@@ -10,16 +10,24 @@ namespace FileCabinetApp
         private const int DescriptionHelpIndex = 1;
         private const int ExplanationHelpIndex = 2;
 
+        private static FileCabinetService fileCabinetService = new FileCabinetService();
+
         private static bool isRunning = true;
 
         private static Tuple<string, Action<string>>[] commands = new Tuple<string, Action<string>>[]
         {
+            new Tuple<string, Action<string>>("create", Create),
+            new Tuple<string, Action<string>>("list", List),
+            new Tuple<string, Action<string>>("stat", Stat),
             new Tuple<string, Action<string>>("help", PrintHelp),
             new Tuple<string, Action<string>>("exit", Exit),
         };
 
         private static string[][] helpMessages = new string[][]
         {
+            new string[] { "create", "creates the record", "The 'create' command creates the record." },
+            new string[] { "list", "provides the list of records", "The 'list' command provides the list of records." },
+            new string[] { "stat", "provides the statistics of records", "The 'stat' command provides the statistics of records." },
             new string[] { "help", "prints the help screen", "The 'help' command prints the help screen." },
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
         };
@@ -89,6 +97,40 @@ namespace FileCabinetApp
             }
 
             Console.WriteLine();
+        }
+
+        private static void Create(string parameters)
+        {
+            Console.Write("First name: ");
+            string name = Console.ReadLine();
+            Console.Write("Last name: ");
+            string surname = Console.ReadLine();
+            Console.Write("Date of birth: ");
+            DateTime birthday = DateTime.ParseExact(Console.ReadLine(), "mm/dd/yyyy", null);
+            Console.Write("Grade: ");
+            short grade = short.Parse(Console.ReadLine(), null);
+            Console.Write("Height: ");
+            decimal height = decimal.Parse(Console.ReadLine(), null);
+            Console.Write("Favourite symbol: ");
+            char favouriteSymbol = Console.ReadLine()[0];
+
+            var recordId = Program.fileCabinetService.CreateRecord(name, surname, birthday, grade, height, favouriteSymbol);
+            Console.WriteLine($"Record #{recordId} is created.");
+        }
+
+        private static void List(string parameters)
+        {
+            var listOfRecords = Program.fileCabinetService.GetRecords();
+            foreach (var record in listOfRecords)
+            {
+                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-mm-dd", null)}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
+            }
+        }
+
+        private static void Stat(string parameters)
+        {
+            var recordsCount = Program.fileCabinetService.GetStat();
+            Console.WriteLine($"{recordsCount} record(s).");
         }
 
         private static void Exit(string parameters)
