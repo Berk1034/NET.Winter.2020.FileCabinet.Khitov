@@ -6,32 +6,31 @@ namespace FileCabinetApp
 {
     public class FileCabinetService
     {
-        private readonly List<FileCabinetRecord> _list = new List<FileCabinetRecord>();
+        private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
 
         public int CreateRecord(string firstName, string lastName, DateTime dateOfBirth)
         {
             var record = new FileCabinetRecord
             {
-                Id = this._list.Count + 1,
+                Id = this.list.Count + 1,
                 FirstName = firstName,
                 LastName = lastName,
                 DateOfBirth = dateOfBirth,
             };
 
-            this._list.Add(record);
+            this.list.Add(record);
 
             return record.Id;
         }
 
-        public FileCabinetRecord[] GetRecords()
+        public List<FileCabinetRecord> GetRecords()
         {
-            // TODO: добавьте реализацию метода
-            return Array.Empty<FileCabinetRecord>();
+            return new List<FileCabinetRecord>(this.list);
         }
 
         public int GetStat()
         {
-            return this._list.Count;
+            return this.list.Count;
         }
     }
 }

@@ -17,6 +17,7 @@ namespace FileCabinetApp
         private static Tuple<string, Action<string>>[] commands = new Tuple<string, Action<string>>[]
         {
             new Tuple<string, Action<string>>("create", Create),
+            new Tuple<string, Action<string>>("list", List),
             new Tuple<string, Action<string>>("stat", Stat),
             new Tuple<string, Action<string>>("help", PrintHelp),
             new Tuple<string, Action<string>>("exit", Exit),
@@ -25,6 +26,7 @@ namespace FileCabinetApp
         private static string[][] helpMessages = new string[][]
         {
             new string[] { "create", "creates the record", "The 'create' command creates the record." },
+            new string[] { "list", "provides the list of records", "The 'list' command provides the list of records." },
             new string[] { "stat", "provides the statistics of records", "The 'stat' command provides the statistics of records." },
             new string[] { "help", "prints the help screen", "The 'help' command prints the help screen." },
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
@@ -108,6 +110,15 @@ namespace FileCabinetApp
 
             var recordId = Program.fileCabinetService.CreateRecord(name, surname, birthday);
             Console.WriteLine($"Record #{recordId} is created.");
+        }
+
+        private static void List(string parameters)
+        {
+            var listOfRecords = Program.fileCabinetService.GetRecords();
+            foreach (var record in listOfRecords)
+            {
+                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-mm-dd", null)}");
+            }
         }
 
         private static void Stat(string parameters)
