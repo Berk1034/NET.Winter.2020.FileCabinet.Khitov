@@ -107,8 +107,14 @@ namespace FileCabinetApp
             string surname = Console.ReadLine();
             Console.Write("Date of birth: ");
             DateTime birthday = DateTime.ParseExact(Console.ReadLine(), "mm/dd/yyyy", null);
+            Console.Write("Grade: ");
+            short grade = short.Parse(Console.ReadLine(), null);
+            Console.Write("Height: ");
+            decimal height = decimal.Parse(Console.ReadLine(), null);
+            Console.Write("Favourite symbol: ");
+            char favouriteSymbol = Console.ReadLine()[0];
 
-            var recordId = Program.fileCabinetService.CreateRecord(name, surname, birthday);
+            var recordId = Program.fileCabinetService.CreateRecord(name, surname, birthday, grade, height, favouriteSymbol);
             Console.WriteLine($"Record #{recordId} is created.");
         }
 
@@ -117,7 +123,7 @@ namespace FileCabinetApp
             var listOfRecords = Program.fileCabinetService.GetRecords();
             foreach (var record in listOfRecords)
             {
-                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-mm-dd", null)}");
+                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-mm-dd", null)}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
             }
         }
 
