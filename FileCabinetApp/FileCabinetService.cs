@@ -10,6 +10,36 @@ namespace FileCabinetApp
 
         public int CreateRecord(string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
         {
+            ValidateInput(firstName, lastName, dateOfBirth, grade, height, favouriteSymbol);
+
+            var record = new FileCabinetRecord
+            {
+                Id = this.list.Count + 1,
+                FirstName = firstName,
+                LastName = lastName,
+                DateOfBirth = dateOfBirth,
+                Grade = grade,
+                Height = height,
+                FavouriteSymbol = favouriteSymbol,
+            };
+
+            this.list.Add(record);
+
+            return record.Id;
+        }
+
+        public List<FileCabinetRecord> GetRecords()
+        {
+            return new List<FileCabinetRecord>(this.list);
+        }
+
+        public int GetStat()
+        {
+            return this.list.Count;
+        }
+
+        private static void ValidateInput(string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
+        {
             if (firstName is null)
             {
                 throw new ArgumentNullException(nameof(firstName), "Firstname can't be null.");
@@ -61,31 +91,6 @@ namespace FileCabinetApp
             {
                 throw new ArgumentException("Space-symbol is not valid.", nameof(favouriteSymbol));
             }
-
-            var record = new FileCabinetRecord
-            {
-                Id = this.list.Count + 1,
-                FirstName = firstName,
-                LastName = lastName,
-                DateOfBirth = dateOfBirth,
-                Grade = grade,
-                Height = height,
-                FavouriteSymbol = favouriteSymbol,
-            };
-
-            this.list.Add(record);
-
-            return record.Id;
-        }
-
-        public List<FileCabinetRecord> GetRecords()
-        {
-            return new List<FileCabinetRecord>(this.list);
-        }
-
-        public int GetStat()
-        {
-            return this.list.Count;
         }
     }
 }
