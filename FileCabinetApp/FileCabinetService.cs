@@ -44,17 +44,22 @@ namespace FileCabinetApp
 
             if (dateOfBirth < minimalDate || dateOfBirth > DateTime.Now)
             {
-                throw new ArgumentException("Date should start from 01-Jan-1950 till Now.");
+                throw new ArgumentException("Date should start from 01-Jan-1950 till Now.", nameof(dateOfBirth));
             }
 
             if (grade < -10 || grade > 10)
             {
-                throw new ArgumentException("Grade should be in range [-10;10].");
+                throw new ArgumentException("Grade should be in range [-10;10].", nameof(grade));
             }
 
             if (height < 0.3m || height > 3m)
             {
-                throw new ArgumentException("Height can't be lower 40cm and higher than 3m.");
+                throw new ArgumentException("Height can't be lower 40cm and higher than 3m.", nameof(height));
+            }
+
+            if (favouriteSymbol == ' ')
+            {
+                throw new ArgumentException("Space-symbol is not valid.", nameof(favouriteSymbol));
             }
 
             var record = new FileCabinetRecord
