@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace FileCabinetApp
 {
@@ -103,16 +104,62 @@ namespace FileCabinetApp
         {
             Console.Write("First name: ");
             string name = Console.ReadLine();
+            while (name is null || name.Trim().Length == 0 || name.Length < 2 || name.Length > 60)
+            {
+                Console.WriteLine("Invalid input! First name can't be empty and it should contain from 2 to 60 non-space symbols. Try again.");
+                Console.Write("First name: ");
+                name = Console.ReadLine();
+            }
+
             Console.Write("Last name: ");
             string surname = Console.ReadLine();
+            while (surname is null || surname.Trim().Length == 0 || surname.Length < 2 || surname.Length > 60)
+            {
+                Console.WriteLine("Invalid input! Last name can't be empty and it should contain from 2 to 60 non-space symbols. Try again.");
+                Console.Write("Last name: ");
+                surname = Console.ReadLine();
+            }
+
+            DateTime minimalDate = new DateTime(1950, 1, 1);
             Console.Write("Date of birth: ");
-            DateTime birthday = DateTime.ParseExact(Console.ReadLine(), "MM/dd/yyyy", null);
+
+            DateTime birthday;
+            bool dateSuccess = DateTime.TryParseExact(Console.ReadLine(), "MM/dd/yyyy", null, DateTimeStyles.None, out birthday);
+            while ((!dateSuccess) || (birthday < minimalDate || birthday > DateTime.Now))
+            {
+                Console.WriteLine("Invalid input! Date of birth should be in format MM/dd/yyyy and minimal date is 01/01/1950. Try again.");
+                Console.Write("Date of birth: ");
+                dateSuccess = DateTime.TryParseExact(Console.ReadLine(), "MM/dd/yyyy", null, DateTimeStyles.None, out birthday);
+            }
+
             Console.Write("Grade: ");
-            short grade = short.Parse(Console.ReadLine(), null);
+            short grade;
+            bool gradeSuccess = short.TryParse(Console.ReadLine(), out grade);
+            while ((!gradeSuccess) || (grade < -10 || grade > 10))
+            {
+                Console.WriteLine("Invalid input! Grade should be integer number in range from -10 to 10. Try again.");
+                Console.Write("Grade: ");
+                gradeSuccess = short.TryParse(Console.ReadLine(), out grade);
+            }
+
             Console.Write("Height: ");
-            decimal height = decimal.Parse(Console.ReadLine(), null);
+            decimal height;
+            bool heightSuccess = decimal.TryParse(Console.ReadLine(), out height);
+            while ((!heightSuccess) || (height < 0.3m || height > 3m))
+            {
+                Console.WriteLine("Invalid input! Height should be number in range from 0,3 to 3,0. Try again.");
+                Console.Write("Height: ");
+                heightSuccess = decimal.TryParse(Console.ReadLine(), out height);
+            }
+
             Console.Write("Favourite symbol: ");
             char favouriteSymbol = Console.ReadLine()[0];
+            while (favouriteSymbol == ' ')
+            {
+                Console.WriteLine("Invalid input! Space symbol is not valid. Try again.");
+                Console.Write("Favourite symbol: ");
+                favouriteSymbol = Console.ReadLine()[0];
+            }
 
             var recordId = Program.fileCabinetService.CreateRecord(name, surname, birthday, grade, height, favouriteSymbol);
             Console.WriteLine($"Record #{recordId} is created.");
