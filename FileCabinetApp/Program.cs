@@ -106,7 +106,7 @@ namespace FileCabinetApp
             Console.Write("Last name: ");
             string surname = Console.ReadLine();
             Console.Write("Date of birth: ");
-            DateTime birthday = DateTime.ParseExact(Console.ReadLine(), "mm/dd/yyyy", null);
+            DateTime birthday = DateTime.ParseExact(Console.ReadLine(), "MM/dd/yyyy", null);
             Console.Write("Grade: ");
             short grade = short.Parse(Console.ReadLine(), null);
             Console.Write("Height: ");
@@ -123,7 +123,7 @@ namespace FileCabinetApp
             var listOfRecords = Program.fileCabinetService.GetRecords();
             foreach (var record in listOfRecords)
             {
-                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-mm-dd", null)}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
+                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-MM-dd", null)}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
             }
         }
 
