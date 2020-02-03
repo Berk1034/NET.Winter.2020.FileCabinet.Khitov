@@ -33,6 +33,30 @@ namespace FileCabinetApp
             return new List<FileCabinetRecord>(this.list);
         }
 
+        public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
+        {
+            var indexToEdit = this.list.FindIndex((record) => record.Id == id);
+            if (indexToEdit == -1)
+            {
+                throw new ArgumentException("No record with such id found.", nameof(id));
+            }
+
+            ValidateInput(firstName, lastName, dateOfBirth, grade, height, favouriteSymbol);
+
+            var recordToEdit = new FileCabinetRecord
+            {
+                Id = id,
+                FirstName = firstName,
+                LastName = lastName,
+                DateOfBirth = dateOfBirth,
+                Grade = grade,
+                Height = height,
+                FavouriteSymbol = favouriteSymbol,
+            };
+
+            this.list[indexToEdit] = recordToEdit;
+        }
+
         public int GetStat()
         {
             return this.list.Count;
