@@ -33,6 +33,20 @@ namespace FileCabinetApp
             return new List<FileCabinetRecord>(this.list);
         }
 
+        public FileCabinetRecord[] FindByFirstName(string firstName)
+        {
+            List<FileCabinetRecord> result = new List<FileCabinetRecord>();
+            foreach (var record in this.list)
+            {
+                if (string.Compare(record.FirstName, firstName, true, null) == 0)
+                {
+                    result.Add(record);
+                }
+            }
+
+            return result.ToArray();
+        }
+
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
         {
             var indexToEdit = this.list.FindIndex((record) => record.Id == id);
