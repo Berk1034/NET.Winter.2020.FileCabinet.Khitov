@@ -187,7 +187,10 @@ namespace FileCabinetApp
                 switch (args[0].ToLower(null))
                 {
                     case "firstname":
-                        searchResult = Program.fileCabinetService.FindByFirstName(args[1].Trim(new char[] { '"' }));
+                        searchResult = Program.fileCabinetService.FindByFirstName(args[1].Trim('"'));
+                        break;
+                    case "lastname":
+                        searchResult = Program.fileCabinetService.FindByLastName(args[1].Trim('"'));
                         break;
                     default:
                         Console.WriteLine("Nothing found.");
