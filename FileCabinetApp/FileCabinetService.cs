@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace FileCabinetApp
@@ -59,6 +60,29 @@ namespace FileCabinetApp
             }
 
             return result.ToArray();
+        }
+
+        public FileCabinetRecord[] FindByDateOfBirth(string dateOfBirth)
+        {
+            DateTime birthday;
+            bool dateSuccess = DateTime.TryParseExact(dateOfBirth, "yyyy-MMM-dd", new CultureInfo("en-US"), DateTimeStyles.None, out birthday);
+            if (dateSuccess)
+            {
+                List<FileCabinetRecord> result = new List<FileCabinetRecord>();
+                foreach (var record in this.list)
+                {
+                    if (DateTime.Compare(record.DateOfBirth, birthday) == 0)
+                    {
+                        result.Add(record);
+                    }
+                }
+
+                return result.ToArray();
+            }
+            else
+            {
+                return Array.Empty<FileCabinetRecord>();
+            }
         }
 
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
