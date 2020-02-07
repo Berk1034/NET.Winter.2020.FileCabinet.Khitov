@@ -9,6 +9,7 @@ namespace FileCabinetApp
     {
         private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
         private readonly Dictionary<string, List<FileCabinetRecord>> firstNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
+        private readonly Dictionary<string, List<FileCabinetRecord>> lastNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
 
         public int CreateRecord(string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
         {
@@ -39,6 +40,20 @@ namespace FileCabinetApp
                 this.firstNameDictionary.Add(record.FirstName.ToLower(null), listOfFirstNames);
             }
 
+            List<FileCabinetRecord> listOfLastNames;
+            if (this.lastNameDictionary.TryGetValue(record.LastName?.ToLower(null), out listOfLastNames))
+            {
+                listOfLastNames.Add(record);
+            }
+            else
+            {
+                listOfLastNames = new List<FileCabinetRecord>
+                {
+                    record,
+                };
+                this.lastNameDictionary.Add(record.LastName.ToLower(null), listOfLastNames);
+            }
+
             this.list.Add(record);
 
             return record.Id;
@@ -62,16 +77,13 @@ namespace FileCabinetApp
 
         public FileCabinetRecord[] FindByLastName(string lastName)
         {
-            List<FileCabinetRecord> result = new List<FileCabinetRecord>();
-            foreach (var record in this.list)
+            List<FileCabinetRecord> listOfLastNames;
+            if (!this.lastNameDictionary.TryGetValue(lastName?.ToLower(null), out listOfLastNames))
             {
-                if (string.Compare(record.LastName, lastName, true, null) == 0)
-                {
-                    result.Add(record);
-                }
+                listOfLastNames = new List<FileCabinetRecord>();
             }
 
-            return result.ToArray();
+            return listOfLastNames.ToArray();
         }
 
         public FileCabinetRecord[] FindByDateOfBirth(string dateOfBirth)
@@ -145,6 +157,35 @@ namespace FileCabinetApp
                     recordToEdit,
                 };
                 this.firstNameDictionary.Add(recordToEdit.FirstName, listOfFirstNames);
+            }
+
+            List<FileCabinetRecord> listOfLastNames;
+            if (this.lastNameDictionary.TryGetValue(this.list[indexToEdit].LastName.ToLower(null), out listOfLastNames))
+            {
+                var indexToEditLastNamesList = listOfLastNames.FindIndex((record) => record.Id == id);
+                listOfLastNames.RemoveAt(indexToEditLastNamesList);
+
+                List<FileCabinetRecord> newListOfLastNames;
+                if (this.lastNameDictionary.TryGetValue(recordToEdit.LastName?.ToLower(null), out newListOfLastNames))
+                {
+                    newListOfLastNames.Add(recordToEdit);
+                }
+                else
+                {
+                    newListOfLastNames = new List<FileCabinetRecord>
+                {
+                    recordToEdit,
+                };
+                    this.lastNameDictionary.Add(recordToEdit.LastName.ToLower(null), newListOfLastNames);
+                }
+            }
+            else
+            {
+                listOfLastNames = new List<FileCabinetRecord>
+                {
+                    recordToEdit,
+                };
+                this.lastNameDictionary.Add(recordToEdit.LastName, listOfLastNames);
             }
 
             this.list[indexToEdit] = recordToEdit;
