@@ -18,6 +18,7 @@ namespace FileCabinetApp
         private static Tuple<string, Action<string>>[] commands = new Tuple<string, Action<string>>[]
         {
             new Tuple<string, Action<string>>("create", Create),
+            new Tuple<string, Action<string>>("find", Find),
             new Tuple<string, Action<string>>("edit", Edit),
             new Tuple<string, Action<string>>("list", List),
             new Tuple<string, Action<string>>("stat", Stat),
@@ -28,6 +29,7 @@ namespace FileCabinetApp
         private static string[][] helpMessages = new string[][]
         {
             new string[] { "create", "creates the record", "The 'create' command creates the record." },
+            new string[] { "find", "finds the record by specified property", "The 'find' command finds the record by specified property." },
             new string[] { "edit", "allows to update the choosen record", "The 'edit' command allows to update the choosen record." },
             new string[] { "list", "provides the list of records", "The 'list' command provides the list of records." },
             new string[] { "stat", "provides the statistics of records", "The 'stat' command provides the statistics of records." },
@@ -172,7 +174,40 @@ namespace FileCabinetApp
             var listOfRecords = Program.fileCabinetService.GetRecords();
             foreach (var record in listOfRecords)
             {
-                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-MM-dd", null)}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
+                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
+            }
+        }
+
+        private static void Find(string parameters)
+        {
+            string[] args = parameters.Split(' ');
+            if (args.Length == 2)
+            {
+                FileCabinetRecord[] searchResult = Array.Empty<FileCabinetRecord>();
+                switch (args[0].ToLower(null))
+                {
+                    case "firstname":
+                        searchResult = Program.fileCabinetService.FindByFirstName(args[1].Trim('"'));
+                        break;
+                    case "lastname":
+                        searchResult = Program.fileCabinetService.FindByLastName(args[1].Trim('"'));
+                        break;
+                    case "dateofbirth":
+                        searchResult = Program.fileCabinetService.FindByDateOfBirth(args[1].Trim('"'));
+                        break;
+                    default:
+                        Console.WriteLine("Nothing found.");
+                        break;
+                }
+
+                for (int i = 0; i < searchResult.Length; i++)
+                {
+                    Console.WriteLine($"#{searchResult[i].Id}, {searchResult[i].FirstName}, {searchResult[i].LastName}, {searchResult[i].DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {searchResult[i].Grade}, {searchResult[i].Height}, {searchResult[i].FavouriteSymbol}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("This command admits two arguments! Try again.");
             }
         }
 
