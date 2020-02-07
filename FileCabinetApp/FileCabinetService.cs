@@ -10,6 +10,7 @@ namespace FileCabinetApp
         private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
         private readonly Dictionary<string, List<FileCabinetRecord>> firstNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
         private readonly Dictionary<string, List<FileCabinetRecord>> lastNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
+        private readonly Dictionary<DateTime, List<FileCabinetRecord>> dateOfBirthDictionary = new Dictionary<DateTime, List<FileCabinetRecord>>();
 
         public int CreateRecord(string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
         {
@@ -54,6 +55,20 @@ namespace FileCabinetApp
                 this.lastNameDictionary.Add(record.LastName.ToLower(null), listOfLastNames);
             }
 
+            List<FileCabinetRecord> listOfDateOfBirth;
+            if (this.dateOfBirthDictionary.TryGetValue(record.DateOfBirth, out listOfDateOfBirth))
+            {
+                listOfDateOfBirth.Add(record);
+            }
+            else
+            {
+                listOfDateOfBirth = new List<FileCabinetRecord>
+                {
+                    record,
+                };
+                this.dateOfBirthDictionary.Add(record.DateOfBirth, listOfDateOfBirth);
+            }
+
             this.list.Add(record);
 
             return record.Id;
@@ -92,6 +107,15 @@ namespace FileCabinetApp
             bool dateSuccess = DateTime.TryParseExact(dateOfBirth, "yyyy-MMM-dd", new CultureInfo("en-US"), DateTimeStyles.None, out birthday);
             if (dateSuccess)
             {
+                List<FileCabinetRecord> listOfDateOfBirth;
+                if (!this.dateOfBirthDictionary.TryGetValue(birthday, out listOfDateOfBirth))
+                {
+                    listOfDateOfBirth = new List<FileCabinetRecord>();
+                }
+
+                return listOfDateOfBirth.ToArray();
+
+                /*
                 List<FileCabinetRecord> result = new List<FileCabinetRecord>();
                 foreach (var record in this.list)
                 {
@@ -102,6 +126,7 @@ namespace FileCabinetApp
                 }
 
                 return result.ToArray();
+                */
             }
             else
             {
@@ -186,6 +211,35 @@ namespace FileCabinetApp
                     recordToEdit,
                 };
                 this.lastNameDictionary.Add(recordToEdit.LastName, listOfLastNames);
+            }
+
+            List<FileCabinetRecord> listOfDateOfBirth;
+            if (this.dateOfBirthDictionary.TryGetValue(this.list[indexToEdit].DateOfBirth, out listOfDateOfBirth))
+            {
+                var indexToEditDateOfBirthList = listOfDateOfBirth.FindIndex((record) => record.Id == id);
+                listOfDateOfBirth.RemoveAt(indexToEditDateOfBirthList);
+
+                List<FileCabinetRecord> newListOfDateOfBirth;
+                if (this.dateOfBirthDictionary.TryGetValue(recordToEdit.DateOfBirth, out newListOfDateOfBirth))
+                {
+                    newListOfDateOfBirth.Add(recordToEdit);
+                }
+                else
+                {
+                    newListOfDateOfBirth = new List<FileCabinetRecord>
+                {
+                    recordToEdit,
+                };
+                    this.dateOfBirthDictionary.Add(recordToEdit.DateOfBirth, newListOfDateOfBirth);
+                }
+            }
+            else
+            {
+                listOfDateOfBirth = new List<FileCabinetRecord>
+                {
+                    recordToEdit,
+                };
+                this.dateOfBirthDictionary.Add(recordToEdit.DateOfBirth, listOfDateOfBirth);
             }
 
             this.list[indexToEdit] = recordToEdit;
