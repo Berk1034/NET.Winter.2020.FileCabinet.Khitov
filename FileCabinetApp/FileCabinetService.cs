@@ -8,6 +8,7 @@ namespace FileCabinetApp
     public class FileCabinetService
     {
         private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
+        private readonly Dictionary<string, List<FileCabinetRecord>> firstNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
 
         public int CreateRecord(string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
         {
@@ -24,6 +25,20 @@ namespace FileCabinetApp
                 FavouriteSymbol = favouriteSymbol,
             };
 
+            List<FileCabinetRecord> listOfFirstNames;
+            if (this.firstNameDictionary.TryGetValue(record.FirstName?.ToLower(null), out listOfFirstNames))
+            {
+                listOfFirstNames.Add(record);
+            }
+            else
+            {
+                listOfFirstNames = new List<FileCabinetRecord>
+                {
+                    record,
+                };
+                this.firstNameDictionary.Add(record.FirstName.ToLower(null), listOfFirstNames);
+            }
+
             this.list.Add(record);
 
             return record.Id;
@@ -36,16 +51,13 @@ namespace FileCabinetApp
 
         public FileCabinetRecord[] FindByFirstName(string firstName)
         {
-            List<FileCabinetRecord> result = new List<FileCabinetRecord>();
-            foreach (var record in this.list)
+            List<FileCabinetRecord> listOfFirstNames;
+            if (!this.firstNameDictionary.TryGetValue(firstName?.ToLower(null), out listOfFirstNames))
             {
-                if (string.Compare(record.FirstName, firstName, true, null) == 0)
-                {
-                    result.Add(record);
-                }
+                listOfFirstNames = new List<FileCabinetRecord>();
             }
 
-            return result.ToArray();
+            return listOfFirstNames.ToArray();
         }
 
         public FileCabinetRecord[] FindByLastName(string lastName)
@@ -105,6 +117,35 @@ namespace FileCabinetApp
                 Height = height,
                 FavouriteSymbol = favouriteSymbol,
             };
+
+            List<FileCabinetRecord> listOfFirstNames;
+            if (this.firstNameDictionary.TryGetValue(this.list[indexToEdit].FirstName.ToLower(null), out listOfFirstNames))
+            {
+                var indexToEditFirstNamesList = listOfFirstNames.FindIndex((record) => record.Id == id);
+                listOfFirstNames.RemoveAt(indexToEditFirstNamesList);
+
+                List<FileCabinetRecord> newListOfFirstNames;
+                if (this.firstNameDictionary.TryGetValue(recordToEdit.FirstName?.ToLower(null), out newListOfFirstNames))
+                {
+                    newListOfFirstNames.Add(recordToEdit);
+                }
+                else
+                {
+                    newListOfFirstNames = new List<FileCabinetRecord>
+                {
+                    recordToEdit,
+                };
+                    this.firstNameDictionary.Add(recordToEdit.FirstName.ToLower(null), newListOfFirstNames);
+                }
+            }
+            else
+            {
+                listOfFirstNames = new List<FileCabinetRecord>
+                {
+                    recordToEdit,
+                };
+                this.firstNameDictionary.Add(recordToEdit.FirstName, listOfFirstNames);
+            }
 
             this.list[indexToEdit] = recordToEdit;
         }
