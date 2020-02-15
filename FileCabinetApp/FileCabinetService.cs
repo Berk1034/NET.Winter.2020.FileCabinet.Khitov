@@ -7,10 +7,29 @@ namespace FileCabinetApp
 {
     public class FileCabinetService
     {
+        private const int MinLengthInSymbols = 2;
+        private const int MaxLengthInSymbols = 60;
+        private const int MinGradeInPoints = -10;
+        private const int MaxGradeInPoints = 10;
+        private const decimal MinHeightInMeters = 0.3m;
+        private const decimal MaxHeightInMeters = 3m;
+
         private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
         private readonly Dictionary<string, List<FileCabinetRecord>> firstNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
         private readonly Dictionary<string, List<FileCabinetRecord>> lastNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
         private readonly Dictionary<DateTime, List<FileCabinetRecord>> dateOfBirthDictionary = new Dictionary<DateTime, List<FileCabinetRecord>>();
+
+        public int MinLength => MinLengthInSymbols;
+
+        public int MaxLength => MaxLengthInSymbols;
+
+        public int MinGrade => MinGradeInPoints;
+
+        public int MaxGrade => MaxGradeInPoints;
+
+        public decimal MinHeight => MinHeightInMeters;
+
+        public decimal MaxHeight => MaxHeightInMeters;
 
         public int CreateRecord(string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
         {
@@ -114,19 +133,6 @@ namespace FileCabinetApp
                 }
 
                 return listOfDateOfBirth.ToArray();
-
-                /*
-                List<FileCabinetRecord> result = new List<FileCabinetRecord>();
-                foreach (var record in this.list)
-                {
-                    if (DateTime.Compare(record.DateOfBirth, birthday) == 0)
-                    {
-                        result.Add(record);
-                    }
-                }
-
-                return result.ToArray();
-                */
             }
             else
             {
@@ -262,7 +268,7 @@ namespace FileCabinetApp
                 throw new ArgumentException("Firstname cannot contain only spaces.", nameof(firstName));
             }
 
-            if (firstName.Length < 2 || firstName.Length > 60)
+            if (firstName.Length < MinLengthInSymbols || firstName.Length > MaxLengthInSymbols)
             {
                 throw new ArgumentException("Firstname length should be in range [2;60].", nameof(firstName));
             }
@@ -277,7 +283,7 @@ namespace FileCabinetApp
                 throw new ArgumentException("Firstname cannot contain only spaces.", nameof(lastName));
             }
 
-            if (lastName.Length < 2 || lastName.Length > 60)
+            if (lastName.Length < MinLengthInSymbols || lastName.Length > MaxLengthInSymbols)
             {
                 throw new ArgumentException("Firstname length should be in range [2;60].", nameof(lastName));
             }
@@ -289,14 +295,14 @@ namespace FileCabinetApp
                 throw new ArgumentException("Date should start from 01-Jan-1950 till Now.", nameof(dateOfBirth));
             }
 
-            if (grade < -10 || grade > 10)
+            if (grade < MinGradeInPoints || grade > MaxGradeInPoints)
             {
                 throw new ArgumentException("Grade should be in range [-10;10].", nameof(grade));
             }
 
-            if (height < 0.3m || height > 3m)
+            if (height < MinHeightInMeters || height > MaxHeightInMeters)
             {
-                throw new ArgumentException("Height can't be lower 40cm and higher than 3m.", nameof(height));
+                throw new ArgumentException("Height can't be lower 30cm and higher than 3m.", nameof(height));
             }
 
             if (favouriteSymbol == ' ')
