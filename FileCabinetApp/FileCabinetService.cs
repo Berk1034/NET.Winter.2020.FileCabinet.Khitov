@@ -5,6 +5,9 @@ using System.Text;
 
 namespace FileCabinetApp
 {
+    /// <summary>
+    /// The FileCabinetService class.
+    /// </summary>
     public class FileCabinetService
     {
         private const int MinLengthInSymbols = 2;
@@ -19,18 +22,66 @@ namespace FileCabinetApp
         private readonly Dictionary<string, List<FileCabinetRecord>> lastNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
         private readonly Dictionary<DateTime, List<FileCabinetRecord>> dateOfBirthDictionary = new Dictionary<DateTime, List<FileCabinetRecord>>();
 
+        /// <summary>
+        /// Gets the value of MinLengthInSymbols const.
+        /// </summary>
+        /// <value>
+        /// The value of MinLengthInSymbols const.
+        /// </value>
         public int MinLength => MinLengthInSymbols;
 
+        /// <summary>
+        /// Gets the value of MaxLengthInSymbols const.
+        /// </summary>
+        /// <value>
+        /// The value of MaxLengthInSymbols const.
+        /// </value>
         public int MaxLength => MaxLengthInSymbols;
 
+        /// <summary>
+        /// Gets the value of MinGradeInPoints const.
+        /// </summary>
+        /// <value>
+        /// The value of MinGradeInPoints const.
+        /// </value>
         public int MinGrade => MinGradeInPoints;
 
+        /// <summary>
+        /// Gets the value of MaxGradeInPoints const.
+        /// </summary>
+        /// <value>
+        /// The value of MaxGradeInPoints const.
+        /// </value>
         public int MaxGrade => MaxGradeInPoints;
 
+        /// <summary>
+        /// Gets the value of MinHeight const.
+        /// </summary>
+        /// <value>
+        /// The value of MinHeight const.
+        /// </value>
         public decimal MinHeight => MinHeightInMeters;
 
+        /// <summary>
+        /// Gets the value of MaxHeight const.
+        /// </summary>
+        /// <value>
+        /// The value of MaxHeight const.
+        /// </value>
         public decimal MaxHeight => MaxHeightInMeters;
 
+        /// <summary>
+        /// Creates the record.
+        /// </summary>
+        /// <param name="firstName">The first name of the record.</param>
+        /// <param name="lastName">The last name of the record.</param>
+        /// <param name="dateOfBirth">The date of birth of the record.</param>
+        /// <param name="grade">The grade of the record.</param>
+        /// <param name="height">The height of the record.</param>
+        /// <param name="favouriteSymbol">The favourite symbol of the record.</param>
+        /// <exception cref="ArgumentException()">Thrown when parameters do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+        /// <exception cref="ArgumentNullException()">Thrown when firstname or lastname is null.</exception>
+        /// <returns>The id of the created record.</returns>
         public int CreateRecord(string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
         {
             ValidateInput(firstName, lastName, dateOfBirth, grade, height, favouriteSymbol);
@@ -93,11 +144,20 @@ namespace FileCabinetApp
             return record.Id;
         }
 
+        /// <summary>
+        /// Gets all the records.
+        /// </summary>
+        /// <returns>The list of all current records.</returns>
         public List<FileCabinetRecord> GetRecords()
         {
             return new List<FileCabinetRecord>(this.list);
         }
 
+        /// <summary>
+        /// Finds the records by the firstname.
+        /// </summary>
+        /// <param name="firstName">The first name to find the records by it.</param>
+        /// <returns>The list of found records.</returns>
         public FileCabinetRecord[] FindByFirstName(string firstName)
         {
             List<FileCabinetRecord> listOfFirstNames;
@@ -109,6 +169,11 @@ namespace FileCabinetApp
             return listOfFirstNames.ToArray();
         }
 
+        /// <summary>
+        /// Finds the records by the last name.
+        /// </summary>
+        /// <param name="lastName">The last name to find the records by it.</param>
+        /// <returns>The list of found records.</returns>
         public FileCabinetRecord[] FindByLastName(string lastName)
         {
             List<FileCabinetRecord> listOfLastNames;
@@ -120,6 +185,11 @@ namespace FileCabinetApp
             return listOfLastNames.ToArray();
         }
 
+        /// <summary>
+        /// Finds the records by the date of birth.
+        /// </summary>
+        /// <param name="dateOfBirth">The date of birth to find the records by it.</param>
+        /// <returns>The list of found records.</returns>
         public FileCabinetRecord[] FindByDateOfBirth(string dateOfBirth)
         {
             DateTime birthday;
@@ -140,6 +210,16 @@ namespace FileCabinetApp
             }
         }
 
+        /// <summary>
+        /// Edits the record.
+        /// </summary>
+        /// <param name="id">The id of the record to edit.</param>
+        /// <param name="firstName">The new first name.</param>
+        /// <param name="lastName">The new last name.</param>
+        /// <param name="dateOfBirth">The new date of birth.</param>
+        /// <param name="grade">The new grade.</param>
+        /// <param name="height">The new height.</param>
+        /// <param name="favouriteSymbol">The new favourite symbol.</param>
         public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
         {
             var indexToEdit = this.list.FindIndex((record) => record.Id == id);
@@ -251,6 +331,10 @@ namespace FileCabinetApp
             this.list[indexToEdit] = recordToEdit;
         }
 
+        /// <summary>
+        /// Gets amount of records.
+        /// </summary>
+        /// <returns>The total number of records.</returns>
         public int GetStat()
         {
             return this.list.Count;

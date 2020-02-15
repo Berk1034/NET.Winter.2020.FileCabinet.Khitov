@@ -3,6 +3,9 @@ using System.Globalization;
 
 namespace FileCabinetApp
 {
+    /// <summary>
+    /// The Program class.
+    /// </summary>
     public static class Program
     {
         private const string DeveloperName = "Constantin Hitov";
@@ -37,6 +40,10 @@ namespace FileCabinetApp
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
         };
 
+        /// <summary>
+        /// The start point of the program.
+        /// </summary>
+        /// <param name="args">The arguments passed to the program.</param>
         public static void Main(string[] args)
         {
             Console.WriteLine($"File Cabinet Application, developed by {Program.DeveloperName}");
