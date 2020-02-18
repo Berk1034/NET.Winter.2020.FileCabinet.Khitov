@@ -163,6 +163,11 @@
             The FileCabinetCustomService class.
             </summary>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetCustomService.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetCustomService"/> class.
+            </summary>
+        </member>
         <member name="M:FileCabinetApp.FileCabinetCustomService.CreateValidator">
             <summary>
             Creates the validator for record information.
@@ -172,6 +177,11 @@
         <member name="T:FileCabinetApp.FileCabinetDefaultService">
             <summary>
             The FileCabinetDefaultService class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetDefaultService.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetDefaultService"/> class.
             </summary>
         </member>
         <member name="M:FileCabinetApp.FileCabinetDefaultService.CreateValidator">
@@ -306,6 +316,12 @@
             <summary>
             The FileCabinetService class.
             </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.#ctor(FileCabinetApp.IRecordValidator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetService"/> class.
+            </summary>
+            <param name="validator">The validator for record information.</param>
         </member>
         <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
