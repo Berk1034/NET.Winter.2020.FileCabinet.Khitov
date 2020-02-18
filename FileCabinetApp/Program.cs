@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace FileCabinetApp
@@ -218,24 +219,24 @@ namespace FileCabinetApp
             string[] args = parameters.Split(' ');
             if (args.Length == 2)
             {
-                FileCabinetRecord[] searchResult = Array.Empty<FileCabinetRecord>();
+                List<FileCabinetRecord> searchResult = new List<FileCabinetRecord>();
                 switch (args[0].ToLower(null))
                 {
                     case "firstname":
-                        searchResult = Program.fileCabinetService.FindByFirstName(args[1].Trim('"'));
+                        searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByFirstName(args[1].Trim('"')));
                         break;
                     case "lastname":
-                        searchResult = Program.fileCabinetService.FindByLastName(args[1].Trim('"'));
+                        searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByLastName(args[1].Trim('"')));
                         break;
                     case "dateofbirth":
-                        searchResult = Program.fileCabinetService.FindByDateOfBirth(args[1].Trim('"'));
+                        searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByDateOfBirth(args[1].Trim('"')));
                         break;
                     default:
                         Console.WriteLine("Nothing found.");
                         break;
                 }
 
-                for (int i = 0; i < searchResult.Length; i++)
+                for (int i = 0; i < searchResult.Count; i++)
                 {
                     Console.WriteLine($"#{searchResult[i].Id}, {searchResult[i].FirstName}, {searchResult[i].LastName}, {searchResult[i].DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {searchResult[i].Grade}, {searchResult[i].Height}, {searchResult[i].FavouriteSymbol}");
                 }
@@ -248,7 +249,7 @@ namespace FileCabinetApp
 
         private static void Edit(string parameters)
         {
-            var listOfRecords = Program.fileCabinetService.GetRecords();
+            var listOfRecords = new List<FileCabinetRecord>(Program.fileCabinetService.GetRecords());
             int editId;
             bool parseSuccess = int.TryParse(parameters, out editId);
             if (!parseSuccess)

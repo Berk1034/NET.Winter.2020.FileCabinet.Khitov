@@ -324,28 +324,28 @@
             <summary>
             Gets all the records.
             </summary>
-            <returns>The list of all current records.</returns>
+            <returns>The ReadOnlyCollection of all current records.</returns>
         </member>
         <member name="M:FileCabinetApp.FileCabinetService.FindByFirstName(System.String)">
             <summary>
             Finds the records by the firstname.
             </summary>
             <param name="firstName">The first name to find the records by it.</param>
-            <returns>The list of found records.</returns>
+            <returns>The ReadOnlyCollection of found records.</returns>
         </member>
         <member name="M:FileCabinetApp.FileCabinetService.FindByLastName(System.String)">
             <summary>
             Finds the records by the last name.
             </summary>
             <param name="lastName">The last name to find the records by it.</param>
-            <returns>The list of found records.</returns>
+            <returns>The ReadOnlyCollection of found records.</returns>
         </member>
         <member name="M:FileCabinetApp.FileCabinetService.FindByDateOfBirth(System.String)">
             <summary>
             Finds the records by the date of birth.
             </summary>
             <param name="dateOfBirth">The date of birth to find the records by it.</param>
-            <returns>The list of found records.</returns>
+            <returns>The ReadOnlyCollection of found records.</returns>
         </member>
         <member name="M:FileCabinetApp.FileCabinetService.EditRecord(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
