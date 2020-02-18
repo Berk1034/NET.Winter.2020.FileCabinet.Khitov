@@ -4,12 +4,12 @@
         <name>FileCabinetApp</name>
     </assembly>
     <members>
-        <member name="T:FileCabinetApp.FileCabinetCustomService">
+        <member name="T:FileCabinetApp.CustomValidator">
             <summary>
-            The FileCabinetCustomService class.
+            The CustomValidator class.
             </summary>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetCustomService.MinLength">
+        <member name="P:FileCabinetApp.CustomValidator.MinLength">
             <summary>
             Gets the value of MinLengthInSymbols const.
             </summary>
@@ -17,7 +17,7 @@
             The value of MinLengthInSymbols const.
             </value>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetCustomService.MaxLength">
+        <member name="P:FileCabinetApp.CustomValidator.MaxLength">
             <summary>
             Gets the value of MaxLengthInSymbols const.
             </summary>
@@ -25,7 +25,7 @@
             The value of MaxLengthInSymbols const.
             </value>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetCustomService.MinGrade">
+        <member name="P:FileCabinetApp.CustomValidator.MinGrade">
             <summary>
             Gets the value of MinGradeInPoints const.
             </summary>
@@ -33,7 +33,7 @@
             The value of MinGradeInPoints const.
             </value>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetCustomService.MaxGrade">
+        <member name="P:FileCabinetApp.CustomValidator.MaxGrade">
             <summary>
             Gets the value of MaxGradeInPoints const.
             </summary>
@@ -41,7 +41,7 @@
             The value of MaxGradeInPoints const.
             </value>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetCustomService.MinHeight">
+        <member name="P:FileCabinetApp.CustomValidator.MinHeight">
             <summary>
             Gets the value of MinHeight const.
             </summary>
@@ -49,7 +49,7 @@
             The value of MinHeight const.
             </value>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetCustomService.MaxHeight">
+        <member name="P:FileCabinetApp.CustomValidator.MaxHeight">
             <summary>
             Gets the value of MaxHeight const.
             </summary>
@@ -57,7 +57,7 @@
             The value of MaxHeight const.
             </value>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetCustomService.MinimalDate">
+        <member name="P:FileCabinetApp.CustomValidator.MinimalDate">
             <summary>
             Gets the value of minimal DateTime.
             </summary>
@@ -65,7 +65,7 @@
             The value of minimal DateTime.
             </value>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetCustomService.MaximalDate">
+        <member name="P:FileCabinetApp.CustomValidator.MaximalDate">
             <summary>
             Gets the value of DateTime.Now.
             </summary>
@@ -73,90 +73,112 @@
             The value of DateTime.Now.
             </value>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetCustomService.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+        <member name="M:FileCabinetApp.CustomValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
             Validates the record information.
             </summary>
             <param name="recordInfo">The record informaton.</param>
             <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
             <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
+        </member>
+        <member name="T:FileCabinetApp.DefaultValidator">
+            <summary>
+            The DefaultValidator class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MinLength">
+            <summary>
+            Gets the value of MinLengthInSymbols const.
+            </summary>
+            <value>
+            The value of MinLengthInSymbols const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MaxLength">
+            <summary>
+            Gets the value of MaxLengthInSymbols const.
+            </summary>
+            <value>
+            The value of MaxLengthInSymbols const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MinGrade">
+            <summary>
+            Gets the value of MinGradeInPoints const.
+            </summary>
+            <value>
+            The value of MinGradeInPoints const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MaxGrade">
+            <summary>
+            Gets the value of MaxGradeInPoints const.
+            </summary>
+            <value>
+            The value of MaxGradeInPoints const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MinHeight">
+            <summary>
+            Gets the value of MinHeight const.
+            </summary>
+            <value>
+            The value of MinHeight const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MaxHeight">
+            <summary>
+            Gets the value of MaxHeight const.
+            </summary>
+            <value>
+            The value of MaxHeight const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MinimalDate">
+            <summary>
+            Gets the value of minimal DateTime.
+            </summary>
+            <value>
+            The value of minimal DateTime.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MaximalDate">
+            <summary>
+            Gets the value of DateTime.Now.
+            </summary>
+            <value>
+            The value of DateTime.Now.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.DefaultValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+            <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+            <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetCustomService">
+            <summary>
+            The FileCabinetCustomService class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetCustomService.CreateValidator">
+            <summary>
+            Creates the validator for record information.
+            </summary>
+            <returns>The IRecordValidator implementation.</returns>
         </member>
         <member name="T:FileCabinetApp.FileCabinetDefaultService">
             <summary>
             The FileCabinetDefaultService class.
             </summary>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetDefaultService.MinLength">
+        <member name="M:FileCabinetApp.FileCabinetDefaultService.CreateValidator">
             <summary>
-            Gets the value of MinLengthInSymbols const.
+            Creates the validator for record information.
             </summary>
-            <value>
-            The value of MinLengthInSymbols const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetDefaultService.MaxLength">
-            <summary>
-            Gets the value of MaxLengthInSymbols const.
-            </summary>
-            <value>
-            The value of MaxLengthInSymbols const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetDefaultService.MinGrade">
-            <summary>
-            Gets the value of MinGradeInPoints const.
-            </summary>
-            <value>
-            The value of MinGradeInPoints const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetDefaultService.MaxGrade">
-            <summary>
-            Gets the value of MaxGradeInPoints const.
-            </summary>
-            <value>
-            The value of MaxGradeInPoints const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetDefaultService.MinHeight">
-            <summary>
-            Gets the value of MinHeight const.
-            </summary>
-            <value>
-            The value of MinHeight const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetDefaultService.MaxHeight">
-            <summary>
-            Gets the value of MaxHeight const.
-            </summary>
-            <value>
-            The value of MaxHeight const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetDefaultService.MinimalDate">
-            <summary>
-            Gets the value of minimal DateTime.
-            </summary>
-            <value>
-            The value of minimal DateTime.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetDefaultService.MaximalDate">
-            <summary>
-            Gets the value of DateTime.Now.
-            </summary>
-            <value>
-            The value of DateTime.Now.
-            </value>
-        </member>
-        <member name="M:FileCabinetApp.FileCabinetDefaultService.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
-            <summary>
-            Validates the record information.
-            </summary>
-            <param name="recordInfo">The record informaton.</param>
-            <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
-            <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
+            <returns>The IRecordValidator implementation.</returns>
         </member>
         <member name="T:FileCabinetApp.FileCabinetRecord">
             <summary>
@@ -285,70 +307,6 @@
             The FileCabinetService class.
             </summary>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MinLength">
-            <summary>
-            Gets the value of MinLength.
-            </summary>
-            <value>
-            The value of MinLength.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MaxLength">
-            <summary>
-            Gets the value of MaxLength.
-            </summary>
-            <value>
-            The value of MaxLength.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MinGrade">
-            <summary>
-            Gets the value of MinGrade.
-            </summary>
-            <value>
-            The value of MinGrade.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MaxGrade">
-            <summary>
-            Gets the value of MaxGrade.
-            </summary>
-            <value>
-            The value of MaxGrade.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MinHeight">
-            <summary>
-            Gets the value of MinHeight.
-            </summary>
-            <value>
-            The value of MinHeight.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MaxHeight">
-            <summary>
-            Gets the value of MaxHeight.
-            </summary>
-            <value>
-            The value of MaxHeight.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MinimalDate">
-            <summary>
-            Gets the value of minimal DateTime.
-            </summary>
-            <value>
-            The value of minimal DateTime.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MaximalDate">
-            <summary>
-            Gets the value of maximal DateTime.
-            </summary>
-            <value>
-            The value of maximal DateTime.
-            </value>
-        </member>
         <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
             Creates the record.
@@ -399,11 +357,22 @@
             </summary>
             <returns>The total number of records.</returns>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetService.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+        <member name="M:FileCabinetApp.FileCabinetService.CreateValidator">
             <summary>
-            Validates the record information.
+            Creates the validator for record information.
             </summary>
-            <param name="recordInfo">The record informaton.</param>
+            <returns>The IRecordValidator implementation.</returns>
+        </member>
+        <member name="T:FileCabinetApp.IRecordValidator">
+            <summary>
+            The IRecordValidator interface.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.IRecordValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Validates the parameters.
+            </summary>
+            <param name="recordInfo">The record information for validation.</param>
         </member>
         <member name="T:FileCabinetApp.Program">
             <summary>

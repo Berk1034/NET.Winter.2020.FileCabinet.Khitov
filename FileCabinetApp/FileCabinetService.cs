@@ -16,70 +16,6 @@ namespace FileCabinetApp
         private readonly Dictionary<DateTime, List<FileCabinetRecord>> dateOfBirthDictionary = new Dictionary<DateTime, List<FileCabinetRecord>>();
 
         /// <summary>
-        /// Gets the value of MinLength.
-        /// </summary>
-        /// <value>
-        /// The value of MinLength.
-        /// </value>
-        public abstract int MinLength { get; }
-
-        /// <summary>
-        /// Gets the value of MaxLength.
-        /// </summary>
-        /// <value>
-        /// The value of MaxLength.
-        /// </value>
-        public abstract int MaxLength { get; }
-
-        /// <summary>
-        /// Gets the value of MinGrade.
-        /// </summary>
-        /// <value>
-        /// The value of MinGrade.
-        /// </value>
-        public abstract int MinGrade { get; }
-
-        /// <summary>
-        /// Gets the value of MaxGrade.
-        /// </summary>
-        /// <value>
-        /// The value of MaxGrade.
-        /// </value>
-        public abstract int MaxGrade { get; }
-
-        /// <summary>
-        /// Gets the value of MinHeight.
-        /// </summary>
-        /// <value>
-        /// The value of MinHeight.
-        /// </value>
-        public abstract decimal MinHeight { get; }
-
-        /// <summary>
-        /// Gets the value of MaxHeight.
-        /// </summary>
-        /// <value>
-        /// The value of MaxHeight.
-        /// </value>
-        public abstract decimal MaxHeight { get; }
-
-        /// <summary>
-        /// Gets the value of minimal DateTime.
-        /// </summary>
-        /// <value>
-        /// The value of minimal DateTime.
-        /// </value>
-        public abstract DateTime MinimalDate { get; }
-
-        /// <summary>
-        /// Gets the value of maximal DateTime.
-        /// </summary>
-        /// <value>
-        /// The value of maximal DateTime.
-        /// </value>
-        public abstract DateTime MaximalDate { get; }
-
-        /// <summary>
         /// Creates the record.
         /// </summary>
         /// <param name="recordInfo">The record information.</param>
@@ -88,7 +24,7 @@ namespace FileCabinetApp
         /// <returns>The id of the created record.</returns>
         public int CreateRecord(FileCabinetRecordInfo recordInfo)
         {
-            this.ValidateParameters(recordInfo);
+            this.CreateValidator().ValidateParameters(recordInfo);
 
             var record = new FileCabinetRecord
             {
@@ -228,7 +164,7 @@ namespace FileCabinetApp
                 throw new ArgumentException("No record with such id found.", nameof(recordInfo.Id));
             }
 
-            this.ValidateParameters(recordInfo);
+            this.CreateValidator().ValidateParameters(recordInfo);
 
             var recordToEdit = new FileCabinetRecord
             {
@@ -341,9 +277,9 @@ namespace FileCabinetApp
         }
 
         /// <summary>
-        /// Validates the record information.
+        /// Creates the validator for record information.
         /// </summary>
-        /// <param name="recordInfo">The record informaton.</param>
-        protected abstract void ValidateParameters(FileCabinetRecordInfo recordInfo);
+        /// <returns>The IRecordValidator implementation.</returns>
+        protected abstract IRecordValidator CreateValidator();
     }
 }
