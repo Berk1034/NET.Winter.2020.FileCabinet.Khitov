@@ -1,30 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Text;
 
 namespace FileCabinetApp
 {
-    public class FileCabinetService
+    /// <summary>
+    /// The FileCabinetService class.
+    /// </summary>
+    public class FileCabinetService : IFileCabinetService
     {
         private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
         private readonly Dictionary<string, List<FileCabinetRecord>> firstNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
         private readonly Dictionary<string, List<FileCabinetRecord>> lastNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
         private readonly Dictionary<DateTime, List<FileCabinetRecord>> dateOfBirthDictionary = new Dictionary<DateTime, List<FileCabinetRecord>>();
+        private readonly IRecordValidator validator;
 
-        public int CreateRecord(string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileCabinetService"/> class.
+        /// </summary>
+        /// <param name="validator">The validator for record information.</param>
+        public FileCabinetService(IRecordValidator validator)
         {
-            ValidateInput(firstName, lastName, dateOfBirth, grade, height, favouriteSymbol);
+            this.validator = validator;
+        }
+
+        /// <summary>
+        /// Gets the validator.
+        /// </summary>
+        /// <value>
+        /// The validator.
+        /// </value>
+        public IRecordValidator Validator => this.validator;
+
+        /// <summary>
+        /// Creates the record.
+        /// </summary>
+        /// <param name="recordInfo">The record information.</param>
+        /// <exception cref="ArgumentException()">Thrown when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+        /// <exception cref="ArgumentNullException()">Thrown when firstname or lastname is null.</exception>
+        /// <returns>The id of the created record.</returns>
+        public int CreateRecord(FileCabinetRecordInfo recordInfo)
+        {
+            this.validator.ValidateParameters(recordInfo);
 
             var record = new FileCabinetRecord
             {
                 Id = this.list.Count + 1,
-                FirstName = firstName,
-                LastName = lastName,
-                DateOfBirth = dateOfBirth,
-                Grade = grade,
-                Height = height,
-                FavouriteSymbol = favouriteSymbol,
+                FirstName = recordInfo.FirstName,
+                LastName = recordInfo.LastName,
+                DateOfBirth = recordInfo.DateOfBirth,
+                Grade = recordInfo.Grade,
+                Height = recordInfo.Height,
+                FavouriteSymbol = recordInfo.FavouriteSymbol,
             };
 
             List<FileCabinetRecord> listOfFirstNames;
@@ -74,12 +103,21 @@ namespace FileCabinetApp
             return record.Id;
         }
 
-        public List<FileCabinetRecord> GetRecords()
+        /// <summary>
+        /// Gets all the records.
+        /// </summary>
+        /// <returns>The ReadOnlyCollection of all current records.</returns>
+        public ReadOnlyCollection<FileCabinetRecord> GetRecords()
         {
-            return new List<FileCabinetRecord>(this.list);
+            return new ReadOnlyCollection<FileCabinetRecord>(this.list);
         }
 
-        public FileCabinetRecord[] FindByFirstName(string firstName)
+        /// <summary>
+        /// Finds the records by the firstname.
+        /// </summary>
+        /// <param name="firstName">The first name to find the records by it.</param>
+        /// <returns>The ReadOnlyCollection of found records.</returns>
+        public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
         {
             List<FileCabinetRecord> listOfFirstNames;
             if (!this.firstNameDictionary.TryGetValue(firstName?.ToLower(null), out listOfFirstNames))
@@ -87,10 +125,15 @@ namespace FileCabinetApp
                 listOfFirstNames = new List<FileCabinetRecord>();
             }
 
-            return listOfFirstNames.ToArray();
+            return listOfFirstNames.AsReadOnly();
         }
 
-        public FileCabinetRecord[] FindByLastName(string lastName)
+        /// <summary>
+        /// Finds the records by the last name.
+        /// </summary>
+        /// <param name="lastName">The last name to find the records by it.</param>
+        /// <returns>The ReadOnlyCollection of found records.</returns>
+        public ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName)
         {
             List<FileCabinetRecord> listOfLastNames;
             if (!this.lastNameDictionary.TryGetValue(lastName?.ToLower(null), out listOfLastNames))
@@ -98,10 +141,15 @@ namespace FileCabinetApp
                 listOfLastNames = new List<FileCabinetRecord>();
             }
 
-            return listOfLastNames.ToArray();
+            return listOfLastNames.AsReadOnly();
         }
 
-        public FileCabinetRecord[] FindByDateOfBirth(string dateOfBirth)
+        /// <summary>
+        /// Finds the records by the date of birth.
+        /// </summary>
+        /// <param name="dateOfBirth">The date of birth to find the records by it.</param>
+        /// <returns>The ReadOnlyCollection of found records.</returns>
+        public ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             DateTime birthday;
             bool dateSuccess = DateTime.TryParseExact(dateOfBirth, "yyyy-MMM-dd", new CultureInfo("en-US"), DateTimeStyles.None, out birthday);
@@ -113,52 +161,45 @@ namespace FileCabinetApp
                     listOfDateOfBirth = new List<FileCabinetRecord>();
                 }
 
-                return listOfDateOfBirth.ToArray();
-
-                /*
-                List<FileCabinetRecord> result = new List<FileCabinetRecord>();
-                foreach (var record in this.list)
-                {
-                    if (DateTime.Compare(record.DateOfBirth, birthday) == 0)
-                    {
-                        result.Add(record);
-                    }
-                }
-
-                return result.ToArray();
-                */
+                return listOfDateOfBirth.AsReadOnly();
             }
             else
             {
-                return Array.Empty<FileCabinetRecord>();
+                return new ReadOnlyCollection<FileCabinetRecord>(new List<FileCabinetRecord>());
             }
         }
 
-        public void EditRecord(int id, string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
+        /// <summary>
+        /// Edits the record.
+        /// </summary>
+        /// <param name="recordInfo">The record information.</param>
+        /// <exception cref="ArgumentException()">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+        /// <exception cref="ArgumentNullException()">Thrown when firstname or lastname is null.</exception>
+        public void EditRecord(FileCabinetRecordInfo recordInfo)
         {
-            var indexToEdit = this.list.FindIndex((record) => record.Id == id);
+            var indexToEdit = this.list.FindIndex((record) => record.Id == recordInfo.Id);
             if (indexToEdit == -1)
             {
-                throw new ArgumentException("No record with such id found.", nameof(id));
+                throw new ArgumentException("No record with such id found.", nameof(recordInfo.Id));
             }
 
-            ValidateInput(firstName, lastName, dateOfBirth, grade, height, favouriteSymbol);
+            this.validator.ValidateParameters(recordInfo);
 
             var recordToEdit = new FileCabinetRecord
             {
-                Id = id,
-                FirstName = firstName,
-                LastName = lastName,
-                DateOfBirth = dateOfBirth,
-                Grade = grade,
-                Height = height,
-                FavouriteSymbol = favouriteSymbol,
+                Id = recordInfo.Id,
+                FirstName = recordInfo.FirstName,
+                LastName = recordInfo.LastName,
+                DateOfBirth = recordInfo.DateOfBirth,
+                Grade = recordInfo.Grade,
+                Height = recordInfo.Height,
+                FavouriteSymbol = recordInfo.FavouriteSymbol,
             };
 
             List<FileCabinetRecord> listOfFirstNames;
             if (this.firstNameDictionary.TryGetValue(this.list[indexToEdit].FirstName.ToLower(null), out listOfFirstNames))
             {
-                var indexToEditFirstNamesList = listOfFirstNames.FindIndex((record) => record.Id == id);
+                var indexToEditFirstNamesList = listOfFirstNames.FindIndex((record) => record.Id == recordInfo.Id);
                 listOfFirstNames.RemoveAt(indexToEditFirstNamesList);
 
                 List<FileCabinetRecord> newListOfFirstNames;
@@ -187,7 +228,7 @@ namespace FileCabinetApp
             List<FileCabinetRecord> listOfLastNames;
             if (this.lastNameDictionary.TryGetValue(this.list[indexToEdit].LastName.ToLower(null), out listOfLastNames))
             {
-                var indexToEditLastNamesList = listOfLastNames.FindIndex((record) => record.Id == id);
+                var indexToEditLastNamesList = listOfLastNames.FindIndex((record) => record.Id == recordInfo.Id);
                 listOfLastNames.RemoveAt(indexToEditLastNamesList);
 
                 List<FileCabinetRecord> newListOfLastNames;
@@ -216,7 +257,7 @@ namespace FileCabinetApp
             List<FileCabinetRecord> listOfDateOfBirth;
             if (this.dateOfBirthDictionary.TryGetValue(this.list[indexToEdit].DateOfBirth, out listOfDateOfBirth))
             {
-                var indexToEditDateOfBirthList = listOfDateOfBirth.FindIndex((record) => record.Id == id);
+                var indexToEditDateOfBirthList = listOfDateOfBirth.FindIndex((record) => record.Id == recordInfo.Id);
                 listOfDateOfBirth.RemoveAt(indexToEditDateOfBirthList);
 
                 List<FileCabinetRecord> newListOfDateOfBirth;
@@ -245,64 +286,13 @@ namespace FileCabinetApp
             this.list[indexToEdit] = recordToEdit;
         }
 
+        /// <summary>
+        /// Gets amount of records.
+        /// </summary>
+        /// <returns>The total number of records.</returns>
         public int GetStat()
         {
             return this.list.Count;
-        }
-
-        private static void ValidateInput(string firstName, string lastName, DateTime dateOfBirth, short grade, decimal height, char favouriteSymbol)
-        {
-            if (firstName is null)
-            {
-                throw new ArgumentNullException(nameof(firstName), "Firstname can't be null.");
-            }
-
-            if (firstName.Trim().Length == 0)
-            {
-                throw new ArgumentException("Firstname cannot contain only spaces.", nameof(firstName));
-            }
-
-            if (firstName.Length < 2 || firstName.Length > 60)
-            {
-                throw new ArgumentException("Firstname length should be in range [2;60].", nameof(firstName));
-            }
-
-            if (lastName is null)
-            {
-                throw new ArgumentNullException(nameof(lastName), "Lastname can't be null.");
-            }
-
-            if (lastName.Trim().Length == 0)
-            {
-                throw new ArgumentException("Firstname cannot contain only spaces.", nameof(lastName));
-            }
-
-            if (lastName.Length < 2 || lastName.Length > 60)
-            {
-                throw new ArgumentException("Firstname length should be in range [2;60].", nameof(lastName));
-            }
-
-            DateTime minimalDate = new DateTime(1950, 1, 1);
-
-            if (dateOfBirth < minimalDate || dateOfBirth > DateTime.Now)
-            {
-                throw new ArgumentException("Date should start from 01-Jan-1950 till Now.", nameof(dateOfBirth));
-            }
-
-            if (grade < -10 || grade > 10)
-            {
-                throw new ArgumentException("Grade should be in range [-10;10].", nameof(grade));
-            }
-
-            if (height < 0.3m || height > 3m)
-            {
-                throw new ArgumentException("Height can't be lower 40cm and higher than 3m.", nameof(height));
-            }
-
-            if (favouriteSymbol == ' ')
-            {
-                throw new ArgumentException("Space-symbol is not valid.", nameof(favouriteSymbol));
-            }
         }
     }
 }

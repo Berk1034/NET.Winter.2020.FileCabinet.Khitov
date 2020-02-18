@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace FileCabinetApp
 {
     /// <summary>
-    /// The FileCabinetRecord class.
+    /// The FileCabinetRecordInfo class.
     /// </summary>
-    public class FileCabinetRecord
+    public class FileCabinetRecordInfo
     {
         /// <summary>
         /// Gets or sets the identificator of the record holder.

@@ -4,5 +4,515 @@
         <name>FileCabinetApp</name>
     </assembly>
     <members>
+        <member name="T:FileCabinetApp.CustomValidator">
+            <summary>
+            The CustomValidator class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.CustomValidator.MinLength">
+            <summary>
+            Gets the value of MinLengthInSymbols const.
+            </summary>
+            <value>
+            The value of MinLengthInSymbols const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.CustomValidator.MaxLength">
+            <summary>
+            Gets the value of MaxLengthInSymbols const.
+            </summary>
+            <value>
+            The value of MaxLengthInSymbols const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.CustomValidator.MinGrade">
+            <summary>
+            Gets the value of MinGradeInPoints const.
+            </summary>
+            <value>
+            The value of MinGradeInPoints const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.CustomValidator.MaxGrade">
+            <summary>
+            Gets the value of MaxGradeInPoints const.
+            </summary>
+            <value>
+            The value of MaxGradeInPoints const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.CustomValidator.MinHeight">
+            <summary>
+            Gets the value of MinHeight const.
+            </summary>
+            <value>
+            The value of MinHeight const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.CustomValidator.MaxHeight">
+            <summary>
+            Gets the value of MaxHeight const.
+            </summary>
+            <value>
+            The value of MaxHeight const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.CustomValidator.MinimalDate">
+            <summary>
+            Gets the value of minimal DateTime.
+            </summary>
+            <value>
+            The value of minimal DateTime.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.CustomValidator.MaximalDate">
+            <summary>
+            Gets the value of DateTime.Now.
+            </summary>
+            <value>
+            The value of DateTime.Now.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.CustomValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+            <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+            <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
+        </member>
+        <member name="T:FileCabinetApp.DefaultValidator">
+            <summary>
+            The DefaultValidator class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MinLength">
+            <summary>
+            Gets the value of MinLengthInSymbols const.
+            </summary>
+            <value>
+            The value of MinLengthInSymbols const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MaxLength">
+            <summary>
+            Gets the value of MaxLengthInSymbols const.
+            </summary>
+            <value>
+            The value of MaxLengthInSymbols const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MinGrade">
+            <summary>
+            Gets the value of MinGradeInPoints const.
+            </summary>
+            <value>
+            The value of MinGradeInPoints const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MaxGrade">
+            <summary>
+            Gets the value of MaxGradeInPoints const.
+            </summary>
+            <value>
+            The value of MaxGradeInPoints const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MinHeight">
+            <summary>
+            Gets the value of MinHeight const.
+            </summary>
+            <value>
+            The value of MinHeight const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MaxHeight">
+            <summary>
+            Gets the value of MaxHeight const.
+            </summary>
+            <value>
+            The value of MaxHeight const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MinimalDate">
+            <summary>
+            Gets the value of minimal DateTime.
+            </summary>
+            <value>
+            The value of minimal DateTime.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.MaximalDate">
+            <summary>
+            Gets the value of DateTime.Now.
+            </summary>
+            <value>
+            The value of DateTime.Now.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.DefaultValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+            <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+            <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetCustomService">
+            <summary>
+            The FileCabinetCustomService class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetCustomService.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetCustomService"/> class.
+            </summary>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetDefaultService">
+            <summary>
+            The FileCabinetDefaultService class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetDefaultService.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetDefaultService"/> class.
+            </summary>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetRecord">
+            <summary>
+            The FileCabinetRecord class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.Id">
+            <summary>
+            Gets or sets the identificator of the record holder.
+            </summary>
+            <value>
+            The identificator of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.FirstName">
+            <summary>
+            Gets or sets the first name of the record holder.
+            </summary>
+            <value>
+            The first name of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.LastName">
+            <summary>
+            Gets or sets the last name of the record holder.
+            </summary>
+            <value>
+            The last name of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.DateOfBirth">
+            <summary>
+            Gets or sets the date of birth of the record holder.
+            </summary>
+            <value>
+            The date of birth of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.Grade">
+            <summary>
+            Gets or sets the grade of the record holder.
+            </summary>
+            <value>
+            The grade of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.Height">
+            <summary>
+            Gets or sets the height of the record holder.
+            </summary>
+            <value>
+            The height of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.FavouriteSymbol">
+            <summary>
+            Gets or sets the favourite symbol of the record holder.
+            </summary>
+            <value>
+            The favourite symbol of the record.
+            </value>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetRecordInfo">
+            <summary>
+            The FileCabinetRecordInfo class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.Id">
+            <summary>
+            Gets or sets the identificator of the record holder.
+            </summary>
+            <value>
+            The identificator of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.FirstName">
+            <summary>
+            Gets or sets the first name of the record holder.
+            </summary>
+            <value>
+            The first name of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.LastName">
+            <summary>
+            Gets or sets the last name of the record holder.
+            </summary>
+            <value>
+            The last name of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.DateOfBirth">
+            <summary>
+            Gets or sets the date of birth of the record holder.
+            </summary>
+            <value>
+            The date of birth of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.Grade">
+            <summary>
+            Gets or sets the grade of the record holder.
+            </summary>
+            <value>
+            The grade of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.Height">
+            <summary>
+            Gets or sets the height of the record holder.
+            </summary>
+            <value>
+            The height of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.FavouriteSymbol">
+            <summary>
+            Gets or sets the favourite symbol of the record holder.
+            </summary>
+            <value>
+            The favourite symbol of the record.
+            </value>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetService">
+            <summary>
+            The FileCabinetService class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.#ctor(FileCabinetApp.IRecordValidator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetService"/> class.
+            </summary>
+            <param name="validator">The validator for record information.</param>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetService.Validator">
+            <summary>
+            Gets the validator.
+            </summary>
+            <value>
+            The validator.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Creates the record.
+            </summary>
+            <param name="recordInfo">The record information.</param>
+            <exception cref="M:System.ArgumentException.#ctor">Thrown when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+            <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
+            <returns>The id of the created record.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.GetRecords">
+            <summary>
+            Gets all the records.
+            </summary>
+            <returns>The ReadOnlyCollection of all current records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.FindByFirstName(System.String)">
+            <summary>
+            Finds the records by the firstname.
+            </summary>
+            <param name="firstName">The first name to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.FindByLastName(System.String)">
+            <summary>
+            Finds the records by the last name.
+            </summary>
+            <param name="lastName">The last name to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.FindByDateOfBirth(System.String)">
+            <summary>
+            Finds the records by the date of birth.
+            </summary>
+            <param name="dateOfBirth">The date of birth to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.EditRecord(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Edits the record.
+            </summary>
+            <param name="recordInfo">The record information.</param>
+            <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+            <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.GetStat">
+            <summary>
+            Gets amount of records.
+            </summary>
+            <returns>The total number of records.</returns>
+        </member>
+        <member name="T:FileCabinetApp.IFileCabinetService">
+            <summary>
+            The IFileCabinetService interface.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.IFileCabinetService.Validator">
+            <summary>
+            Gets the validator.
+            </summary>
+            <value>
+            The validator.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Creates the record.
+            </summary>
+            <param name="recordInfo">The record information.</param>
+            <returns>The id of the created record.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.GetRecords">
+            <summary>
+            Gets all the records.
+            </summary>
+            <returns>The ReadOnlyCollection of all current records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.FindByFirstName(System.String)">
+            <summary>
+            Finds the records by the firstname.
+            </summary>
+            <param name="firstName">The first name to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.FindByLastName(System.String)">
+            <summary>
+            Finds the records by the last name.
+            </summary>
+            <param name="lastName">The last name to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.FindByDateOfBirth(System.String)">
+            <summary>
+            Finds the records by the date of birth.
+            </summary>
+            <param name="dateOfBirth">The date of birth to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.EditRecord(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Edits the record.
+            </summary>
+            <param name="recordInfo">The record information.</param>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.GetStat">
+            <summary>
+            Gets amount of records.
+            </summary>
+            <returns>The total number of records.</returns>
+        </member>
+        <member name="T:FileCabinetApp.IRecordValidator">
+            <summary>
+            The IRecordValidator interface.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MinLength">
+            <summary>
+            Gets the value of MinLength.
+            </summary>
+            <value>
+            The value of MinLength.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MaxLength">
+            <summary>
+            Gets the value of MaxLength.
+            </summary>
+            <value>
+            The value of MaxLength.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MinGrade">
+            <summary>
+            Gets the value of MinGrade.
+            </summary>
+            <value>
+            The value of MinGrade.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MaxGrade">
+            <summary>
+            Gets the value of MaxGrade.
+            </summary>
+            <value>
+            The value of MaxGrade.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MinHeight">
+            <summary>
+            Gets the value of MinHeight.
+            </summary>
+            <value>
+            The value of MinHeight.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MaxHeight">
+            <summary>
+            Gets the value of MaxHeight.
+            </summary>
+            <value>
+            The value of MaxHeight.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MinimalDate">
+            <summary>
+            Gets the value of minimal DateTime.
+            </summary>
+            <value>
+            The value of minimal DateTime.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MaximalDate">
+            <summary>
+            Gets the value of maximal DateTime.
+            </summary>
+            <value>
+            The value of maximal DateTime.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.IRecordValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Validates the parameters.
+            </summary>
+            <param name="recordInfo">The record information for validation.</param>
+        </member>
+        <member name="T:FileCabinetApp.Program">
+            <summary>
+            The Program class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Program.Main(System.String[])">
+            <summary>
+            The start point of the program.
+            </summary>
+            <param name="args">The arguments passed to the program.</param>
+        </member>
     </members>
 </doc>
