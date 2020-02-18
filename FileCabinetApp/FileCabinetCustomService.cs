@@ -17,14 +17,5 @@ namespace FileCabinetApp
             : base(new CustomValidator())
         {
         }
-
-        /// <summary>
-        /// Creates the validator for record information.
-        /// </summary>
-        /// <returns>The IRecordValidator implementation.</returns>
-        protected override IRecordValidator CreateValidator()
-        {
-            return new CustomValidator();
-        }
     }
 }

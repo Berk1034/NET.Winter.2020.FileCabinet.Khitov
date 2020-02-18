@@ -8,7 +8,7 @@ namespace FileCabinetApp
     /// <summary>
     /// The FileCabinetService class.
     /// </summary>
-    public abstract class FileCabinetService
+    public class FileCabinetService
     {
         private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
         private readonly Dictionary<string, List<FileCabinetRecord>> firstNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
@@ -20,7 +20,7 @@ namespace FileCabinetApp
         /// Initializes a new instance of the <see cref="FileCabinetService"/> class.
         /// </summary>
         /// <param name="validator">The validator for record information.</param>
-        protected FileCabinetService(IRecordValidator validator)
+        public FileCabinetService(IRecordValidator validator)
         {
             this.validator = validator;
         }
@@ -34,7 +34,7 @@ namespace FileCabinetApp
         /// <returns>The id of the created record.</returns>
         public int CreateRecord(FileCabinetRecordInfo recordInfo)
         {
-            this.CreateValidator().ValidateParameters(recordInfo);
+            this.validator.ValidateParameters(recordInfo);
 
             var record = new FileCabinetRecord
             {
@@ -163,7 +163,7 @@ namespace FileCabinetApp
         /// <summary>
         /// Edits the record.
         /// </summary>
-        /// <param name="recordInfo">The record information.</param>\
+        /// <param name="recordInfo">The record information.</param>
         /// <exception cref="ArgumentException()">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
         /// <exception cref="ArgumentNullException()">Thrown when firstname or lastname is null.</exception>
         public void EditRecord(FileCabinetRecordInfo recordInfo)
@@ -174,7 +174,7 @@ namespace FileCabinetApp
                 throw new ArgumentException("No record with such id found.", nameof(recordInfo.Id));
             }
 
-            this.CreateValidator().ValidateParameters(recordInfo);
+            this.validator.ValidateParameters(recordInfo);
 
             var recordToEdit = new FileCabinetRecord
             {
@@ -285,11 +285,5 @@ namespace FileCabinetApp
         {
             return this.list.Count;
         }
-
-        /// <summary>
-        /// Creates the validator for record information.
-        /// </summary>
-        /// <returns>The IRecordValidator implementation.</returns>
-        protected abstract IRecordValidator CreateValidator();
     }
 }
