@@ -361,6 +361,57 @@
             </summary>
             <returns>The total number of records.</returns>
         </member>
+        <member name="T:FileCabinetApp.IFileCabinetService">
+            <summary>
+            The IFileCabinetService interface.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Creates the record.
+            </summary>
+            <param name="recordInfo">The record information.</param>
+            <returns>The id of the created record.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.GetRecords">
+            <summary>
+            Gets all the records.
+            </summary>
+            <returns>The ReadOnlyCollection of all current records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.FindByFirstName(System.String)">
+            <summary>
+            Finds the records by the firstname.
+            </summary>
+            <param name="firstName">The first name to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.FindByLastName(System.String)">
+            <summary>
+            Finds the records by the last name.
+            </summary>
+            <param name="lastName">The last name to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.FindByDateOfBirth(System.String)">
+            <summary>
+            Finds the records by the date of birth.
+            </summary>
+            <param name="dateOfBirth">The date of birth to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.EditRecord(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Edits the record.
+            </summary>
+            <param name="recordInfo">The record information.</param>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.GetStat">
+            <summary>
+            Gets amount of records.
+            </summary>
+            <returns>The total number of records.</returns>
+        </member>
         <member name="T:FileCabinetApp.IRecordValidator">
             <summary>
             The IRecordValidator interface.

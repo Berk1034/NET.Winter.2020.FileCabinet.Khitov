@@ -15,7 +15,7 @@ namespace FileCabinetApp
         private const int DescriptionHelpIndex = 1;
         private const int ExplanationHelpIndex = 2;
 
-        private static FileCabinetService fileCabinetService = new FileCabinetDefaultService();
+        private static IFileCabinetService fileCabinetService = new FileCabinetDefaultService();
 
         private static bool isRunning = true;
 
