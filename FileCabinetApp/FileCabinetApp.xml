@@ -4,6 +4,160 @@
         <name>FileCabinetApp</name>
     </assembly>
     <members>
+        <member name="T:FileCabinetApp.FileCabinetCustomService">
+            <summary>
+            The FileCabinetCustomService class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetCustomService.MinLength">
+            <summary>
+            Gets the value of MinLengthInSymbols const.
+            </summary>
+            <value>
+            The value of MinLengthInSymbols const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetCustomService.MaxLength">
+            <summary>
+            Gets the value of MaxLengthInSymbols const.
+            </summary>
+            <value>
+            The value of MaxLengthInSymbols const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetCustomService.MinGrade">
+            <summary>
+            Gets the value of MinGradeInPoints const.
+            </summary>
+            <value>
+            The value of MinGradeInPoints const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetCustomService.MaxGrade">
+            <summary>
+            Gets the value of MaxGradeInPoints const.
+            </summary>
+            <value>
+            The value of MaxGradeInPoints const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetCustomService.MinHeight">
+            <summary>
+            Gets the value of MinHeight const.
+            </summary>
+            <value>
+            The value of MinHeight const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetCustomService.MaxHeight">
+            <summary>
+            Gets the value of MaxHeight const.
+            </summary>
+            <value>
+            The value of MaxHeight const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetCustomService.MinimalDate">
+            <summary>
+            Gets the value of minimal DateTime.
+            </summary>
+            <value>
+            The value of minimal DateTime.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetCustomService.MaximalDate">
+            <summary>
+            Gets the value of DateTime.Now.
+            </summary>
+            <value>
+            The value of DateTime.Now.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetCustomService.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+            <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+            <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetDefaultService">
+            <summary>
+            The FileCabinetDefaultService class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetDefaultService.MinLength">
+            <summary>
+            Gets the value of MinLengthInSymbols const.
+            </summary>
+            <value>
+            The value of MinLengthInSymbols const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetDefaultService.MaxLength">
+            <summary>
+            Gets the value of MaxLengthInSymbols const.
+            </summary>
+            <value>
+            The value of MaxLengthInSymbols const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetDefaultService.MinGrade">
+            <summary>
+            Gets the value of MinGradeInPoints const.
+            </summary>
+            <value>
+            The value of MinGradeInPoints const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetDefaultService.MaxGrade">
+            <summary>
+            Gets the value of MaxGradeInPoints const.
+            </summary>
+            <value>
+            The value of MaxGradeInPoints const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetDefaultService.MinHeight">
+            <summary>
+            Gets the value of MinHeight const.
+            </summary>
+            <value>
+            The value of MinHeight const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetDefaultService.MaxHeight">
+            <summary>
+            Gets the value of MaxHeight const.
+            </summary>
+            <value>
+            The value of MaxHeight const.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetDefaultService.MinimalDate">
+            <summary>
+            Gets the value of minimal DateTime.
+            </summary>
+            <value>
+            The value of minimal DateTime.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetDefaultService.MaximalDate">
+            <summary>
+            Gets the value of DateTime.Now.
+            </summary>
+            <value>
+            The value of DateTime.Now.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetDefaultService.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+            <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+            <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
+        </member>
         <member name="T:FileCabinetApp.FileCabinetRecord">
             <summary>
             The FileCabinetRecord class.
@@ -131,54 +285,6 @@
             The FileCabinetService class.
             </summary>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MinLength">
-            <summary>
-            Gets the value of MinLengthInSymbols const.
-            </summary>
-            <value>
-            The value of MinLengthInSymbols const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MaxLength">
-            <summary>
-            Gets the value of MaxLengthInSymbols const.
-            </summary>
-            <value>
-            The value of MaxLengthInSymbols const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MinGrade">
-            <summary>
-            Gets the value of MinGradeInPoints const.
-            </summary>
-            <value>
-            The value of MinGradeInPoints const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MaxGrade">
-            <summary>
-            Gets the value of MaxGradeInPoints const.
-            </summary>
-            <value>
-            The value of MaxGradeInPoints const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MinHeight">
-            <summary>
-            Gets the value of MinHeight const.
-            </summary>
-            <value>
-            The value of MinHeight const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetService.MaxHeight">
-            <summary>
-            Gets the value of MaxHeight const.
-            </summary>
-            <value>
-            The value of MaxHeight const.
-            </value>
-        </member>
         <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
             Creates the record.
@@ -228,6 +334,12 @@
             Gets amount of records.
             </summary>
             <returns>The total number of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetService.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
         </member>
         <member name="T:FileCabinetApp.Program">
             <summary>

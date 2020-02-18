@@ -8,67 +8,12 @@ namespace FileCabinetApp
     /// <summary>
     /// The FileCabinetService class.
     /// </summary>
-    public class FileCabinetService
+    public abstract class FileCabinetService
     {
-        private const int MinLengthInSymbols = 2;
-        private const int MaxLengthInSymbols = 60;
-        private const int MinGradeInPoints = -10;
-        private const int MaxGradeInPoints = 10;
-        private const decimal MinHeightInMeters = 0.3m;
-        private const decimal MaxHeightInMeters = 3m;
-
         private readonly List<FileCabinetRecord> list = new List<FileCabinetRecord>();
         private readonly Dictionary<string, List<FileCabinetRecord>> firstNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
         private readonly Dictionary<string, List<FileCabinetRecord>> lastNameDictionary = new Dictionary<string, List<FileCabinetRecord>>();
         private readonly Dictionary<DateTime, List<FileCabinetRecord>> dateOfBirthDictionary = new Dictionary<DateTime, List<FileCabinetRecord>>();
-
-        /// <summary>
-        /// Gets the value of MinLengthInSymbols const.
-        /// </summary>
-        /// <value>
-        /// The value of MinLengthInSymbols const.
-        /// </value>
-        public int MinLength => MinLengthInSymbols;
-
-        /// <summary>
-        /// Gets the value of MaxLengthInSymbols const.
-        /// </summary>
-        /// <value>
-        /// The value of MaxLengthInSymbols const.
-        /// </value>
-        public int MaxLength => MaxLengthInSymbols;
-
-        /// <summary>
-        /// Gets the value of MinGradeInPoints const.
-        /// </summary>
-        /// <value>
-        /// The value of MinGradeInPoints const.
-        /// </value>
-        public int MinGrade => MinGradeInPoints;
-
-        /// <summary>
-        /// Gets the value of MaxGradeInPoints const.
-        /// </summary>
-        /// <value>
-        /// The value of MaxGradeInPoints const.
-        /// </value>
-        public int MaxGrade => MaxGradeInPoints;
-
-        /// <summary>
-        /// Gets the value of MinHeight const.
-        /// </summary>
-        /// <value>
-        /// The value of MinHeight const.
-        /// </value>
-        public decimal MinHeight => MinHeightInMeters;
-
-        /// <summary>
-        /// Gets the value of MaxHeight const.
-        /// </summary>
-        /// <value>
-        /// The value of MaxHeight const.
-        /// </value>
-        public decimal MaxHeight => MaxHeightInMeters;
 
         /// <summary>
         /// Creates the record.
@@ -79,7 +24,7 @@ namespace FileCabinetApp
         /// <returns>The id of the created record.</returns>
         public int CreateRecord(FileCabinetRecordInfo recordInfo)
         {
-            ValidateInput(recordInfo);
+            this.ValidateParameters(recordInfo);
 
             var record = new FileCabinetRecord
             {
@@ -219,7 +164,7 @@ namespace FileCabinetApp
                 throw new ArgumentException("No record with such id found.", nameof(recordInfo.Id));
             }
 
-            ValidateInput(recordInfo);
+            this.ValidateParameters(recordInfo);
 
             var recordToEdit = new FileCabinetRecord
             {
@@ -331,64 +276,10 @@ namespace FileCabinetApp
             return this.list.Count;
         }
 
-        private static void ValidateInput(FileCabinetRecordInfo recordInfo)
-        {
-            if (recordInfo is null)
-            {
-                throw new ArgumentNullException(nameof(recordInfo), "Record information is null.");
-            }
-
-            if (recordInfo.FirstName is null)
-            {
-                throw new ArgumentNullException(nameof(recordInfo.FirstName), "Firstname can't be null.");
-            }
-
-            if (recordInfo.FirstName.Trim().Length == 0)
-            {
-                throw new ArgumentException("Firstname cannot contain only spaces.", nameof(recordInfo.FirstName));
-            }
-
-            if (recordInfo.FirstName.Length < MinLengthInSymbols || recordInfo.FirstName.Length > MaxLengthInSymbols)
-            {
-                throw new ArgumentException("Firstname length should be in range [2;60].", nameof(recordInfo.FirstName));
-            }
-
-            if (recordInfo.LastName is null)
-            {
-                throw new ArgumentNullException(nameof(recordInfo.LastName), "Lastname can't be null.");
-            }
-
-            if (recordInfo.LastName.Trim().Length == 0)
-            {
-                throw new ArgumentException("Firstname cannot contain only spaces.", nameof(recordInfo.LastName));
-            }
-
-            if (recordInfo.LastName.Length < MinLengthInSymbols || recordInfo.LastName.Length > MaxLengthInSymbols)
-            {
-                throw new ArgumentException("Firstname length should be in range [2;60].", nameof(recordInfo.LastName));
-            }
-
-            DateTime minimalDate = new DateTime(1950, 1, 1);
-
-            if (recordInfo.DateOfBirth < minimalDate || recordInfo.DateOfBirth > DateTime.Now)
-            {
-                throw new ArgumentException("Date should start from 01-Jan-1950 till Now.", nameof(recordInfo.DateOfBirth));
-            }
-
-            if (recordInfo.Grade < MinGradeInPoints || recordInfo.Grade > MaxGradeInPoints)
-            {
-                throw new ArgumentException("Grade should be in range [-10;10].", nameof(recordInfo.Grade));
-            }
-
-            if (recordInfo.Height < MinHeightInMeters || recordInfo.Height > MaxHeightInMeters)
-            {
-                throw new ArgumentException("Height can't be lower 30cm and higher than 3m.", nameof(recordInfo.Height));
-            }
-
-            if (recordInfo.FavouriteSymbol == ' ')
-            {
-                throw new ArgumentException("Space-symbol is not valid.", nameof(recordInfo.FavouriteSymbol));
-            }
-        }
+        /// <summary>
+        /// Validates the record information.
+        /// </summary>
+        /// <param name="recordInfo">The record informaton.</param>
+        protected abstract void ValidateParameters(FileCabinetRecordInfo recordInfo);
     }
 }

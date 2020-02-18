@@ -14,7 +14,7 @@ namespace FileCabinetApp
         private const int DescriptionHelpIndex = 1;
         private const int ExplanationHelpIndex = 2;
 
-        private static FileCabinetService fileCabinetService = new FileCabinetService();
+        private static FileCabinetCustomService fileCabinetService = new FileCabinetCustomService();
 
         private static bool isRunning = true;
 
@@ -117,7 +117,7 @@ namespace FileCabinetApp
             string name = Console.ReadLine();
             while (name is null || name.Trim().Length == 0 || name.Length < fileCabinetService.MinLength || name.Length > fileCabinetService.MaxLength)
             {
-                Console.WriteLine("Invalid input! First name can't be empty and it should contain from 2 to 60 non-space symbols. Try again.");
+                Console.WriteLine($"Invalid input! First name can't be empty and it should contain from {fileCabinetService.MinLength} to {fileCabinetService.MaxLength} non-space symbols. Try again.");
                 Console.Write("First name: ");
                 name = Console.ReadLine();
             }
@@ -126,19 +126,18 @@ namespace FileCabinetApp
             string surname = Console.ReadLine();
             while (surname is null || surname.Trim().Length == 0 || surname.Length < fileCabinetService.MinLength || surname.Length > fileCabinetService.MaxLength)
             {
-                Console.WriteLine("Invalid input! Last name can't be empty and it should contain from 2 to 60 non-space symbols. Try again.");
+                Console.WriteLine($"Invalid input! Last name can't be empty and it should contain from {fileCabinetService.MinLength} to {fileCabinetService.MaxLength} non-space symbols. Try again.");
                 Console.Write("Last name: ");
                 surname = Console.ReadLine();
             }
 
-            DateTime minimalDate = new DateTime(1950, 1, 1);
             Console.Write("Date of birth: ");
 
             DateTime birthday;
             bool dateSuccess = DateTime.TryParseExact(Console.ReadLine(), "MM/dd/yyyy", null, DateTimeStyles.None, out birthday);
-            while ((!dateSuccess) || (birthday < minimalDate || birthday > DateTime.Now))
+            while ((!dateSuccess) || (birthday < fileCabinetService.MinimalDate || birthday > fileCabinetService.MaximalDate))
             {
-                Console.WriteLine("Invalid input! Date of birth should be in format MM/dd/yyyy and minimal date is 01/01/1950. Try again.");
+                Console.WriteLine($"Invalid input! Date of birth should be in format MM/dd/yyyy and minimal date is {fileCabinetService.MinimalDate.ToString("MM'/'dd'/'yyyy", null)}. Try again.");
                 Console.Write("Date of birth: ");
                 dateSuccess = DateTime.TryParseExact(Console.ReadLine(), "MM/dd/yyyy", null, DateTimeStyles.None, out birthday);
             }
@@ -148,7 +147,7 @@ namespace FileCabinetApp
             bool gradeSuccess = short.TryParse(Console.ReadLine(), out grade);
             while ((!gradeSuccess) || (grade < fileCabinetService.MinGrade || grade > fileCabinetService.MaxGrade))
             {
-                Console.WriteLine("Invalid input! Grade should be integer number in range from -10 to 10. Try again.");
+                Console.WriteLine($"Invalid input! Grade should be integer number in range from {fileCabinetService.MinGrade} to {fileCabinetService.MaxGrade}. Try again.");
                 Console.Write("Grade: ");
                 gradeSuccess = short.TryParse(Console.ReadLine(), out grade);
             }
@@ -158,7 +157,7 @@ namespace FileCabinetApp
             bool heightSuccess = decimal.TryParse(Console.ReadLine(), out height);
             while ((!heightSuccess) || (height < fileCabinetService.MinHeight || height > fileCabinetService.MaxHeight))
             {
-                Console.WriteLine("Invalid input! Height should be number in range from 0,3 to 3,0. Try again.");
+                Console.WriteLine($"Invalid input! Height should be number in range from {fileCabinetService.MinHeight} to {fileCabinetService.MaxHeight}. Try again.");
                 Console.Write("Height: ");
                 heightSuccess = decimal.TryParse(Console.ReadLine(), out height);
             }
@@ -240,7 +239,7 @@ namespace FileCabinetApp
                     string name = Console.ReadLine();
                     while (name is null || name.Trim().Length == 0 || name.Length < fileCabinetService.MinLength || name.Length > fileCabinetService.MaxLength)
                     {
-                        Console.WriteLine("Invalid input! First name can't be empty and it should contain from 2 to 60 non-space symbols. Try again.");
+                        Console.WriteLine($"Invalid input! First name can't be empty and it should contain from {fileCabinetService.MinLength} to {fileCabinetService.MaxLength} non-space symbols. Try again.");
                         Console.Write("First name: ");
                         name = Console.ReadLine();
                     }
@@ -249,19 +248,18 @@ namespace FileCabinetApp
                     string surname = Console.ReadLine();
                     while (surname is null || surname.Trim().Length == 0 || surname.Length < fileCabinetService.MinLength || surname.Length > fileCabinetService.MaxLength)
                     {
-                        Console.WriteLine("Invalid input! Last name can't be empty and it should contain from 2 to 60 non-space symbols. Try again.");
+                        Console.WriteLine($"Invalid input! Last name can't be empty and it should contain from {fileCabinetService.MinLength} to {fileCabinetService.MaxLength} non-space symbols. Try again.");
                         Console.Write("Last name: ");
                         surname = Console.ReadLine();
                     }
 
-                    DateTime minimalDate = new DateTime(1950, 1, 1);
                     Console.Write("Date of birth: ");
 
                     DateTime birthday;
                     bool dateSuccess = DateTime.TryParseExact(Console.ReadLine(), "MM/dd/yyyy", null, DateTimeStyles.None, out birthday);
-                    while ((!dateSuccess) || (birthday < minimalDate || birthday > DateTime.Now))
+                    while ((!dateSuccess) || (birthday < fileCabinetService.MinimalDate || birthday > fileCabinetService.MaximalDate))
                     {
-                        Console.WriteLine("Invalid input! Date of birth should be in format MM/dd/yyyy and minimal date is 01/01/1950. Try again.");
+                        Console.WriteLine($"Invalid input! Date of birth should be in format MM/dd/yyyy and minimal date is {fileCabinetService.MinimalDate.ToString("MM'/'dd'/'yyyy", null)}. Try again.");
                         Console.Write("Date of birth: ");
                         dateSuccess = DateTime.TryParseExact(Console.ReadLine(), "MM/dd/yyyy", null, DateTimeStyles.None, out birthday);
                     }
@@ -271,7 +269,7 @@ namespace FileCabinetApp
                     bool gradeSuccess = short.TryParse(Console.ReadLine(), out grade);
                     while ((!gradeSuccess) || (grade < fileCabinetService.MinGrade || grade > fileCabinetService.MaxGrade))
                     {
-                        Console.WriteLine("Invalid input! Grade should be integer number in range from -10 to 10. Try again.");
+                        Console.WriteLine($"Invalid input! Grade should be integer number in range from {fileCabinetService.MinGrade} to {fileCabinetService.MaxGrade}. Try again.");
                         Console.Write("Grade: ");
                         gradeSuccess = short.TryParse(Console.ReadLine(), out grade);
                     }
@@ -281,7 +279,7 @@ namespace FileCabinetApp
                     bool heightSuccess = decimal.TryParse(Console.ReadLine(), out height);
                     while ((!heightSuccess) || (height < fileCabinetService.MinHeight || height > fileCabinetService.MaxHeight))
                     {
-                        Console.WriteLine("Invalid input! Height should be number in range from 0,3 to 3,0. Try again.");
+                        Console.WriteLine($"Invalid input! Height should be number in range from {fileCabinetService.MinHeight} to {fileCabinetService.MaxHeight}. Try again.");
                         Console.Write("Height: ");
                         heightSuccess = decimal.TryParse(Console.ReadLine(), out height);
                     }
