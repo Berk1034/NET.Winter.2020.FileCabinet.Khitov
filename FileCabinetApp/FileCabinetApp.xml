@@ -65,6 +65,67 @@
             The favourite symbol of the record.
             </value>
         </member>
+        <member name="T:FileCabinetApp.FileCabinetRecordInfo">
+            <summary>
+            The FileCabinetRecordInfo class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.Id">
+            <summary>
+            Gets or sets the identificator of the record holder.
+            </summary>
+            <value>
+            The identificator of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.FirstName">
+            <summary>
+            Gets or sets the first name of the record holder.
+            </summary>
+            <value>
+            The first name of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.LastName">
+            <summary>
+            Gets or sets the last name of the record holder.
+            </summary>
+            <value>
+            The last name of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.DateOfBirth">
+            <summary>
+            Gets or sets the date of birth of the record holder.
+            </summary>
+            <value>
+            The date of birth of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.Grade">
+            <summary>
+            Gets or sets the grade of the record holder.
+            </summary>
+            <value>
+            The grade of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.Height">
+            <summary>
+            Gets or sets the height of the record holder.
+            </summary>
+            <value>
+            The height of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecordInfo.FavouriteSymbol">
+            <summary>
+            Gets or sets the favourite symbol of the record holder.
+            </summary>
+            <value>
+            The favourite symbol of the record.
+            </value>
+        </member>
         <member name="T:FileCabinetApp.FileCabinetService">
             <summary>
             The FileCabinetService class.
@@ -118,17 +179,12 @@
             The value of MaxHeight const.
             </value>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(System.String,System.String,System.DateTime,System.Int16,System.Decimal,System.Char)">
+        <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
             Creates the record.
             </summary>
-            <param name="firstName">The first name of the record.</param>
-            <param name="lastName">The last name of the record.</param>
-            <param name="dateOfBirth">The date of birth of the record.</param>
-            <param name="grade">The grade of the record.</param>
-            <param name="height">The height of the record.</param>
-            <param name="favouriteSymbol">The favourite symbol of the record.</param>
-            <exception cref="M:System.ArgumentException.#ctor">Thrown when parameters do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+            <param name="recordInfo">The record information.</param>
+            <exception cref="M:System.ArgumentException.#ctor">Thrown when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
             <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
             <returns>The id of the created record.</returns>
         </member>
@@ -159,17 +215,13 @@
             <param name="dateOfBirth">The date of birth to find the records by it.</param>
             <returns>The list of found records.</returns>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetService.EditRecord(System.Int32,System.String,System.String,System.DateTime,System.Int16,System.Decimal,System.Char)">
+        <member name="M:FileCabinetApp.FileCabinetService.EditRecord(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
             Edits the record.
             </summary>
-            <param name="id">The id of the record to edit.</param>
-            <param name="firstName">The new first name.</param>
-            <param name="lastName">The new last name.</param>
-            <param name="dateOfBirth">The new date of birth.</param>
-            <param name="grade">The new grade.</param>
-            <param name="height">The new height.</param>
-            <param name="favouriteSymbol">The new favourite symbol.</param>
+            <param name="recordInfo">The record information.</param>\
+            <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
+            <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
         </member>
         <member name="M:FileCabinetApp.FileCabinetService.GetStat">
             <summary>

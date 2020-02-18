@@ -172,7 +172,7 @@ namespace FileCabinetApp
                 favouriteSymbol = Console.ReadLine()[0];
             }
 
-            var recordId = Program.fileCabinetService.CreateRecord(name, surname, birthday, grade, height, favouriteSymbol);
+            var recordId = Program.fileCabinetService.CreateRecord(new FileCabinetRecordInfo { FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
             Console.WriteLine($"Record #{recordId} is created.");
         }
 
@@ -279,7 +279,7 @@ namespace FileCabinetApp
                     Console.Write("Height: ");
                     decimal height;
                     bool heightSuccess = decimal.TryParse(Console.ReadLine(), out height);
-                    while ((!heightSuccess) || (height < fileCabinetService.MinHeight || height > fileCabinetService.MaxLength))
+                    while ((!heightSuccess) || (height < fileCabinetService.MinHeight || height > fileCabinetService.MaxHeight))
                     {
                         Console.WriteLine("Invalid input! Height should be number in range from 0,3 to 3,0. Try again.");
                         Console.Write("Height: ");
@@ -295,7 +295,7 @@ namespace FileCabinetApp
                         favouriteSymbol = Console.ReadLine()[0];
                     }
 
-                    Program.fileCabinetService.EditRecord(listOfRecords[index].Id, name, surname, birthday, grade, height, favouriteSymbol);
+                    Program.fileCabinetService.EditRecord(new FileCabinetRecordInfo { Id = listOfRecords[index].Id, FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
                     Console.WriteLine($"Record #{parameters} is updated.");
                 }
             }
