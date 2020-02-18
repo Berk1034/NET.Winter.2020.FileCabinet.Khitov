@@ -11,6 +11,14 @@ namespace FileCabinetApp
     public interface IFileCabinetService
     {
         /// <summary>
+        /// Gets the validator.
+        /// </summary>
+        /// <value>
+        /// The validator.
+        /// </value>
+        public IRecordValidator Validator { get; }
+
+        /// <summary>
         /// Creates the record.
         /// </summary>
         /// <param name="recordInfo">The record information.</param>

@@ -27,6 +27,14 @@ namespace FileCabinetApp
         }
 
         /// <summary>
+        /// Gets the validator.
+        /// </summary>
+        /// <value>
+        /// The validator.
+        /// </value>
+        public IRecordValidator Validator => this.validator;
+
+        /// <summary>
         /// Creates the record.
         /// </summary>
         /// <param name="recordInfo">The record information.</param>

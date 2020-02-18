@@ -311,6 +311,14 @@
             </summary>
             <param name="validator">The validator for record information.</param>
         </member>
+        <member name="P:FileCabinetApp.FileCabinetService.Validator">
+            <summary>
+            Gets the validator.
+            </summary>
+            <value>
+            The validator.
+            </value>
+        </member>
         <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
             Creates the record.
@@ -366,6 +374,14 @@
             The IFileCabinetService interface.
             </summary>
         </member>
+        <member name="P:FileCabinetApp.IFileCabinetService.Validator">
+            <summary>
+            Gets the validator.
+            </summary>
+            <value>
+            The validator.
+            </value>
+        </member>
         <member name="M:FileCabinetApp.IFileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
             Creates the record.
@@ -416,6 +432,70 @@
             <summary>
             The IRecordValidator interface.
             </summary>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MinLength">
+            <summary>
+            Gets the value of MinLength.
+            </summary>
+            <value>
+            The value of MinLength.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MaxLength">
+            <summary>
+            Gets the value of MaxLength.
+            </summary>
+            <value>
+            The value of MaxLength.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MinGrade">
+            <summary>
+            Gets the value of MinGrade.
+            </summary>
+            <value>
+            The value of MinGrade.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MaxGrade">
+            <summary>
+            Gets the value of MaxGrade.
+            </summary>
+            <value>
+            The value of MaxGrade.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MinHeight">
+            <summary>
+            Gets the value of MinHeight.
+            </summary>
+            <value>
+            The value of MinHeight.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MaxHeight">
+            <summary>
+            Gets the value of MaxHeight.
+            </summary>
+            <value>
+            The value of MaxHeight.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MinimalDate">
+            <summary>
+            Gets the value of minimal DateTime.
+            </summary>
+            <value>
+            The value of minimal DateTime.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.MaximalDate">
+            <summary>
+            Gets the value of maximal DateTime.
+            </summary>
+            <value>
+            The value of maximal DateTime.
+            </value>
         </member>
         <member name="M:FileCabinetApp.IRecordValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
