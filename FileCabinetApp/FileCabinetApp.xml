@@ -285,6 +285,70 @@
             The FileCabinetService class.
             </summary>
         </member>
+        <member name="P:FileCabinetApp.FileCabinetService.MinLength">
+            <summary>
+            Gets the value of MinLength.
+            </summary>
+            <value>
+            The value of MinLength.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetService.MaxLength">
+            <summary>
+            Gets the value of MaxLength.
+            </summary>
+            <value>
+            The value of MaxLength.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetService.MinGrade">
+            <summary>
+            Gets the value of MinGrade.
+            </summary>
+            <value>
+            The value of MinGrade.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetService.MaxGrade">
+            <summary>
+            Gets the value of MaxGrade.
+            </summary>
+            <value>
+            The value of MaxGrade.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetService.MinHeight">
+            <summary>
+            Gets the value of MinHeight.
+            </summary>
+            <value>
+            The value of MinHeight.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetService.MaxHeight">
+            <summary>
+            Gets the value of MaxHeight.
+            </summary>
+            <value>
+            The value of MaxHeight.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetService.MinimalDate">
+            <summary>
+            Gets the value of minimal DateTime.
+            </summary>
+            <value>
+            The value of minimal DateTime.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetService.MaximalDate">
+            <summary>
+            Gets the value of maximal DateTime.
+            </summary>
+            <value>
+            The value of maximal DateTime.
+            </value>
+        </member>
         <member name="M:FileCabinetApp.FileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
             Creates the record.

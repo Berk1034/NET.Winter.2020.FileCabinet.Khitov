@@ -23,7 +23,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of MinLengthInSymbols const.
         /// </value>
-        public int MinLength => MinLengthInSymbols;
+        public override int MinLength => MinLengthInSymbols;
 
         /// <summary>
         /// Gets the value of MaxLengthInSymbols const.
@@ -31,7 +31,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of MaxLengthInSymbols const.
         /// </value>
-        public int MaxLength => MaxLengthInSymbols;
+        public override int MaxLength => MaxLengthInSymbols;
 
         /// <summary>
         /// Gets the value of MinGradeInPoints const.
@@ -39,7 +39,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of MinGradeInPoints const.
         /// </value>
-        public int MinGrade => MinGradeInPoints;
+        public override int MinGrade => MinGradeInPoints;
 
         /// <summary>
         /// Gets the value of MaxGradeInPoints const.
@@ -47,7 +47,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of MaxGradeInPoints const.
         /// </value>
-        public int MaxGrade => MaxGradeInPoints;
+        public override int MaxGrade => MaxGradeInPoints;
 
         /// <summary>
         /// Gets the value of MinHeight const.
@@ -55,7 +55,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of MinHeight const.
         /// </value>
-        public decimal MinHeight => MinHeightInMeters;
+        public override decimal MinHeight => MinHeightInMeters;
 
         /// <summary>
         /// Gets the value of MaxHeight const.
@@ -63,7 +63,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of MaxHeight const.
         /// </value>
-        public decimal MaxHeight => MaxHeightInMeters;
+        public override decimal MaxHeight => MaxHeightInMeters;
 
         /// <summary>
         /// Gets the value of minimal DateTime.
@@ -71,7 +71,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of minimal DateTime.
         /// </value>
-        public DateTime MinimalDate => new DateTime(1960, 1, 1);
+        public override DateTime MinimalDate => new DateTime(1960, 1, 1);
 
         /// <summary>
         /// Gets the value of DateTime.Now.
@@ -79,7 +79,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of DateTime.Now.
         /// </value>
-        public DateTime MaximalDate => DateTime.Now;
+        public override DateTime MaximalDate => DateTime.Now;
 
         /// <summary>
         /// Validates the record information.
