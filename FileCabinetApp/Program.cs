@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 
 namespace FileCabinetApp
 {
@@ -26,6 +27,7 @@ namespace FileCabinetApp
             new Tuple<string, Action<string>>("edit", Edit),
             new Tuple<string, Action<string>>("list", List),
             new Tuple<string, Action<string>>("stat", Stat),
+            new Tuple<string, Action<string>>("export", Export),
             new Tuple<string, Action<string>>("help", PrintHelp),
             new Tuple<string, Action<string>>("exit", Exit),
         };
@@ -37,6 +39,7 @@ namespace FileCabinetApp
             new string[] { "edit", "allows to update the choosen record", "The 'edit' command allows to update the choosen record." },
             new string[] { "list", "provides the list of records", "The 'list' command provides the list of records." },
             new string[] { "stat", "provides the statistics of records", "The 'stat' command provides the statistics of records." },
+            new string[] { "export", "allows to export the list of records to different formats", "The 'export' command allows to export the list of records to different formats." },
             new string[] { "help", "prints the help screen", "The 'help' command prints the help screen." },
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
         };
@@ -245,6 +248,49 @@ namespace FileCabinetApp
 
                     Program.fileCabinetService.EditRecord(new FileCabinetRecordInfo { Id = listOfRecords[index].Id, FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
                     Console.WriteLine($"Record #{parameters} is updated.");
+                }
+            }
+        }
+
+        private static void Export(string parameters)
+        {
+            string[] args = parameters.Split(' ');
+            if (args.Length == 2)
+            {
+                switch (args[0])
+                {
+                    case "csv":
+                        try
+                        {
+                            bool rewriteFlag = true;
+                            if (File.Exists(args[1]))
+                            {
+                                Console.Write(@"File exists - rewrite {0}? [Y\n] ", args[1]);
+                                var result = Console.ReadLine();
+                                if (result.Length == 0 || result[0] == 'n')
+                                {
+                                    rewriteFlag = false;
+                                }
+                            }
+
+                            if (rewriteFlag)
+                            {
+                                StreamWriter writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
+                                var snapshot = Program.fileCabinetService.MakeSnapshot();
+                                snapshot.SaveToCsv(writer);
+                                Console.WriteLine("All records are exported to file {0}.", args[1]);
+                                writer.Close();
+                            }
+                        }
+                        catch (DirectoryNotFoundException)
+                        {
+                            Console.WriteLine("Export failed: can't open file {0}.", args[1]);
+                        }
+
+                        break;
+                    case "xml":
+
+                        break;
                 }
             }
         }

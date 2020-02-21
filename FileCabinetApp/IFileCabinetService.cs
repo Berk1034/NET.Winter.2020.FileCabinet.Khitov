@@ -63,5 +63,11 @@ namespace FileCabinetApp
         /// </summary>
         /// <returns>The total number of records.</returns>
         public int GetStat();
+
+        /// <summary>
+        /// Makes the snapshot of current records.
+        /// </summary>
+        /// <returns>The snapshot of file cabinet service.</returns>
+        public FileCabinetServiceSnapshot MakeSnapshot();
     }
 }
