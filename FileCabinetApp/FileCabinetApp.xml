@@ -317,6 +317,23 @@
             The favourite symbol of the record.
             </value>
         </member>
+        <member name="T:FileCabinetApp.FileCabinetRecordXmlWriter">
+            <summary>
+            The FileCabinetRecordXmlWriter class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecordXmlWriter.#ctor(System.Xml.XmlWriter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetRecordXmlWriter"/> class.
+            </summary>
+            <param name="writer">The writer.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecordXmlWriter.Write(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Writes record to xml file.
+            </summary>
+            <param name="record">The record to be written.</param>
+        </member>
         <member name="T:FileCabinetApp.FileCabinetService">
             <summary>
             The FileCabinetService class.
@@ -406,6 +423,12 @@
         <member name="M:FileCabinetApp.FileCabinetServiceSnapshot.SaveToCsv(System.IO.StreamWriter)">
             <summary>
             Saves data to csv file.
+            </summary>
+            <param name="writer">The stream for file-writing.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetServiceSnapshot.SaveToXml(System.IO.StreamWriter)">
+            <summary>
+            Saves data to xml file.
             </summary>
             <param name="writer">The stream for file-writing.</param>
         </member>

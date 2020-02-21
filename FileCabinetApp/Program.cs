@@ -289,6 +289,32 @@ namespace FileCabinetApp
 
                         break;
                     case "xml":
+                        try
+                        {
+                            bool rewriteFlag = true;
+                            if (File.Exists(args[1]))
+                            {
+                                Console.Write(@"File exists - rewrite {0}? [Y\n] ", args[1]);
+                                var result = Console.ReadLine();
+                                if (result.Length == 0 || result[0] == 'n')
+                                {
+                                    rewriteFlag = false;
+                                }
+                            }
+
+                            if (rewriteFlag)
+                            {
+                                StreamWriter writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
+                                var snapshot = Program.fileCabinetService.MakeSnapshot();
+                                snapshot.SaveToXml(writer);
+                                Console.WriteLine("All records are exported to file {0}.", args[1]);
+                                writer.Close();
+                            }
+                        }
+                        catch (DirectoryNotFoundException)
+                        {
+                            Console.WriteLine("Export failed: can't open file {0}.", args[1]);
+                        }
 
                         break;
                 }
