@@ -239,6 +239,23 @@
             The favourite symbol of the record.
             </value>
         </member>
+        <member name="T:FileCabinetApp.FileCabinetRecordCsvWriter">
+            <summary>
+            The FileCabinetRecordCsvWriter class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecordCsvWriter.#ctor(System.IO.TextWriter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetRecordCsvWriter"/> class.
+            </summary>
+            <param name="writer">The writer.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecordCsvWriter.Write(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Writes record to csv file.
+            </summary>
+            <param name="record">The record to be written.</param>
+        </member>
         <member name="T:FileCabinetApp.FileCabinetRecordInfo">
             <summary>
             The FileCabinetRecordInfo class.
@@ -299,6 +316,23 @@
             <value>
             The favourite symbol of the record.
             </value>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetRecordXmlWriter">
+            <summary>
+            The FileCabinetRecordXmlWriter class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecordXmlWriter.#ctor(System.Xml.XmlWriter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetRecordXmlWriter"/> class.
+            </summary>
+            <param name="writer">The writer.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecordXmlWriter.Write(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Writes record to xml file.
+            </summary>
+            <param name="record">The record to be written.</param>
         </member>
         <member name="T:FileCabinetApp.FileCabinetService">
             <summary>
@@ -369,6 +403,35 @@
             </summary>
             <returns>The total number of records.</returns>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetService.MakeSnapshot">
+            <summary>
+            Make the snapshot of the current state of records.
+            </summary>
+            <returns>The snapshot of the current state of records.</returns>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetServiceSnapshot">
+            <summary>
+            The FileCabinetServiceSnapshot class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetServiceSnapshot.#ctor(FileCabinetApp.FileCabinetRecord[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetServiceSnapshot"/> class.
+            </summary>
+            <param name="records">The array of records.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetServiceSnapshot.SaveToCsv(System.IO.StreamWriter)">
+            <summary>
+            Saves data to csv file.
+            </summary>
+            <param name="writer">The stream for file-writing.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetServiceSnapshot.SaveToXml(System.IO.StreamWriter)">
+            <summary>
+            Saves data to xml file.
+            </summary>
+            <param name="writer">The stream for file-writing.</param>
+        </member>
         <member name="T:FileCabinetApp.IFileCabinetService">
             <summary>
             The IFileCabinetService interface.
@@ -427,6 +490,12 @@
             Gets amount of records.
             </summary>
             <returns>The total number of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.MakeSnapshot">
+            <summary>
+            Makes the snapshot of current records.
+            </summary>
+            <returns>The snapshot of file cabinet service.</returns>
         </member>
         <member name="T:FileCabinetApp.IRecordValidator">
             <summary>
