@@ -11,14 +11,6 @@ namespace FileCabinetApp
     public interface IFileCabinetService
     {
         /// <summary>
-        /// Gets the validator.
-        /// </summary>
-        /// <value>
-        /// The validator.
-        /// </value>
-        public IRecordValidator Validator { get; }
-
-        /// <summary>
         /// Creates the record.
         /// </summary>
         /// <param name="recordInfo">The record information.</param>
@@ -63,11 +55,5 @@ namespace FileCabinetApp
         /// </summary>
         /// <returns>The total number of records.</returns>
         public int GetStat();
-
-        /// <summary>
-        /// Makes the snapshot of current records.
-        /// </summary>
-        /// <returns>The snapshot of file cabinet service.</returns>
-        public FileCabinetServiceSnapshot MakeSnapshot();
     }
 }

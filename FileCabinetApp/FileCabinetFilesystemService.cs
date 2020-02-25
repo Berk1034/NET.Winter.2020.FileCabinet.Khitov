@@ -23,14 +23,6 @@ namespace FileCabinetApp
         }
 
         /// <summary>
-        /// Gets the validator.
-        /// </summary>
-        /// <value>
-        /// The validator.
-        /// </value>
-        public IRecordValidator Validator => throw new NotImplementedException();
-
-        /// <summary>
         /// Creates the record.
         /// </summary>
         /// <param name="recordInfo">The record information.</param>
@@ -93,15 +85,6 @@ namespace FileCabinetApp
         /// </summary>
         /// <returns>The total number of records.</returns>
         public int GetStat()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Make the snapshot of the current state of records.
-        /// </summary>
-        /// <returns>The snapshot of the current state of records.</returns>
-        public FileCabinetServiceSnapshot MakeSnapshot()
         {
             throw new NotImplementedException();
         }

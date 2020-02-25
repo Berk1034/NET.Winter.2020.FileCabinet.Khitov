@@ -189,14 +189,6 @@
             </summary>
             <param name="fileStream">The file stream to use.</param>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetFilesystemService.Validator">
-            <summary>
-            Gets the validator.
-            </summary>
-            <value>
-            The validator.
-            </value>
-        </member>
         <member name="M:FileCabinetApp.FileCabinetFilesystemService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
             Creates the record.
@@ -243,12 +235,6 @@
             </summary>
             <returns>The total number of records.</returns>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetFilesystemService.MakeSnapshot">
-            <summary>
-            Make the snapshot of the current state of records.
-            </summary>
-            <returns>The snapshot of the current state of records.</returns>
-        </member>
         <member name="T:FileCabinetApp.FileCabinetMemoryService">
             <summary>
             The FileCabinetService class.
@@ -259,6 +245,11 @@
             Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetMemoryService"/> class.
             </summary>
             <param name="validator">The validator for record information.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetMemoryService.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetMemoryService"/> class.
+            </summary>
         </member>
         <member name="P:FileCabinetApp.FileCabinetMemoryService.Validator">
             <summary>
@@ -508,14 +499,6 @@
             The IFileCabinetService interface.
             </summary>
         </member>
-        <member name="P:FileCabinetApp.IFileCabinetService.Validator">
-            <summary>
-            Gets the validator.
-            </summary>
-            <value>
-            The validator.
-            </value>
-        </member>
         <member name="M:FileCabinetApp.IFileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
             Creates the record.
@@ -561,12 +544,6 @@
             Gets amount of records.
             </summary>
             <returns>The total number of records.</returns>
-        </member>
-        <member name="M:FileCabinetApp.IFileCabinetService.MakeSnapshot">
-            <summary>
-            Makes the snapshot of current records.
-            </summary>
-            <returns>The snapshot of file cabinet service.</returns>
         </member>
         <member name="T:FileCabinetApp.IRecordValidator">
             <summary>

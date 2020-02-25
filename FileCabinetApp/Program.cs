@@ -16,7 +16,8 @@ namespace FileCabinetApp
         private const int DescriptionHelpIndex = 1;
         private const int ExplanationHelpIndex = 2;
 
-        private static IFileCabinetService fileCabinetService = new FileCabinetDefaultService();
+        private static FileCabinetMemoryService fileCabinetService = new FileCabinetDefaultService();
+        private static IFileCabinetService fileCabinetStorage = new FileCabinetMemoryService();
 
         private static bool isRunning = true;
 
@@ -59,22 +60,32 @@ namespace FileCabinetApp
                     fileCabinetService = new FileCabinetCustomService();
                     validationRules = "custom";
                 }
-                else
+
+                if (args[0].Remove(0, "--storage=".Length).ToLower(null) == "file")
                 {
-                    fileCabinetService = new FileCabinetDefaultService();
+                    fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate));
                 }
             }
 
-            if (args.Length == 2 && args[0] == "-v")
+            if (args.Length == 2)
             {
-                if (args[1].ToLower(null) == "custom")
+                switch (args[0])
                 {
-                    fileCabinetService = new FileCabinetCustomService();
-                    validationRules = "custom";
-                }
-                else
-                {
-                    fileCabinetService = new FileCabinetDefaultService();
+                    case "-v":
+                        if (args[1].ToLower(null) == "custom")
+                        {
+                            fileCabinetService = new FileCabinetCustomService();
+                            validationRules = "custom";
+                        }
+
+                        break;
+                    case "-s":
+                        if (args[1].ToLower(null) == "file")
+                        {
+                            fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate));
+                        }
+
+                        break;
                 }
             }
 

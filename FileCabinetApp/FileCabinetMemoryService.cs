@@ -27,6 +27,13 @@ namespace FileCabinetApp
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FileCabinetMemoryService"/> class.
+        /// </summary>
+        public FileCabinetMemoryService()
+        {
+        }
+
+        /// <summary>
         /// Gets the validator.
         /// </summary>
         /// <value>
