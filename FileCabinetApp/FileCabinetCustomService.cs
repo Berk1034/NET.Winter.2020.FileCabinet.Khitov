@@ -8,7 +8,7 @@ namespace FileCabinetApp
     /// <summary>
     /// The FileCabinetCustomService class.
     /// </summary>
-    public class FileCabinetCustomService : FileCabinetService
+    public class FileCabinetCustomService : FileCabinetMemoryService
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileCabinetCustomService"/> class.
