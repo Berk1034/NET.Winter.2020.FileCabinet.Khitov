@@ -62,7 +62,35 @@ namespace FileCabinetApp
         /// <param name="recordInfo">The record information.</param>
         public void EditRecord(FileCabinetRecordInfo recordInfo)
         {
-            throw new NotImplementedException();
+            int id = -1;
+            using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
+            {
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                using (var writer = new BinaryWriter(this.fileStream, Encoding.ASCII, true))
+                {
+                    while (id != recordInfo.Id)
+                    {
+                        var position = reader.BaseStream.Position;
+                        reader.BaseStream.Seek(2, SeekOrigin.Current);
+                        id = reader.ReadInt32();
+                        if (id != recordInfo.Id)
+                        {
+                            reader.BaseStream.Seek(RecordSize - 6, SeekOrigin.Current);
+                        }
+                    }
+
+                    writer.Write(recordInfo.FirstName);
+                    writer.Seek(120 - recordInfo.FirstName.Length - 1, SeekOrigin.Current);
+                    writer.Write(recordInfo.LastName);
+                    writer.Seek(120 - recordInfo.LastName.Length - 1, SeekOrigin.Current);
+                    writer.Write(recordInfo.DateOfBirth.Year);
+                    writer.Write(recordInfo.DateOfBirth.Month);
+                    writer.Write(recordInfo.DateOfBirth.Day);
+                    writer.Write(recordInfo.Grade);
+                    writer.Write(recordInfo.Height);
+                    writer.Write(recordInfo.FavouriteSymbol);
+                }
+            }
         }
 
         /// <summary>

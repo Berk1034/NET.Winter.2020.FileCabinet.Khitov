@@ -230,6 +230,7 @@ namespace FileCabinetApp
 
         private static void Edit(string parameters)
         {
+            // var listOfRecords = new List<FileCabinetRecord>(Program.fileCabinetStorage.GetRecords());
             var listOfRecords = new List<FileCabinetRecord>(Program.fileCabinetService.GetRecords());
             int editId;
             bool parseSuccess = int.TryParse(parameters, out editId);
@@ -264,6 +265,7 @@ namespace FileCabinetApp
                     Console.Write("Favourite symbol: ");
                     var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
+                    // Program.fileCabinetStorage.EditRecord(new FileCabinetRecordInfo { Id = listOfRecords[index].Id, FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
                     Program.fileCabinetService.EditRecord(new FileCabinetRecordInfo { Id = listOfRecords[index].Id, FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
                     Console.WriteLine($"Record #{parameters} is updated.");
                 }
