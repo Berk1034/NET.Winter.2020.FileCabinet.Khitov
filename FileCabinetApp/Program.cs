@@ -212,6 +212,7 @@ namespace FileCabinetApp
                         searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByLastName(args[1].Trim('"')));
                         break;
                     case "dateofbirth":
+                        // searchResult = new List<FileCabinetRecord>(Program.fileCabinetStorage.FindByDateOfBirth(args[1].Trim('"')));
                         searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByDateOfBirth(args[1].Trim('"')));
                         break;
                     default:
