@@ -12,6 +12,7 @@ namespace FileCabinetApp
     /// </summary>
     public class FileCabinetFilesystemService : IFileCabinetService
     {
+        private const int RecordSize = 277;
         private FileStream fileStream;
 
         /// <summary>
@@ -35,22 +36,22 @@ namespace FileCabinetApp
             {
                 writer.BaseStream.Seek(0, SeekOrigin.End);
                 var position = writer.BaseStream.Position;
-                int recordSize = 277;
-                int amountOfRecords = (int)writer.BaseStream.Length / recordSize;
+                int amountOfRecords = (int)writer.BaseStream.Length / RecordSize;
                 recordId = amountOfRecords + 1;
                 short reseved = 0;
                 writer.Write(reseved);
                 writer.Write(recordId);
                 writer.Write(recordInfo.FirstName);
-                writer.Seek((recordSize * amountOfRecords) + 126, SeekOrigin.Begin);
+                writer.Seek((RecordSize * amountOfRecords) + 126, SeekOrigin.Begin);
                 writer.Write(recordInfo.LastName);
-                writer.Seek((recordSize * amountOfRecords) + 246, SeekOrigin.Begin);
+                writer.Seek((RecordSize * amountOfRecords) + 246, SeekOrigin.Begin);
                 writer.Write(recordInfo.DateOfBirth.Year);
                 writer.Write(recordInfo.DateOfBirth.Month);
                 writer.Write(recordInfo.DateOfBirth.Day);
                 writer.Write(recordInfo.Grade);
                 writer.Write(recordInfo.Height);
                 writer.Write(recordInfo.FavouriteSymbol);
+                writer.Flush();
             }
 
             return recordId;
@@ -101,7 +102,40 @@ namespace FileCabinetApp
         /// <returns>The ReadOnlyCollection of all current records.</returns>
         public ReadOnlyCollection<FileCabinetRecord> GetRecords()
         {
-            throw new NotImplementedException();
+            List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
+            using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
+            {
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                while (reader.PeekChar() > -1)
+                {
+                    reader.BaseStream.Seek(2, SeekOrigin.Current);
+                    int id = reader.ReadInt32();
+                    string firstName = reader.ReadString();
+                    reader.BaseStream.Seek(120 - firstName.Length - 1, SeekOrigin.Current);
+                    string lastName = reader.ReadString();
+                    reader.BaseStream.Seek(120 - lastName.Length - 1, SeekOrigin.Current);
+                    int year = reader.ReadInt32();
+                    int month = reader.ReadInt32();
+                    int day = reader.ReadInt32();
+                    short grade = reader.ReadInt16();
+                    decimal height = reader.ReadDecimal();
+                    char favouriteSymbol = reader.ReadChar();
+
+                    var record = new FileCabinetRecord()
+                    {
+                        Id = id,
+                        FirstName = firstName,
+                        LastName = lastName,
+                        DateOfBirth = new DateTime(year, month, day),
+                        Grade = grade,
+                        Height = height,
+                        FavouriteSymbol = favouriteSymbol,
+                    };
+                    listOfRecords.Add(record);
+                }
+            }
+
+            return listOfRecords.AsReadOnly();
         }
 
         /// <summary>

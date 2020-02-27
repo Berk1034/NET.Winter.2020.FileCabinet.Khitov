@@ -17,6 +17,8 @@ namespace FileCabinetApp
         private const int ExplanationHelpIndex = 2;
 
         private static FileCabinetMemoryService fileCabinetService = new FileCabinetDefaultService();
+
+        // private static IFileCabinetService fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate, FileAccess.ReadWrite));
         private static IFileCabinetService fileCabinetStorage = new FileCabinetMemoryService();
 
         private static bool isRunning = true;
@@ -184,7 +186,9 @@ namespace FileCabinetApp
 
         private static void List(string parameters)
         {
+            // var listOfRecords = Program.fileCabinetStorage.GetRecords();
             var listOfRecords = Program.fileCabinetService.GetRecords();
+
             foreach (var record in listOfRecords)
             {
                 Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
