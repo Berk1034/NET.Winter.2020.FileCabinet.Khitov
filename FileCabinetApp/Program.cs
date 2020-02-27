@@ -65,7 +65,7 @@ namespace FileCabinetApp
 
                 if (args[0].Remove(0, "--storage=".Length).ToLower(null) == "file")
                 {
-                    fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.Create, FileAccess.ReadWrite));
+                    fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate, FileAccess.ReadWrite));
                 }
             }
 
@@ -84,7 +84,7 @@ namespace FileCabinetApp
                     case "-s":
                         if (args[1].ToLower(null) == "file")
                         {
-                            fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.Create, FileAccess.ReadWrite));
+                            fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate, FileAccess.ReadWrite));
                         }
 
                         break;
@@ -204,6 +204,7 @@ namespace FileCabinetApp
                 switch (args[0].ToLower(null))
                 {
                     case "firstname":
+                        // searchResult = new List<FileCabinetRecord>(Program.fileCabinetStorage.FindByFirstName(args[1].Trim('"')));
                         searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByFirstName(args[1].Trim('"')));
                         break;
                     case "lastname":

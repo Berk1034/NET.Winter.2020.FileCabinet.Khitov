@@ -110,7 +110,48 @@ namespace FileCabinetApp
         /// <returns>The ReadOnlyCollection of found records.</returns>
         public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
         {
-            throw new NotImplementedException();
+            List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
+            using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
+            {
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                while (reader.PeekChar() > -1)
+                {
+                    reader.BaseStream.Seek(6, SeekOrigin.Current);
+                    string recordFirstName = reader.ReadString();
+                    if (firstName == recordFirstName)
+                    {
+                        reader.BaseStream.Seek(-(recordFirstName.Length + 5), SeekOrigin.Current);
+                        int id = reader.ReadInt32();
+                        reader.BaseStream.Seek(120, SeekOrigin.Current);
+                        string lastName = reader.ReadString();
+                        reader.BaseStream.Seek(120 - lastName.Length - 1, SeekOrigin.Current);
+                        int year = reader.ReadInt32();
+                        int month = reader.ReadInt32();
+                        int day = reader.ReadInt32();
+                        short grade = reader.ReadInt16();
+                        decimal height = reader.ReadDecimal();
+                        char favouriteSymbol = reader.ReadChar();
+
+                        var record = new FileCabinetRecord()
+                        {
+                            Id = id,
+                            FirstName = firstName,
+                            LastName = lastName,
+                            DateOfBirth = new DateTime(year, month, day),
+                            Grade = grade,
+                            Height = height,
+                            FavouriteSymbol = favouriteSymbol,
+                        };
+                        listOfRecords.Add(record);
+                    }
+                    else
+                    {
+                        reader.BaseStream.Seek(RecordSize - recordFirstName.Length - 7, SeekOrigin.Current);
+                    }
+                }
+            }
+
+            return listOfRecords.AsReadOnly();
         }
 
         /// <summary>
