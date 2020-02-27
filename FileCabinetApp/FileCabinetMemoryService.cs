@@ -210,9 +210,9 @@ namespace FileCabinetApp
                 else
                 {
                     newListOfFirstNames = new List<FileCabinetRecord>
-                {
-                    recordToEdit,
-                };
+                    {
+                        recordToEdit,
+                    };
                     this.firstNameDictionary.Add(recordToEdit.FirstName.ToLower(null), newListOfFirstNames);
                 }
             }
@@ -239,9 +239,9 @@ namespace FileCabinetApp
                 else
                 {
                     newListOfLastNames = new List<FileCabinetRecord>
-                {
-                    recordToEdit,
-                };
+                    {
+                        recordToEdit,
+                    };
                     this.lastNameDictionary.Add(recordToEdit.LastName.ToLower(null), newListOfLastNames);
                 }
             }
@@ -268,9 +268,9 @@ namespace FileCabinetApp
                 else
                 {
                     newListOfDateOfBirth = new List<FileCabinetRecord>
-                {
-                    recordToEdit,
-                };
+                    {
+                        recordToEdit,
+                    };
                     this.dateOfBirthDictionary.Add(recordToEdit.DateOfBirth, newListOfDateOfBirth);
                 }
             }
