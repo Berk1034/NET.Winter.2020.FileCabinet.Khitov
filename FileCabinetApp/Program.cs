@@ -16,10 +16,7 @@ namespace FileCabinetApp
         private const int DescriptionHelpIndex = 1;
         private const int ExplanationHelpIndex = 2;
 
-        private static FileCabinetMemoryService fileCabinetService = new FileCabinetDefaultService();
-
-        // private static IFileCabinetService fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate, FileAccess.ReadWrite));
-        private static IFileCabinetService fileCabinetStorage = new FileCabinetMemoryService();
+        private static IFileCabinetService fileCabinetService;
 
         private static bool isRunning = true;
 
@@ -54,41 +51,58 @@ namespace FileCabinetApp
         public static void Main(string[] args)
         {
             string validationRules = "default";
-
-            if (args.Length == 1)
+            int argsAmount = args.Length;
+            IRecordValidator validator = new DefaultValidator();
+            for (int i = 0; i < args.Length; i++)
             {
-                if (args[0].Remove(0, "--validation-rules=".Length).ToLower(null) == "custom")
+                if (args[i].Contains("--validation-rules=", StringComparison.OrdinalIgnoreCase))
                 {
-                    fileCabinetService = new FileCabinetCustomService();
-                    validationRules = "custom";
+                    if (args[i].Remove(0, "--validation-rules=".Length).ToLower(null) == "custom")
+                    {
+                        validator = new CustomValidator();
+                        validationRules = "custom";
+                    }
                 }
 
-                if (args[0].Remove(0, "--storage=".Length).ToLower(null) == "file")
+                if (args[i] == "-v")
                 {
-                    fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate, FileAccess.ReadWrite));
+                    if (args[i + 1].ToLower(null) == "custom")
+                    {
+                        validator = new CustomValidator();
+                        validationRules = "custom";
+                    }
                 }
             }
 
-            if (args.Length == 2)
+            bool foundFlag = false;
+
+            for (int i = 0; i < args.Length && !foundFlag; i += 2)
             {
-                switch (args[0])
+                if (args[i].Contains("--storage=", StringComparison.OrdinalIgnoreCase))
                 {
-                    case "-v":
-                        if (args[1].ToLower(null) == "custom")
-                        {
-                            fileCabinetService = new FileCabinetCustomService();
-                            validationRules = "custom";
-                        }
-
-                        break;
-                    case "-s":
-                        if (args[1].ToLower(null) == "file")
-                        {
-                            fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate, FileAccess.ReadWrite));
-                        }
-
-                        break;
+                    if (args[i].Remove(0, "--storage=".Length).ToLower(null) == "file")
+                    {
+                        fileCabinetService = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate, FileAccess.ReadWrite), validator);
+                        foundFlag = true;
+                    }
                 }
+                else if (args[i] == "-s")
+                {
+                    if (args[i + 1].ToLower(null) == "file")
+                    {
+                        fileCabinetService = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate, FileAccess.ReadWrite), validator);
+                        foundFlag = true;
+                    }
+                }
+                else
+                {
+                    fileCabinetService = new FileCabinetMemoryService(validator);
+                }
+            }
+
+            if (argsAmount == 0)
+            {
+                fileCabinetService = new FileCabinetMemoryService(validator);
             }
 
             Console.WriteLine($"File Cabinet Application, developed by {Program.DeveloperName}");
@@ -177,16 +191,12 @@ namespace FileCabinetApp
             Console.Write("Favourite symbol: ");
             var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
-            // var recordId = Program.fileCabinetStorage.CreateRecord(new FileCabinetRecordInfo { FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
             var recordId = Program.fileCabinetService.CreateRecord(new FileCabinetRecordInfo { FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
-
-            // var result = Program.fileCabinetStorage.CreateRecord(new FileCabinetRecordInfo { Id = recordId, FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
             Console.WriteLine($"Record #{recordId} is created.");
         }
 
         private static void List(string parameters)
         {
-            // var listOfRecords = Program.fileCabinetStorage.GetRecords();
             var listOfRecords = Program.fileCabinetService.GetRecords();
 
             foreach (var record in listOfRecords)
@@ -204,15 +214,12 @@ namespace FileCabinetApp
                 switch (args[0].ToLower(null))
                 {
                     case "firstname":
-                        // searchResult = new List<FileCabinetRecord>(Program.fileCabinetStorage.FindByFirstName(args[1].Trim('"')));
                         searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByFirstName(args[1].Trim('"')));
                         break;
                     case "lastname":
-                        // searchResult = new List<FileCabinetRecord>(Program.fileCabinetStorage.FindByLastName(args[1].Trim('"')));
                         searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByLastName(args[1].Trim('"')));
                         break;
                     case "dateofbirth":
-                        // searchResult = new List<FileCabinetRecord>(Program.fileCabinetStorage.FindByDateOfBirth(args[1].Trim('"')));
                         searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByDateOfBirth(args[1].Trim('"')));
                         break;
                     default:
@@ -233,7 +240,6 @@ namespace FileCabinetApp
 
         private static void Edit(string parameters)
         {
-            // var listOfRecords = new List<FileCabinetRecord>(Program.fileCabinetStorage.GetRecords());
             var listOfRecords = new List<FileCabinetRecord>(Program.fileCabinetService.GetRecords());
             int editId;
             bool parseSuccess = int.TryParse(parameters, out editId);
@@ -268,7 +274,6 @@ namespace FileCabinetApp
                     Console.Write("Favourite symbol: ");
                     var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
-                    // Program.fileCabinetStorage.EditRecord(new FileCabinetRecordInfo { Id = listOfRecords[index].Id, FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
                     Program.fileCabinetService.EditRecord(new FileCabinetRecordInfo { Id = listOfRecords[index].Id, FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
                     Console.WriteLine($"Record #{parameters} is updated.");
                 }
@@ -346,7 +351,6 @@ namespace FileCabinetApp
 
         private static void Stat(string parameters)
         {
-            // var recordsCount = Program.fileCabinetStorage.GetStat();
             var recordsCount = Program.fileCabinetService.GetStat();
             Console.WriteLine($"{recordsCount} record(s).");
         }

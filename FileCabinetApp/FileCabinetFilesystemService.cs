@@ -15,15 +15,26 @@ namespace FileCabinetApp
     {
         private const int RecordSize = 277;
         private FileStream fileStream;
+        private IRecordValidator validator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileCabinetFilesystemService"/> class.
         /// </summary>
         /// <param name="fileStream">The file stream to use.</param>
-        public FileCabinetFilesystemService(FileStream fileStream)
+        /// <param name="validator">The validator for record information.</param>
+        public FileCabinetFilesystemService(FileStream fileStream, IRecordValidator validator)
         {
             this.fileStream = fileStream;
+            this.validator = validator;
         }
+
+        /// <summary>
+        /// Gets the validator.
+        /// </summary>
+        /// <value>
+        /// The validator.
+        /// </value>
+        public IRecordValidator Validator => this.validator;
 
         /// <summary>
         /// Creates the record.
@@ -32,6 +43,8 @@ namespace FileCabinetApp
         /// <returns>The id of the created record.</returns>
         public int CreateRecord(FileCabinetRecordInfo recordInfo)
         {
+            this.validator.ValidateParameters(recordInfo);
+
             int recordId;
             using (var writer = new BinaryWriter(this.fileStream, Encoding.ASCII, true))
             {
@@ -63,6 +76,8 @@ namespace FileCabinetApp
         /// <param name="recordInfo">The record information.</param>
         public void EditRecord(FileCabinetRecordInfo recordInfo)
         {
+            this.validator.ValidateParameters(recordInfo);
+
             int id = -1;
             using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
             {
@@ -310,6 +325,15 @@ namespace FileCabinetApp
             {
                 return (int)reader.BaseStream.Length / RecordSize;
             }
+        }
+
+        /// <summary>
+        /// Make the snapshot of the current state of records.
+        /// </summary>
+        /// <returns>The snapshot of the current state of records.</returns>
+        public FileCabinetServiceSnapshot MakeSnapshot()
+        {
+            throw new NotImplementedException();
         }
     }
 }
