@@ -63,7 +63,7 @@ namespace FileCabinetApp
 
                 if (args[0].Remove(0, "--storage=".Length).ToLower(null) == "file")
                 {
-                    fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate));
+                    fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.Create, FileAccess.ReadWrite));
                 }
             }
 
@@ -82,7 +82,7 @@ namespace FileCabinetApp
                     case "-s":
                         if (args[1].ToLower(null) == "file")
                         {
-                            fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.OpenOrCreate));
+                            fileCabinetStorage = new FileCabinetFilesystemService(new FileStream("cabinet-records.db", FileMode.Create, FileAccess.ReadWrite));
                         }
 
                         break;
@@ -175,7 +175,10 @@ namespace FileCabinetApp
             Console.Write("Favourite symbol: ");
             var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
+            // var recordId = Program.fileCabinetStorage.CreateRecord(new FileCabinetRecordInfo { FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
             var recordId = Program.fileCabinetService.CreateRecord(new FileCabinetRecordInfo { FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+
+            // var result = Program.fileCabinetStorage.CreateRecord(new FileCabinetRecordInfo { Id = recordId, FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
             Console.WriteLine($"Record #{recordId} is created.");
         }
 

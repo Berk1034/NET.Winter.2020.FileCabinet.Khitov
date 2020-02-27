@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace FileCabinetApp
@@ -29,7 +30,30 @@ namespace FileCabinetApp
         /// <returns>The id of the created record.</returns>
         public int CreateRecord(FileCabinetRecordInfo recordInfo)
         {
-            throw new NotImplementedException();
+            int recordId;
+            using (var writer = new BinaryWriter(this.fileStream, Encoding.ASCII, true))
+            {
+                writer.BaseStream.Seek(0, SeekOrigin.End);
+                var position = writer.BaseStream.Position;
+                int recordSize = 277;
+                int amountOfRecords = (int)writer.BaseStream.Length / recordSize;
+                recordId = amountOfRecords + 1;
+                short reseved = 0;
+                writer.Write(reseved);
+                writer.Write(recordId);
+                writer.Write(recordInfo.FirstName);
+                writer.Seek((recordSize * amountOfRecords) + 126, SeekOrigin.Begin);
+                writer.Write(recordInfo.LastName);
+                writer.Seek((recordSize * amountOfRecords) + 246, SeekOrigin.Begin);
+                writer.Write(recordInfo.DateOfBirth.Year);
+                writer.Write(recordInfo.DateOfBirth.Month);
+                writer.Write(recordInfo.DateOfBirth.Day);
+                writer.Write(recordInfo.Grade);
+                writer.Write(recordInfo.Height);
+                writer.Write(recordInfo.FavouriteSymbol);
+            }
+
+            return recordId;
         }
 
         /// <summary>

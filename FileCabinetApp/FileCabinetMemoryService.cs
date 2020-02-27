@@ -31,6 +31,7 @@ namespace FileCabinetApp
         /// </summary>
         public FileCabinetMemoryService()
         {
+            this.validator = new FileCabinetDefaultService().Validator;
         }
 
         /// <summary>
