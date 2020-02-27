@@ -51,7 +51,6 @@ namespace FileCabinetApp
                 writer.Write(recordInfo.Grade);
                 writer.Write(recordInfo.Height);
                 writer.Write(recordInfo.FavouriteSymbol);
-                writer.Flush();
             }
 
             return recordId;
@@ -144,7 +143,10 @@ namespace FileCabinetApp
         /// <returns>The total number of records.</returns>
         public int GetStat()
         {
-            throw new NotImplementedException();
+            using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
+            {
+                return (int)reader.BaseStream.Length / RecordSize;
+            }
         }
     }
 }

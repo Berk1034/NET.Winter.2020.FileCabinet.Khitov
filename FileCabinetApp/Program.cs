@@ -341,6 +341,7 @@ namespace FileCabinetApp
 
         private static void Stat(string parameters)
         {
+            // var recordsCount = Program.fileCabinetStorage.GetStat();
             var recordsCount = Program.fileCabinetService.GetStat();
             Console.WriteLine($"{recordsCount} record(s).");
         }
