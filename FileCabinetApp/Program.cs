@@ -476,7 +476,7 @@ namespace FileCabinetApp
 
         private static Tuple<bool, string> FavouriteSymbolValidator(char favouriteSymbol)
         {
-            if (favouriteSymbol == ' ')
+            if (favouriteSymbol == Program.fileCabinetService.Validator.ExcludeChar)
             {
                 return new Tuple<bool, string>(false, favouriteSymbol.ToString());
             }

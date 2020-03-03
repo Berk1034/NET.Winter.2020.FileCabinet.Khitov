@@ -73,6 +73,14 @@
             The value of DateTime.Now.
             </value>
         </member>
+        <member name="P:FileCabinetApp.CustomValidator.ExcludeChar">
+            <summary>
+            Gets the value of BannedChar const.
+            </summary>
+            <value>
+            The value of BannedChar const.
+            </value>
+        </member>
         <member name="M:FileCabinetApp.CustomValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
             <summary>
             Validates the record information.
@@ -148,6 +156,14 @@
             </summary>
             <value>
             The value of DateTime.Now.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.DefaultValidator.ExcludeChar">
+            <summary>
+            Gets the value of BannedChar const.
+            </summary>
+            <value>
+            The value of BannedChar const.
             </value>
         </member>
         <member name="M:FileCabinetApp.DefaultValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
@@ -636,6 +652,14 @@
             </summary>
             <value>
             The value of maximal DateTime.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.IRecordValidator.ExcludeChar">
+            <summary>
+            Gets the value of exclude char.
+            </summary>
+            <value>
+            The value of exclude char.
             </value>
         </member>
         <member name="M:FileCabinetApp.IRecordValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">

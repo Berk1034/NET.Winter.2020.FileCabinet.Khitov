@@ -12,10 +12,11 @@ namespace FileCabinetApp
     {
         private const int MinLengthInSymbols = 2;
         private const int MaxLengthInSymbols = 40;
-        private const int MinGradeInPoints = 0;
-        private const int MaxGradeInPoints = 5;
+        private const short MinGradeInPoints = 0;
+        private const short MaxGradeInPoints = 5;
         private const decimal MinHeightInMeters = 0.4m;
         private const decimal MaxHeightInMeters = 3m;
+        private const char BannedChar = ' ';
 
         /// <summary>
         /// Gets the value of MinLengthInSymbols const.
@@ -39,7 +40,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of MinGradeInPoints const.
         /// </value>
-        public int MinGrade => MinGradeInPoints;
+        public short MinGrade => MinGradeInPoints;
 
         /// <summary>
         /// Gets the value of MaxGradeInPoints const.
@@ -47,7 +48,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of MaxGradeInPoints const.
         /// </value>
-        public int MaxGrade => MaxGradeInPoints;
+        public short MaxGrade => MaxGradeInPoints;
 
         /// <summary>
         /// Gets the value of MinHeight const.
@@ -80,6 +81,14 @@ namespace FileCabinetApp
         /// The value of DateTime.Now.
         /// </value>
         public DateTime MaximalDate => DateTime.Now;
+
+        /// <summary>
+        /// Gets the value of BannedChar const.
+        /// </summary>
+        /// <value>
+        /// The value of BannedChar const.
+        /// </value>
+        public char ExcludeChar => BannedChar;
 
         /// <summary>
         /// Validates the record information.
@@ -139,9 +148,9 @@ namespace FileCabinetApp
                 throw new ArgumentException($"Height can't be lower {MinHeightInMeters} and higher than {MaxHeightInMeters}.", nameof(recordInfo.Height));
             }
 
-            if (recordInfo.FavouriteSymbol == ' ')
+            if (recordInfo.FavouriteSymbol == BannedChar)
             {
-                throw new ArgumentException("Space-symbol is not valid.", nameof(recordInfo.FavouriteSymbol));
+                throw new ArgumentException($"{BannedChar} is not valid symbol.", nameof(recordInfo.FavouriteSymbol));
             }
         }
     }

@@ -31,7 +31,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of MinGrade.
         /// </value>
-        public int MinGrade { get; }
+        public short MinGrade { get; }
 
         /// <summary>
         /// Gets the value of MaxGrade.
@@ -39,7 +39,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of MaxGrade.
         /// </value>
-        public int MaxGrade { get; }
+        public short MaxGrade { get; }
 
         /// <summary>
         /// Gets the value of MinHeight.
@@ -72,6 +72,14 @@ namespace FileCabinetApp
         /// The value of maximal DateTime.
         /// </value>
         public DateTime MaximalDate { get; }
+
+        /// <summary>
+        /// Gets the value of exclude char.
+        /// </summary>
+        /// <value>
+        /// The value of exclude char.
+        /// </value>
+        public char ExcludeChar { get; }
 
         /// <summary>
         /// Validates the parameters.
