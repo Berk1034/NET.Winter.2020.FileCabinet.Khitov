@@ -27,6 +27,7 @@ namespace FileCabinetApp
             new Tuple<string, Action<string>>("edit", Edit),
             new Tuple<string, Action<string>>("list", List),
             new Tuple<string, Action<string>>("stat", Stat),
+            new Tuple<string, Action<string>>("import", Import),
             new Tuple<string, Action<string>>("export", Export),
             new Tuple<string, Action<string>>("help", PrintHelp),
             new Tuple<string, Action<string>>("exit", Exit),
@@ -39,6 +40,7 @@ namespace FileCabinetApp
             new string[] { "edit", "allows to update the choosen record", "The 'edit' command allows to update the choosen record." },
             new string[] { "list", "provides the list of records", "The 'list' command provides the list of records." },
             new string[] { "stat", "provides the statistics of records", "The 'stat' command provides the statistics of records." },
+            new string[] { "import", "allows to import the list of records from different formats", "The 'import' command allows to import the list of records from different formats." },
             new string[] { "export", "allows to export the list of records to different formats", "The 'export' command allows to export the list of records to different formats." },
             new string[] { "help", "prints the help screen", "The 'help' command prints the help screen." },
             new string[] { "exit", "exits the application", "The 'exit' command exits the application." },
@@ -191,7 +193,7 @@ namespace FileCabinetApp
             Console.Write("Favourite symbol: ");
             var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
-            var recordId = Program.fileCabinetService.CreateRecord(new FileCabinetRecordInfo { FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+            var recordId = Program.fileCabinetService.CreateRecord(new FileCabinetRecord { FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
             Console.WriteLine($"Record #{recordId} is created.");
         }
 
@@ -274,8 +276,59 @@ namespace FileCabinetApp
                     Console.Write("Favourite symbol: ");
                     var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
-                    Program.fileCabinetService.EditRecord(new FileCabinetRecordInfo { Id = listOfRecords[index].Id, FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                    Program.fileCabinetService.EditRecord(new FileCabinetRecord { Id = listOfRecords[index].Id, FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
                     Console.WriteLine($"Record #{parameters} is updated.");
+                }
+            }
+        }
+
+        private static void Import(string parameters)
+        {
+            string[] args = parameters.Split(' ');
+            if (args.Length == 2)
+            {
+                switch (args[0])
+                {
+                    case "csv":
+                        try
+                        {
+                            StreamReader reader = new StreamReader(new FileStream(args[1], FileMode.Open));
+                            FileCabinetServiceSnapshot snapshot = new FileCabinetServiceSnapshot();
+                            snapshot.LoadFromCsv(reader);
+                            int importedRecordsCount = Program.fileCabinetService.Restore(snapshot);
+                            Console.WriteLine("{0} records were imported from {1}.", importedRecordsCount, args[1]);
+                            reader.Close();
+                        }
+                        catch (DirectoryNotFoundException)
+                        {
+                            Console.WriteLine("Import error: file {0} is not exist.", args[1]);
+                        }
+                        catch (FileNotFoundException)
+                        {
+                            Console.WriteLine("Import error: file {0} is not exist.", args[1]);
+                        }
+
+                        break;
+                    case "xml":
+                        try
+                        {
+                            StreamReader reader = new StreamReader(new FileStream(args[1], FileMode.Open));
+                            FileCabinetServiceSnapshot snapshot = new FileCabinetServiceSnapshot();
+                            snapshot.LoadFromXml(reader);
+                            int importedRecordsCount = Program.fileCabinetService.Restore(snapshot);
+                            Console.WriteLine("{0} records were imported from {1}.", importedRecordsCount, args[1]);
+                            reader.Close();
+                        }
+                        catch (DirectoryNotFoundException)
+                        {
+                            Console.WriteLine("Import error: file {0} is not exist.", args[1]);
+                        }
+                        catch (FileNotFoundException)
+                        {
+                            Console.WriteLine("Import error: file {0} is not exist.", args[1]);
+                        }
+
+                        break;
                 }
             }
         }

@@ -41,7 +41,7 @@ namespace FileCabinetApp
         /// <exception cref="ArgumentException()">Thrown when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
         /// <exception cref="ArgumentNullException()">Thrown when firstname or lastname is null.</exception>
         /// <returns>The id of the created record.</returns>
-        public int CreateRecord(FileCabinetRecordInfo recordInfo)
+        public int CreateRecord(FileCabinetRecord recordInfo)
         {
             this.validator.ValidateParameters(recordInfo);
 
@@ -56,48 +56,7 @@ namespace FileCabinetApp
                 FavouriteSymbol = recordInfo.FavouriteSymbol,
             };
 
-            List<FileCabinetRecord> listOfFirstNames;
-            if (this.firstNameDictionary.TryGetValue(record.FirstName?.ToLower(null), out listOfFirstNames))
-            {
-                listOfFirstNames.Add(record);
-            }
-            else
-            {
-                listOfFirstNames = new List<FileCabinetRecord>
-                {
-                    record,
-                };
-                this.firstNameDictionary.Add(record.FirstName.ToLower(null), listOfFirstNames);
-            }
-
-            List<FileCabinetRecord> listOfLastNames;
-            if (this.lastNameDictionary.TryGetValue(record.LastName?.ToLower(null), out listOfLastNames))
-            {
-                listOfLastNames.Add(record);
-            }
-            else
-            {
-                listOfLastNames = new List<FileCabinetRecord>
-                {
-                    record,
-                };
-                this.lastNameDictionary.Add(record.LastName.ToLower(null), listOfLastNames);
-            }
-
-            List<FileCabinetRecord> listOfDateOfBirth;
-            if (this.dateOfBirthDictionary.TryGetValue(record.DateOfBirth, out listOfDateOfBirth))
-            {
-                listOfDateOfBirth.Add(record);
-            }
-            else
-            {
-                listOfDateOfBirth = new List<FileCabinetRecord>
-                {
-                    record,
-                };
-                this.dateOfBirthDictionary.Add(record.DateOfBirth, listOfDateOfBirth);
-            }
-
+            this.PopulateDictionariesWithRecord(record);
             this.list.Add(record);
 
             return record.Id;
@@ -175,7 +134,7 @@ namespace FileCabinetApp
         /// <param name="recordInfo">The record information.</param>
         /// <exception cref="ArgumentException()">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
         /// <exception cref="ArgumentNullException()">Thrown when firstname or lastname is null.</exception>
-        public void EditRecord(FileCabinetRecordInfo recordInfo)
+        public void EditRecord(FileCabinetRecord recordInfo)
         {
             var indexToEdit = this.list.FindIndex((record) => record.Id == recordInfo.Id);
             if (indexToEdit == -1)
@@ -302,6 +261,87 @@ namespace FileCabinetApp
         public FileCabinetServiceSnapshot MakeSnapshot()
         {
             return new FileCabinetServiceSnapshot(this.list.ToArray());
+        }
+
+        /// <summary>
+        /// Restores the state of records from the snapshot.
+        /// </summary>
+        /// <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
+        /// <returns>The amount of imported records.</returns>
+        public int Restore(FileCabinetServiceSnapshot fileCabinetServiceSnapshot)
+        {
+            int importedRecordsCount = 0;
+            var importedRecords = new List<FileCabinetRecord>(fileCabinetServiceSnapshot.Records);
+            foreach (var record in importedRecords)
+            {
+                try
+                {
+                    this.validator.ValidateParameters(record);
+                    var updateRecord = this.list.Find(r => r.Id == record.Id);
+                    if (updateRecord != null)
+                    {
+                        this.EditRecord(record);
+                    }
+                    else
+                    {
+                        this.list.Add(record);
+                        this.PopulateDictionariesWithRecord(record);
+                    }
+
+                    importedRecordsCount++;
+                }
+                catch (ArgumentException argException)
+                {
+                    Console.WriteLine($"Validation failed at importing record with ID #{record.Id} with message: {argException.Message}");
+                }
+            }
+
+            return importedRecordsCount;
+        }
+
+        private void PopulateDictionariesWithRecord(FileCabinetRecord record)
+        {
+            List<FileCabinetRecord> listOfFirstNames;
+            if (this.firstNameDictionary.TryGetValue(record.FirstName?.ToLower(null), out listOfFirstNames))
+            {
+                listOfFirstNames.Add(record);
+            }
+            else
+            {
+                listOfFirstNames = new List<FileCabinetRecord>
+                {
+                    record,
+                };
+                this.firstNameDictionary.Add(record.FirstName.ToLower(null), listOfFirstNames);
+            }
+
+            List<FileCabinetRecord> listOfLastNames;
+            if (this.lastNameDictionary.TryGetValue(record.LastName?.ToLower(null), out listOfLastNames))
+            {
+                listOfLastNames.Add(record);
+            }
+            else
+            {
+                listOfLastNames = new List<FileCabinetRecord>
+                {
+                    record,
+                };
+                this.lastNameDictionary.Add(record.LastName.ToLower(null), listOfLastNames);
+            }
+
+            List<FileCabinetRecord> listOfDateOfBirth;
+            if (this.dateOfBirthDictionary.TryGetValue(record.DateOfBirth, out listOfDateOfBirth))
+            {
+                listOfDateOfBirth.Add(record);
+            }
+            else
+            {
+                listOfDateOfBirth = new List<FileCabinetRecord>
+                {
+                    record,
+                };
+                this.dateOfBirthDictionary.Add(record.DateOfBirth, listOfDateOfBirth);
+            }
         }
     }
 }

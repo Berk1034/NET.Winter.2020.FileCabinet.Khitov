@@ -85,6 +85,6 @@ namespace FileCabinetApp
         /// Validates the parameters.
         /// </summary>
         /// <param name="recordInfo">The record information for validation.</param>
-        public void ValidateParameters(FileCabinetRecordInfo recordInfo);
+        public void ValidateParameters(FileCabinetRecord recordInfo);
     }
 }

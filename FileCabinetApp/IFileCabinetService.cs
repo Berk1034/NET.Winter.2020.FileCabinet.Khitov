@@ -23,7 +23,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="recordInfo">The record information.</param>
         /// <returns>The id of the created record.</returns>
-        public int CreateRecord(FileCabinetRecordInfo recordInfo);
+        public int CreateRecord(FileCabinetRecord recordInfo);
 
         /// <summary>
         /// Gets all the records.
@@ -56,7 +56,7 @@ namespace FileCabinetApp
         /// Edits the record.
         /// </summary>
         /// <param name="recordInfo">The record information.</param>
-        public void EditRecord(FileCabinetRecordInfo recordInfo);
+        public void EditRecord(FileCabinetRecord recordInfo);
 
         /// <summary>
         /// Gets amount of records.
@@ -69,5 +69,12 @@ namespace FileCabinetApp
         /// </summary>
         /// <returns>The snapshot of file cabinet service.</returns>
         public FileCabinetServiceSnapshot MakeSnapshot();
+
+        /// <summary>
+        /// Restores the state of records from the snapshot.
+        /// </summary>
+        /// <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
+        /// <returns>The amount of imported records.</returns>
+        public int Restore(FileCabinetServiceSnapshot fileCabinetServiceSnapshot);
     }
 }
