@@ -128,7 +128,7 @@ namespace FileCabinetGenerator
 
             var randomisedTimeSpan = new TimeSpan(Convert.ToInt64(rnd.NextDouble() * range.Ticks));
 
-            return from + randomisedTimeSpan;
+            return (from + randomisedTimeSpan).Date;
         }
         
         public static char NextChar(this Random rnd, char exclude)
