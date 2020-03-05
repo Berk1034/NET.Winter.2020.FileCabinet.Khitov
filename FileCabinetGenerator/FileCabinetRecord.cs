@@ -33,4 +33,13 @@ namespace FileCabinetGenerator
             set => FavouriteSymbol = value[0];
         }
     }
+
+    public class Name
+    {
+        [XmlAttribute("first")]
+        public string FirstName { get; set; }
+
+        [XmlAttribute("last")]
+        public string LastName { get; set; }
+    }
 }
