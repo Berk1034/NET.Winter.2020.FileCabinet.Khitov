@@ -41,7 +41,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="recordInfo">The record information.</param>
         /// <returns>The id of the created record.</returns>
-        public int CreateRecord(FileCabinetRecordInfo recordInfo)
+        public int CreateRecord(FileCabinetRecord recordInfo)
         {
             this.validator.ValidateParameters(recordInfo);
 
@@ -74,7 +74,7 @@ namespace FileCabinetApp
         /// Edits the record.
         /// </summary>
         /// <param name="recordInfo">The record information.</param>
-        public void EditRecord(FileCabinetRecordInfo recordInfo)
+        public void EditRecord(FileCabinetRecord recordInfo)
         {
             this.validator.ValidateParameters(recordInfo);
 
@@ -334,6 +334,79 @@ namespace FileCabinetApp
         public FileCabinetServiceSnapshot MakeSnapshot()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Restores the state of records from the snapshot.
+        /// </summary>
+        /// <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
+        /// <returns>The amount of imported records.</returns>
+        public int Restore(FileCabinetServiceSnapshot fileCabinetServiceSnapshot)
+        {
+            int importedRecordsCount = 0;
+            var importedRecords = new List<FileCabinetRecord>(fileCabinetServiceSnapshot.Records);
+            foreach (var record in importedRecords)
+            {
+                try
+                {
+                    this.validator.ValidateParameters(record);
+                    if (this.ContainsID(record.Id))
+                    {
+                        this.EditRecord(record);
+                    }
+                    else
+                    {
+                        using (var writer = new BinaryWriter(this.fileStream, Encoding.ASCII, true))
+                        {
+                            writer.BaseStream.Seek(0, SeekOrigin.End);
+                            var position = writer.BaseStream.Position;
+                            int amountOfRecords = (int)writer.BaseStream.Length / RecordSize;
+                            short reseved = 0;
+                            writer.Write(reseved);
+                            writer.Write(record.Id);
+                            writer.Write(record.FirstName);
+                            writer.Seek((RecordSize * amountOfRecords) + 126, SeekOrigin.Begin);
+                            writer.Write(record.LastName);
+                            writer.Seek((RecordSize * amountOfRecords) + 246, SeekOrigin.Begin);
+                            writer.Write(record.DateOfBirth.Year);
+                            writer.Write(record.DateOfBirth.Month);
+                            writer.Write(record.DateOfBirth.Day);
+                            writer.Write(record.Grade);
+                            writer.Write(record.Height);
+                            writer.Write(record.FavouriteSymbol);
+                        }
+                    }
+
+                    importedRecordsCount++;
+                }
+                catch (ArgumentException argException)
+                {
+                    Console.WriteLine($"Validation failed at importing record with ID #{record.Id} with message: {argException.Message}");
+                }
+            }
+
+            return importedRecordsCount;
+        }
+
+        private bool ContainsID(int id)
+        {
+            using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
+            {
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                while (reader.PeekChar() > -1)
+                {
+                    reader.BaseStream.Seek(2, SeekOrigin.Current);
+                    int recordID = reader.ReadInt32();
+                    if (id == recordID)
+                    {
+                        return true;
+                    }
+
+                    reader.BaseStream.Seek(RecordSize - 6, SeekOrigin.Current);
+                }
+
+                return false;
+            }
         }
     }
 }
