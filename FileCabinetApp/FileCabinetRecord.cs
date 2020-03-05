@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace FileCabinetApp
 {
     /// <summary>
     /// The FileCabinetRecord class.
     /// </summary>
+    [XmlType("record")]
     public class FileCabinetRecord
     {
         /// <summary>
@@ -13,23 +15,17 @@ namespace FileCabinetApp
         /// <value>
         /// The identificator of the record.
         /// </value>
+        [XmlAttribute("id")]
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the first name of the record holder.
+        /// Gets or sets the name information of the record holder.
         /// </summary>
         /// <value>
-        /// The first name of the record.
+        /// The name information of the record holder.
         /// </value>
-        public string FirstName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the last name of the record holder.
-        /// </summary>
-        /// <value>
-        /// The last name of the record.
-        /// </value>
-        public string LastName { get; set; }
+        [XmlElement("name")]
+        public Name Name { get; set; }
 
         /// <summary>
         /// Gets or sets the date of birth of the record holder.
@@ -37,6 +33,7 @@ namespace FileCabinetApp
         /// <value>
         /// The date of birth of the record.
         /// </value>
+        [XmlElement("dateOfBirth")]
         public DateTime DateOfBirth { get; set; }
 
         /// <summary>
@@ -45,6 +42,7 @@ namespace FileCabinetApp
         /// <value>
         /// The grade of the record.
         /// </value>
+        [XmlElement("grade")]
         public short Grade { get; set; }
 
         /// <summary>
@@ -53,6 +51,7 @@ namespace FileCabinetApp
         /// <value>
         /// The height of the record.
         /// </value>
+        [XmlElement("height")]
         public decimal Height { get; set; }
 
         /// <summary>
@@ -61,6 +60,20 @@ namespace FileCabinetApp
         /// <value>
         /// The favourite symbol of the record.
         /// </value>
+        [XmlIgnore]
         public char FavouriteSymbol { get; set; }
+
+        /// <summary>
+        /// Gets or sets the FavouriteSymbol.
+        /// </summary>
+        /// <value>
+        /// The FavouriteSymbol.
+        /// </value>
+        [XmlElement("favouriteSymbol")]
+        public string FavouriteSymbolString
+        {
+            get => this.FavouriteSymbol.ToString();
+            set => this.FavouriteSymbol = value[0];
+        }
     }
 }

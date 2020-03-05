@@ -30,8 +30,8 @@ namespace FileCabinetApp
             this.writer.WriteStartElement("record");
             this.writer.WriteAttributeString("id", record.Id.ToString());
             this.writer.WriteStartElement("name");
-            this.writer.WriteAttributeString("first", record.FirstName);
-            this.writer.WriteAttributeString("last", record.LastName);
+            this.writer.WriteAttributeString("first", record.Name.FirstName);
+            this.writer.WriteAttributeString("last", record.Name.LastName);
             this.writer.WriteEndElement();
             this.writer.WriteStartElement("dateOfBirth");
             this.writer.WriteString(record.DateOfBirth.ToString("MM'/'dd'/'yyyy", null));

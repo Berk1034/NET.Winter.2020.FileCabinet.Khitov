@@ -73,7 +73,15 @@
             The value of DateTime.Now.
             </value>
         </member>
-        <member name="M:FileCabinetApp.CustomValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+        <member name="P:FileCabinetApp.CustomValidator.ExcludeChar">
+            <summary>
+            Gets the value of BannedChar const.
+            </summary>
+            <value>
+            The value of BannedChar const.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.CustomValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Validates the record information.
             </summary>
@@ -150,7 +158,15 @@
             The value of DateTime.Now.
             </value>
         </member>
-        <member name="M:FileCabinetApp.DefaultValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+        <member name="P:FileCabinetApp.DefaultValidator.ExcludeChar">
+            <summary>
+            Gets the value of BannedChar const.
+            </summary>
+            <value>
+            The value of BannedChar const.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.DefaultValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Validates the record information.
             </summary>
@@ -198,14 +214,14 @@
             The validator.
             </value>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetFilesystemService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.CreateRecord(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Creates the record.
             </summary>
             <param name="recordInfo">The record information.</param>
             <returns>The id of the created record.</returns>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetFilesystemService.EditRecord(FileCabinetApp.FileCabinetRecordInfo)">
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.EditRecord(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Edits the record.
             </summary>
@@ -250,6 +266,13 @@
             </summary>
             <returns>The snapshot of the current state of records.</returns>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.Restore(FileCabinetApp.FileCabinetServiceSnapshot)">
+            <summary>
+            Restores the state of records from the snapshot.
+            </summary>
+            <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
+            <returns>The amount of imported records.</returns>
+        </member>
         <member name="T:FileCabinetApp.FileCabinetMemoryService">
             <summary>
             The FileCabinetService class.
@@ -269,7 +292,7 @@
             The validator.
             </value>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetMemoryService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
+        <member name="M:FileCabinetApp.FileCabinetMemoryService.CreateRecord(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Creates the record.
             </summary>
@@ -305,7 +328,7 @@
             <param name="dateOfBirth">The date of birth to find the records by it.</param>
             <returns>The ReadOnlyCollection of found records.</returns>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetMemoryService.EditRecord(FileCabinetApp.FileCabinetRecordInfo)">
+        <member name="M:FileCabinetApp.FileCabinetMemoryService.EditRecord(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Edits the record.
             </summary>
@@ -325,6 +348,13 @@
             </summary>
             <returns>The snapshot of the current state of records.</returns>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetMemoryService.Restore(FileCabinetApp.FileCabinetServiceSnapshot)">
+            <summary>
+            Restores the state of records from the snapshot.
+            </summary>
+            <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
+            <returns>The amount of imported records.</returns>
+        </member>
         <member name="T:FileCabinetApp.FileCabinetRecord">
             <summary>
             The FileCabinetRecord class.
@@ -338,20 +368,12 @@
             The identificator of the record.
             </value>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetRecord.FirstName">
+        <member name="P:FileCabinetApp.FileCabinetRecord.Name">
             <summary>
-            Gets or sets the first name of the record holder.
+            Gets or sets the name information of the record holder.
             </summary>
             <value>
-            The first name of the record.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetRecord.LastName">
-            <summary>
-            Gets or sets the last name of the record holder.
-            </summary>
-            <value>
-            The last name of the record.
+            The name information of the record holder.
             </value>
         </member>
         <member name="P:FileCabinetApp.FileCabinetRecord.DateOfBirth">
@@ -386,6 +408,31 @@
             The favourite symbol of the record.
             </value>
         </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.FavouriteSymbolString">
+            <summary>
+            Gets or sets the FavouriteSymbol.
+            </summary>
+            <value>
+            The FavouriteSymbol.
+            </value>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetRecordCsvReader">
+            <summary>
+            The FileCabinetRecordCsvReader class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecordCsvReader.#ctor(System.IO.StreamReader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetRecordCsvReader"/> class.
+            </summary>
+            <param name="reader">The reader.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecordCsvReader.ReadAll">
+            <summary>
+            Reads all the lines from reader.
+            </summary>
+            <returns>The IList of records.</returns>
+        </member>
         <member name="T:FileCabinetApp.FileCabinetRecordCsvWriter">
             <summary>
             The FileCabinetRecordCsvWriter class.
@@ -403,66 +450,22 @@
             </summary>
             <param name="record">The record to be written.</param>
         </member>
-        <member name="T:FileCabinetApp.FileCabinetRecordInfo">
+        <member name="T:FileCabinetApp.FileCabinetRecordXmlReader">
             <summary>
-            The FileCabinetRecordInfo class.
+            The FileCabinetRecordXmlReader class.
             </summary>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetRecordInfo.Id">
+        <member name="M:FileCabinetApp.FileCabinetRecordXmlReader.#ctor(System.Xml.XmlReader)">
             <summary>
-            Gets or sets the identificator of the record holder.
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetRecordXmlReader"/> class.
             </summary>
-            <value>
-            The identificator of the record.
-            </value>
+            <param name="reader">The reader.</param>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetRecordInfo.FirstName">
+        <member name="M:FileCabinetApp.FileCabinetRecordXmlReader.ReadAll">
             <summary>
-            Gets or sets the first name of the record holder.
+            Reads all the records from reader.
             </summary>
-            <value>
-            The first name of the record.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetRecordInfo.LastName">
-            <summary>
-            Gets or sets the last name of the record holder.
-            </summary>
-            <value>
-            The last name of the record.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetRecordInfo.DateOfBirth">
-            <summary>
-            Gets or sets the date of birth of the record holder.
-            </summary>
-            <value>
-            The date of birth of the record.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetRecordInfo.Grade">
-            <summary>
-            Gets or sets the grade of the record holder.
-            </summary>
-            <value>
-            The grade of the record.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetRecordInfo.Height">
-            <summary>
-            Gets or sets the height of the record holder.
-            </summary>
-            <value>
-            The height of the record.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetRecordInfo.FavouriteSymbol">
-            <summary>
-            Gets or sets the favourite symbol of the record holder.
-            </summary>
-            <value>
-            The favourite symbol of the record.
-            </value>
+            <returns>The IList of records.</returns>
         </member>
         <member name="T:FileCabinetApp.FileCabinetRecordXmlWriter">
             <summary>
@@ -492,17 +495,42 @@
             </summary>
             <param name="records">The array of records.</param>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetServiceSnapshot.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetServiceSnapshot"/> class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetServiceSnapshot.Records">
+            <summary>
+            Gets the records.
+            </summary>
+            <value>
+            The records.
+            </value>
+        </member>
         <member name="M:FileCabinetApp.FileCabinetServiceSnapshot.SaveToCsv(System.IO.StreamWriter)">
             <summary>
             Saves data to csv file.
             </summary>
             <param name="writer">The stream for file-writing.</param>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetServiceSnapshot.LoadFromCsv(System.IO.StreamReader)">
+            <summary>
+            Loads data from csv file.
+            </summary>
+            <param name="reader">The stream for file-reading.</param>
+        </member>
         <member name="M:FileCabinetApp.FileCabinetServiceSnapshot.SaveToXml(System.IO.StreamWriter)">
             <summary>
             Saves data to xml file.
             </summary>
             <param name="writer">The stream for file-writing.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetServiceSnapshot.LoadFromXml(System.IO.StreamReader)">
+            <summary>
+            Loads data from xml file.
+            </summary>
+            <param name="reader">The stream for file-reading.</param>
         </member>
         <member name="T:FileCabinetApp.IFileCabinetService">
             <summary>
@@ -517,7 +545,7 @@
             The validator.
             </value>
         </member>
-        <member name="M:FileCabinetApp.IFileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecordInfo)">
+        <member name="M:FileCabinetApp.IFileCabinetService.CreateRecord(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Creates the record.
             </summary>
@@ -551,7 +579,7 @@
             <param name="dateOfBirth">The date of birth to find the records by it.</param>
             <returns>The ReadOnlyCollection of found records.</returns>
         </member>
-        <member name="M:FileCabinetApp.IFileCabinetService.EditRecord(FileCabinetApp.FileCabinetRecordInfo)">
+        <member name="M:FileCabinetApp.IFileCabinetService.EditRecord(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Edits the record.
             </summary>
@@ -568,6 +596,13 @@
             Makes the snapshot of current records.
             </summary>
             <returns>The snapshot of file cabinet service.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.Restore(FileCabinetApp.FileCabinetServiceSnapshot)">
+            <summary>
+            Restores the state of records from the snapshot.
+            </summary>
+            <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
+            <returns>The amount of imported records.</returns>
         </member>
         <member name="T:FileCabinetApp.IRecordValidator">
             <summary>
@@ -638,11 +673,40 @@
             The value of maximal DateTime.
             </value>
         </member>
-        <member name="M:FileCabinetApp.IRecordValidator.ValidateParameters(FileCabinetApp.FileCabinetRecordInfo)">
+        <member name="P:FileCabinetApp.IRecordValidator.ExcludeChar">
+            <summary>
+            Gets the value of exclude char.
+            </summary>
+            <value>
+            The value of exclude char.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.IRecordValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Validates the parameters.
             </summary>
             <param name="recordInfo">The record information for validation.</param>
+        </member>
+        <member name="T:FileCabinetApp.Name">
+            <summary>
+            The Name class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.Name.FirstName">
+            <summary>
+            Gets or sets the first name.
+            </summary>
+            <value>
+            The first name.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.Name.LastName">
+            <summary>
+            Gets or sets the last name.
+            </summary>
+            <value>
+            The last name.
+            </value>
         </member>
         <member name="T:FileCabinetApp.Program">
             <summary>
