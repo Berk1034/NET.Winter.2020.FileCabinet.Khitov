@@ -474,6 +474,11 @@ namespace FileCabinetApp
 
         private static Tuple<bool, string, char> CharConverter(string source)
         {
+            if (source is null || source.Length == 0)
+            {
+                return new Tuple<bool, string, char>(false, source, ' ');
+            }
+
             return new Tuple<bool, string, char>(true, source, source[0]);
         }
 
