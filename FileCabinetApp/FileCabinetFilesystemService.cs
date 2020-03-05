@@ -55,9 +55,9 @@ namespace FileCabinetApp
                 short reseved = 0;
                 writer.Write(reseved);
                 writer.Write(recordId);
-                writer.Write(recordInfo.FirstName);
+                writer.Write(recordInfo.Name.FirstName);
                 writer.Seek((RecordSize * amountOfRecords) + 126, SeekOrigin.Begin);
-                writer.Write(recordInfo.LastName);
+                writer.Write(recordInfo.Name.LastName);
                 writer.Seek((RecordSize * amountOfRecords) + 246, SeekOrigin.Begin);
                 writer.Write(recordInfo.DateOfBirth.Year);
                 writer.Write(recordInfo.DateOfBirth.Month);
@@ -95,10 +95,10 @@ namespace FileCabinetApp
                         }
                     }
 
-                    writer.Write(recordInfo.FirstName);
-                    writer.Seek(120 - recordInfo.FirstName.Length - 1, SeekOrigin.Current);
-                    writer.Write(recordInfo.LastName);
-                    writer.Seek(120 - recordInfo.LastName.Length - 1, SeekOrigin.Current);
+                    writer.Write(recordInfo.Name.FirstName);
+                    writer.Seek(120 - recordInfo.Name.FirstName.Length - 1, SeekOrigin.Current);
+                    writer.Write(recordInfo.Name.LastName);
+                    writer.Seek(120 - recordInfo.Name.LastName.Length - 1, SeekOrigin.Current);
                     writer.Write(recordInfo.DateOfBirth.Year);
                     writer.Write(recordInfo.DateOfBirth.Month);
                     writer.Write(recordInfo.DateOfBirth.Day);
@@ -147,8 +147,11 @@ namespace FileCabinetApp
                             var record = new FileCabinetRecord()
                             {
                                 Id = id,
-                                FirstName = firstName,
-                                LastName = lastName,
+                                Name = new Name
+                                {
+                                    FirstName = firstName,
+                                    LastName = lastName,
+                                },
                                 DateOfBirth = new DateTime(year, month, day),
                                 Grade = grade,
                                 Height = height,
@@ -203,8 +206,11 @@ namespace FileCabinetApp
                         var record = new FileCabinetRecord()
                         {
                             Id = id,
-                            FirstName = firstName,
-                            LastName = lastName,
+                            Name = new Name
+                            {
+                                FirstName = firstName,
+                                LastName = lastName,
+                            },
                             DateOfBirth = new DateTime(year, month, day),
                             Grade = grade,
                             Height = height,
@@ -254,8 +260,11 @@ namespace FileCabinetApp
                         var record = new FileCabinetRecord()
                         {
                             Id = id,
-                            FirstName = firstName,
-                            LastName = lastName,
+                            Name = new Name
+                            {
+                                FirstName = firstName,
+                                LastName = lastName,
+                            },
                             DateOfBirth = new DateTime(year, month, day),
                             Grade = grade,
                             Height = height,
@@ -301,8 +310,11 @@ namespace FileCabinetApp
                     var record = new FileCabinetRecord()
                     {
                         Id = id,
-                        FirstName = firstName,
-                        LastName = lastName,
+                        Name = new Name
+                        {
+                            FirstName = firstName,
+                            LastName = lastName,
+                        },
                         DateOfBirth = new DateTime(year, month, day),
                         Grade = grade,
                         Height = height,
@@ -364,9 +376,9 @@ namespace FileCabinetApp
                             short reseved = 0;
                             writer.Write(reseved);
                             writer.Write(record.Id);
-                            writer.Write(record.FirstName);
+                            writer.Write(record.Name.FirstName);
                             writer.Seek((RecordSize * amountOfRecords) + 126, SeekOrigin.Begin);
-                            writer.Write(record.LastName);
+                            writer.Write(record.Name.LastName);
                             writer.Seek((RecordSize * amountOfRecords) + 246, SeekOrigin.Begin);
                             writer.Write(record.DateOfBirth.Year);
                             writer.Write(record.DateOfBirth.Month);

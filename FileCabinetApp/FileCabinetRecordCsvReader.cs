@@ -41,8 +41,11 @@ namespace FileCabinetApp
                 var record = new FileCabinetRecord()
                 {
                     Id = Convert.ToInt32(values[0]),
-                    FirstName = values[1],
-                    LastName = values[2],
+                    Name = new Name
+                    {
+                        FirstName = values[1],
+                        LastName = values[2],
+                    },
                     DateOfBirth = DateTime.ParseExact(values[3], "MM/dd/yyyy", null),
                     Grade = Convert.ToInt16(values[4]),
                     Height = Convert.ToDecimal(values[5] + ',' + values[6]),

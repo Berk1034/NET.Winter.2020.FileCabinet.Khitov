@@ -105,7 +105,13 @@ namespace FileCabinetApp
         /// <param name="reader">The stream for file-reading.</param>
         public void LoadFromXml(StreamReader reader)
         {
-            throw new NotImplementedException();
+            var xmlReader = XmlReader.Create(reader as TextReader);
+            var xmlRecordReader = new FileCabinetRecordXmlReader(xmlReader);
+
+            var importedRecords = xmlRecordReader.ReadAll();
+            var indexToAddRecords = this.records.Length;
+            Array.Resize(ref this.records, this.records.Length + importedRecords.Count);
+            importedRecords.CopyTo(this.records, indexToAddRecords);
         }
     }
 }

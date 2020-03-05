@@ -103,34 +103,34 @@ namespace FileCabinetApp
                 throw new ArgumentNullException(nameof(recordInfo), "Record information is null.");
             }
 
-            if (recordInfo.FirstName is null)
+            if (recordInfo.Name.FirstName is null)
             {
-                throw new ArgumentNullException(nameof(recordInfo.FirstName), "Firstname can't be null.");
+                throw new ArgumentNullException(nameof(recordInfo.Name.FirstName), "Firstname can't be null.");
             }
 
-            if (recordInfo.FirstName.Trim().Length == 0)
+            if (recordInfo.Name.FirstName.Trim().Length == 0)
             {
-                throw new ArgumentException("Firstname cannot contain only spaces.", nameof(recordInfo.FirstName));
+                throw new ArgumentException("Firstname cannot contain only spaces.", nameof(recordInfo.Name.FirstName));
             }
 
-            if (recordInfo.FirstName.Length < MinLengthInSymbols || recordInfo.FirstName.Length > MaxLengthInSymbols)
+            if (recordInfo.Name.FirstName.Length < MinLengthInSymbols || recordInfo.Name.FirstName.Length > MaxLengthInSymbols)
             {
-                throw new ArgumentException($"Firstname length should be in range [{MinLengthInSymbols};{MaxLengthInSymbols}].", nameof(recordInfo.FirstName));
+                throw new ArgumentException($"Firstname length should be in range [{MinLengthInSymbols};{MaxLengthInSymbols}].", nameof(recordInfo.Name.FirstName));
             }
 
-            if (recordInfo.LastName is null)
+            if (recordInfo.Name.LastName is null)
             {
-                throw new ArgumentNullException(nameof(recordInfo.LastName), "Lastname can't be null.");
+                throw new ArgumentNullException(nameof(recordInfo.Name.LastName), "Lastname can't be null.");
             }
 
-            if (recordInfo.LastName.Trim().Length == 0)
+            if (recordInfo.Name.LastName.Trim().Length == 0)
             {
-                throw new ArgumentException("Lastname cannot contain only spaces.", nameof(recordInfo.LastName));
+                throw new ArgumentException("Lastname cannot contain only spaces.", nameof(recordInfo.Name.LastName));
             }
 
-            if (recordInfo.LastName.Length < MinLengthInSymbols || recordInfo.LastName.Length > MaxLengthInSymbols)
+            if (recordInfo.Name.LastName.Length < MinLengthInSymbols || recordInfo.Name.LastName.Length > MaxLengthInSymbols)
             {
-                throw new ArgumentException($"Lastname length should be in range [{MinLengthInSymbols};{MaxLengthInSymbols}.", nameof(recordInfo.LastName));
+                throw new ArgumentException($"Lastname length should be in range [{MinLengthInSymbols};{MaxLengthInSymbols}.", nameof(recordInfo.Name.LastName));
             }
 
             if (recordInfo.DateOfBirth < this.MinimalDate || recordInfo.DateOfBirth > this.MaximalDate)

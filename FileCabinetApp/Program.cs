@@ -193,7 +193,7 @@ namespace FileCabinetApp
             Console.Write("Favourite symbol: ");
             var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
-            var recordId = Program.fileCabinetService.CreateRecord(new FileCabinetRecord { FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+            var recordId = Program.fileCabinetService.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
             Console.WriteLine($"Record #{recordId} is created.");
         }
 
@@ -203,7 +203,7 @@ namespace FileCabinetApp
 
             foreach (var record in listOfRecords)
             {
-                Console.WriteLine($"#{record.Id}, {record.FirstName}, {record.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
+                Console.WriteLine($"#{record.Id}, {record.Name.FirstName}, {record.Name.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
             }
         }
 
@@ -231,7 +231,7 @@ namespace FileCabinetApp
 
                 for (int i = 0; i < searchResult.Count; i++)
                 {
-                    Console.WriteLine($"#{searchResult[i].Id}, {searchResult[i].FirstName}, {searchResult[i].LastName}, {searchResult[i].DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {searchResult[i].Grade}, {searchResult[i].Height}, {searchResult[i].FavouriteSymbol}");
+                    Console.WriteLine($"#{searchResult[i].Id}, {searchResult[i].Name.FirstName}, {searchResult[i].Name.LastName}, {searchResult[i].DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {searchResult[i].Grade}, {searchResult[i].Height}, {searchResult[i].FavouriteSymbol}");
                 }
             }
             else
@@ -276,7 +276,7 @@ namespace FileCabinetApp
                     Console.Write("Favourite symbol: ");
                     var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
-                    Program.fileCabinetService.EditRecord(new FileCabinetRecord { Id = listOfRecords[index].Id, FirstName = name, LastName = surname, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                    Program.fileCabinetService.EditRecord(new FileCabinetRecord { Id = listOfRecords[index].Id, Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
                     Console.WriteLine($"Record #{parameters} is updated.");
                 }
             }

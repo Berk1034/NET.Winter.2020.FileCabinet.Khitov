@@ -368,20 +368,12 @@
             The identificator of the record.
             </value>
         </member>
-        <member name="P:FileCabinetApp.FileCabinetRecord.FirstName">
+        <member name="P:FileCabinetApp.FileCabinetRecord.Name">
             <summary>
-            Gets or sets the first name of the record holder.
+            Gets or sets the name information of the record holder.
             </summary>
             <value>
-            The first name of the record.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.FileCabinetRecord.LastName">
-            <summary>
-            Gets or sets the last name of the record holder.
-            </summary>
-            <value>
-            The last name of the record.
+            The name information of the record holder.
             </value>
         </member>
         <member name="P:FileCabinetApp.FileCabinetRecord.DateOfBirth">
@@ -414,6 +406,14 @@
             </summary>
             <value>
             The favourite symbol of the record.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.FileCabinetRecord.FavouriteSymbolString">
+            <summary>
+            Gets or sets the FavouriteSymbol.
+            </summary>
+            <value>
+            The FavouriteSymbol.
             </value>
         </member>
         <member name="T:FileCabinetApp.FileCabinetRecordCsvReader">
@@ -449,6 +449,23 @@
             Writes record to csv file.
             </summary>
             <param name="record">The record to be written.</param>
+        </member>
+        <member name="T:FileCabinetApp.FileCabinetRecordXmlReader">
+            <summary>
+            The FileCabinetRecordXmlReader class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecordXmlReader.#ctor(System.Xml.XmlReader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetRecordXmlReader"/> class.
+            </summary>
+            <param name="reader">The reader.</param>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetRecordXmlReader.ReadAll">
+            <summary>
+            Reads all the records from reader.
+            </summary>
+            <returns>The IList of records.</returns>
         </member>
         <member name="T:FileCabinetApp.FileCabinetRecordXmlWriter">
             <summary>
@@ -669,6 +686,27 @@
             Validates the parameters.
             </summary>
             <param name="recordInfo">The record information for validation.</param>
+        </member>
+        <member name="T:FileCabinetApp.Name">
+            <summary>
+            The Name class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.Name.FirstName">
+            <summary>
+            Gets or sets the first name.
+            </summary>
+            <value>
+            The first name.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.Name.LastName">
+            <summary>
+            Gets or sets the last name.
+            </summary>
+            <value>
+            The last name.
+            </value>
         </member>
         <member name="T:FileCabinetApp.Program">
             <summary>

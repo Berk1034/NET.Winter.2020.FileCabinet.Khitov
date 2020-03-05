@@ -48,8 +48,11 @@ namespace FileCabinetApp
             var record = new FileCabinetRecord
             {
                 Id = this.list.Count + 1,
-                FirstName = recordInfo.FirstName,
-                LastName = recordInfo.LastName,
+                Name = new Name
+                {
+                    FirstName = recordInfo.Name.FirstName,
+                    LastName = recordInfo.Name.LastName,
+                },
                 DateOfBirth = recordInfo.DateOfBirth,
                 Grade = recordInfo.Grade,
                 Height = recordInfo.Height,
@@ -147,8 +150,11 @@ namespace FileCabinetApp
             var recordToEdit = new FileCabinetRecord
             {
                 Id = recordInfo.Id,
-                FirstName = recordInfo.FirstName,
-                LastName = recordInfo.LastName,
+                Name = new Name
+                {
+                    FirstName = recordInfo.Name.FirstName,
+                    LastName = recordInfo.Name.LastName,
+                },
                 DateOfBirth = recordInfo.DateOfBirth,
                 Grade = recordInfo.Grade,
                 Height = recordInfo.Height,
@@ -156,13 +162,13 @@ namespace FileCabinetApp
             };
 
             List<FileCabinetRecord> listOfFirstNames;
-            if (this.firstNameDictionary.TryGetValue(this.list[indexToEdit].FirstName.ToLower(null), out listOfFirstNames))
+            if (this.firstNameDictionary.TryGetValue(this.list[indexToEdit].Name.FirstName.ToLower(null), out listOfFirstNames))
             {
                 var indexToEditFirstNamesList = listOfFirstNames.FindIndex((record) => record.Id == recordInfo.Id);
                 listOfFirstNames.RemoveAt(indexToEditFirstNamesList);
 
                 List<FileCabinetRecord> newListOfFirstNames;
-                if (this.firstNameDictionary.TryGetValue(recordToEdit.FirstName?.ToLower(null), out newListOfFirstNames))
+                if (this.firstNameDictionary.TryGetValue(recordToEdit.Name.FirstName?.ToLower(null), out newListOfFirstNames))
                 {
                     newListOfFirstNames.Add(recordToEdit);
                 }
@@ -172,7 +178,7 @@ namespace FileCabinetApp
                     {
                         recordToEdit,
                     };
-                    this.firstNameDictionary.Add(recordToEdit.FirstName.ToLower(null), newListOfFirstNames);
+                    this.firstNameDictionary.Add(recordToEdit.Name.FirstName.ToLower(null), newListOfFirstNames);
                 }
             }
             else
@@ -181,17 +187,17 @@ namespace FileCabinetApp
                 {
                     recordToEdit,
                 };
-                this.firstNameDictionary.Add(recordToEdit.FirstName, listOfFirstNames);
+                this.firstNameDictionary.Add(recordToEdit.Name.FirstName, listOfFirstNames);
             }
 
             List<FileCabinetRecord> listOfLastNames;
-            if (this.lastNameDictionary.TryGetValue(this.list[indexToEdit].LastName.ToLower(null), out listOfLastNames))
+            if (this.lastNameDictionary.TryGetValue(this.list[indexToEdit].Name.LastName.ToLower(null), out listOfLastNames))
             {
                 var indexToEditLastNamesList = listOfLastNames.FindIndex((record) => record.Id == recordInfo.Id);
                 listOfLastNames.RemoveAt(indexToEditLastNamesList);
 
                 List<FileCabinetRecord> newListOfLastNames;
-                if (this.lastNameDictionary.TryGetValue(recordToEdit.LastName?.ToLower(null), out newListOfLastNames))
+                if (this.lastNameDictionary.TryGetValue(recordToEdit.Name.LastName?.ToLower(null), out newListOfLastNames))
                 {
                     newListOfLastNames.Add(recordToEdit);
                 }
@@ -201,7 +207,7 @@ namespace FileCabinetApp
                     {
                         recordToEdit,
                     };
-                    this.lastNameDictionary.Add(recordToEdit.LastName.ToLower(null), newListOfLastNames);
+                    this.lastNameDictionary.Add(recordToEdit.Name.LastName.ToLower(null), newListOfLastNames);
                 }
             }
             else
@@ -210,7 +216,7 @@ namespace FileCabinetApp
                 {
                     recordToEdit,
                 };
-                this.lastNameDictionary.Add(recordToEdit.LastName, listOfLastNames);
+                this.lastNameDictionary.Add(recordToEdit.Name.LastName, listOfLastNames);
             }
 
             List<FileCabinetRecord> listOfDateOfBirth;
@@ -302,7 +308,7 @@ namespace FileCabinetApp
         private void PopulateDictionariesWithRecord(FileCabinetRecord record)
         {
             List<FileCabinetRecord> listOfFirstNames;
-            if (this.firstNameDictionary.TryGetValue(record.FirstName?.ToLower(null), out listOfFirstNames))
+            if (this.firstNameDictionary.TryGetValue(record.Name.FirstName?.ToLower(null), out listOfFirstNames))
             {
                 listOfFirstNames.Add(record);
             }
@@ -312,11 +318,11 @@ namespace FileCabinetApp
                 {
                     record,
                 };
-                this.firstNameDictionary.Add(record.FirstName.ToLower(null), listOfFirstNames);
+                this.firstNameDictionary.Add(record.Name.FirstName.ToLower(null), listOfFirstNames);
             }
 
             List<FileCabinetRecord> listOfLastNames;
-            if (this.lastNameDictionary.TryGetValue(record.LastName?.ToLower(null), out listOfLastNames))
+            if (this.lastNameDictionary.TryGetValue(record.Name.LastName?.ToLower(null), out listOfLastNames))
             {
                 listOfLastNames.Add(record);
             }
@@ -326,7 +332,7 @@ namespace FileCabinetApp
                 {
                     record,
                 };
-                this.lastNameDictionary.Add(record.LastName.ToLower(null), listOfLastNames);
+                this.lastNameDictionary.Add(record.Name.LastName.ToLower(null), listOfLastNames);
             }
 
             List<FileCabinetRecord> listOfDateOfBirth;
