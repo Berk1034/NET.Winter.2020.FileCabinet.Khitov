@@ -266,6 +266,12 @@
             </summary>
             <returns>The snapshot of the current state of records.</returns>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.Remove(System.Int32)">
+            <summary>
+            Removes the record by id.
+            </summary>
+            <param name="id">The id of record to remove.</param>
+        </member>
         <member name="M:FileCabinetApp.FileCabinetFilesystemService.Restore(FileCabinetApp.FileCabinetServiceSnapshot)">
             <summary>
             Restores the state of records from the snapshot.
@@ -335,6 +341,12 @@
             <param name="recordInfo">The record information.</param>
             <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
             <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetMemoryService.Remove(System.Int32)">
+            <summary>
+            Removes the record by id.
+            </summary>
+            <param name="id">The id of record to remove.</param>
         </member>
         <member name="M:FileCabinetApp.FileCabinetMemoryService.GetStat">
             <summary>
@@ -584,6 +596,12 @@
             Edits the record.
             </summary>
             <param name="recordInfo">The record information.</param>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.Remove(System.Int32)">
+            <summary>
+            Removes the record by id.
+            </summary>
+            <param name="id">The id of record to remove.</param>
         </member>
         <member name="M:FileCabinetApp.IFileCabinetService.GetStat">
             <summary>

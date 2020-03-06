@@ -25,6 +25,7 @@ namespace FileCabinetApp
             new Tuple<string, Action<string>>("create", Create),
             new Tuple<string, Action<string>>("find", Find),
             new Tuple<string, Action<string>>("edit", Edit),
+            new Tuple<string, Action<string>>("remove", Remove),
             new Tuple<string, Action<string>>("list", List),
             new Tuple<string, Action<string>>("stat", Stat),
             new Tuple<string, Action<string>>("import", Import),
@@ -38,6 +39,7 @@ namespace FileCabinetApp
             new string[] { "create", "creates the record", "The 'create' command creates the record." },
             new string[] { "find", "finds the record by specified property", "The 'find' command finds the record by specified property." },
             new string[] { "edit", "allows to update the choosen record", "The 'edit' command allows to update the choosen record." },
+            new string[] { "remove", "allows to remove the choosen record", "The 'remove' command allows to remove the choosen record." },
             new string[] { "list", "provides the list of records", "The 'list' command provides the list of records." },
             new string[] { "stat", "provides the statistics of records", "The 'stat' command provides the statistics of records." },
             new string[] { "import", "allows to import the list of records from different formats", "The 'import' command allows to import the list of records from different formats." },
@@ -278,6 +280,30 @@ namespace FileCabinetApp
 
                     Program.fileCabinetService.EditRecord(new FileCabinetRecord { Id = listOfRecords[index].Id, Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
                     Console.WriteLine($"Record #{parameters} is updated.");
+                }
+            }
+        }
+
+        private static void Remove(string parameters)
+        {
+            var listOfRecords = new List<FileCabinetRecord>(Program.fileCabinetService.GetRecords());
+            int removeId;
+            bool parseSuccess = int.TryParse(parameters, out removeId);
+            if (!parseSuccess)
+            {
+                Console.WriteLine("You typed invalid symbols!");
+            }
+            else
+            {
+                int index = listOfRecords.FindIndex((record) => record.Id == removeId);
+                if (index == -1)
+                {
+                    Console.WriteLine($"Record #{parameters} doesn't exist.");
+                }
+                else
+                {
+                    Program.fileCabinetService.Remove(removeId);
+                    Console.WriteLine($"Record #{removeId} is removed.");
                 }
             }
         }

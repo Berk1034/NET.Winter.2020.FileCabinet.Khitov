@@ -49,9 +49,8 @@ namespace FileCabinetApp
             using (var writer = new BinaryWriter(this.fileStream, Encoding.ASCII, true))
             {
                 writer.BaseStream.Seek(0, SeekOrigin.End);
-                var position = writer.BaseStream.Position;
                 int amountOfRecords = (int)writer.BaseStream.Length / RecordSize;
-                recordId = amountOfRecords + 1;
+                recordId = this.FindLastID() + 1;
                 short reseved = 0;
                 writer.Write(reseved);
                 writer.Write(recordId);
@@ -84,27 +83,36 @@ namespace FileCabinetApp
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
                 using (var writer = new BinaryWriter(this.fileStream, Encoding.ASCII, true))
                 {
-                    while (id != recordInfo.Id)
+                    while (reader.PeekChar() > -1 && id != recordInfo.Id)
                     {
-                        var position = reader.BaseStream.Position;
-                        reader.BaseStream.Seek(2, SeekOrigin.Current);
-                        id = reader.ReadInt32();
-                        if (id != recordInfo.Id)
+                        int deleted = reader.ReadInt16();
+                        if (deleted == 0)
                         {
-                            reader.BaseStream.Seek(RecordSize - 6, SeekOrigin.Current);
+                            id = reader.ReadInt32();
+                            if (id != recordInfo.Id)
+                            {
+                                reader.BaseStream.Seek(RecordSize - 6, SeekOrigin.Current);
+                            }
+                        }
+                        else
+                        {
+                            reader.BaseStream.Seek(RecordSize - 2, SeekOrigin.Current);
                         }
                     }
 
-                    writer.Write(recordInfo.Name.FirstName);
-                    writer.Seek(120 - recordInfo.Name.FirstName.Length - 1, SeekOrigin.Current);
-                    writer.Write(recordInfo.Name.LastName);
-                    writer.Seek(120 - recordInfo.Name.LastName.Length - 1, SeekOrigin.Current);
-                    writer.Write(recordInfo.DateOfBirth.Year);
-                    writer.Write(recordInfo.DateOfBirth.Month);
-                    writer.Write(recordInfo.DateOfBirth.Day);
-                    writer.Write(recordInfo.Grade);
-                    writer.Write(recordInfo.Height);
-                    writer.Write(recordInfo.FavouriteSymbol);
+                    if (id == recordInfo.Id)
+                    {
+                        writer.Write(recordInfo.Name.FirstName);
+                        writer.Seek(120 - recordInfo.Name.FirstName.Length - 1, SeekOrigin.Current);
+                        writer.Write(recordInfo.Name.LastName);
+                        writer.Seek(120 - recordInfo.Name.LastName.Length - 1, SeekOrigin.Current);
+                        writer.Write(recordInfo.DateOfBirth.Year);
+                        writer.Write(recordInfo.DateOfBirth.Month);
+                        writer.Write(recordInfo.DateOfBirth.Day);
+                        writer.Write(recordInfo.Grade);
+                        writer.Write(recordInfo.Height);
+                        writer.Write(recordInfo.FavouriteSymbol);
+                    }
                 }
             }
         }
@@ -126,42 +134,51 @@ namespace FileCabinetApp
                     reader.BaseStream.Seek(0, SeekOrigin.Begin);
                     while (reader.PeekChar() > -1)
                     {
-                        reader.BaseStream.Seek(246, SeekOrigin.Current);
-                        int year = reader.ReadInt32();
-                        int month = reader.ReadInt32();
-                        int day = reader.ReadInt32();
-                        DateTime recordDate = new DateTime(year, month, day);
-                        if (birthday == recordDate)
+                        int deleted = reader.ReadInt16();
+                        if (deleted == 0)
                         {
-                            reader.BaseStream.Seek(-256, SeekOrigin.Current);
-                            int id = reader.ReadInt32();
-                            string firstName = reader.ReadString();
-                            reader.BaseStream.Seek(120 - firstName.Length - 1, SeekOrigin.Current);
-                            string lastName = reader.ReadString();
-                            reader.BaseStream.Seek(120 - lastName.Length - 1, SeekOrigin.Current);
-                            reader.BaseStream.Seek(12, SeekOrigin.Current);
-                            short grade = reader.ReadInt16();
-                            decimal height = reader.ReadDecimal();
-                            char favouriteSymbol = reader.ReadChar();
-
-                            var record = new FileCabinetRecord()
+                            reader.BaseStream.Seek(-2, SeekOrigin.Current);
+                            reader.BaseStream.Seek(246, SeekOrigin.Current);
+                            int year = reader.ReadInt32();
+                            int month = reader.ReadInt32();
+                            int day = reader.ReadInt32();
+                            DateTime recordDate = new DateTime(year, month, day);
+                            if (birthday == recordDate)
                             {
-                                Id = id,
-                                Name = new Name
+                                reader.BaseStream.Seek(-256, SeekOrigin.Current);
+                                int id = reader.ReadInt32();
+                                string firstName = reader.ReadString();
+                                reader.BaseStream.Seek(120 - firstName.Length - 1, SeekOrigin.Current);
+                                string lastName = reader.ReadString();
+                                reader.BaseStream.Seek(120 - lastName.Length - 1, SeekOrigin.Current);
+                                reader.BaseStream.Seek(12, SeekOrigin.Current);
+                                short grade = reader.ReadInt16();
+                                decimal height = reader.ReadDecimal();
+                                char favouriteSymbol = reader.ReadChar();
+
+                                var record = new FileCabinetRecord()
                                 {
-                                    FirstName = firstName,
-                                    LastName = lastName,
-                                },
-                                DateOfBirth = new DateTime(year, month, day),
-                                Grade = grade,
-                                Height = height,
-                                FavouriteSymbol = favouriteSymbol,
-                            };
-                            listOfRecords.Add(record);
+                                    Id = id,
+                                    Name = new Name
+                                    {
+                                        FirstName = firstName,
+                                        LastName = lastName,
+                                    },
+                                    DateOfBirth = new DateTime(year, month, day),
+                                    Grade = grade,
+                                    Height = height,
+                                    FavouriteSymbol = favouriteSymbol,
+                                };
+                                listOfRecords.Add(record);
+                            }
+                            else
+                            {
+                                reader.BaseStream.Seek(RecordSize - 258, SeekOrigin.Current);
+                            }
                         }
                         else
                         {
-                            reader.BaseStream.Seek(RecordSize - 258, SeekOrigin.Current);
+                            reader.BaseStream.Seek(RecordSize - 2, SeekOrigin.Current);
                         }
                     }
                 }
@@ -187,40 +204,49 @@ namespace FileCabinetApp
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
                 while (reader.PeekChar() > -1)
                 {
-                    reader.BaseStream.Seek(6, SeekOrigin.Current);
-                    string recordFirstName = reader.ReadString();
-                    if (firstName == recordFirstName)
+                    int deleted = reader.ReadInt16();
+                    if (deleted == 0)
                     {
-                        reader.BaseStream.Seek(-(recordFirstName.Length + 5), SeekOrigin.Current);
-                        int id = reader.ReadInt32();
-                        reader.BaseStream.Seek(120, SeekOrigin.Current);
-                        string lastName = reader.ReadString();
-                        reader.BaseStream.Seek(120 - lastName.Length - 1, SeekOrigin.Current);
-                        int year = reader.ReadInt32();
-                        int month = reader.ReadInt32();
-                        int day = reader.ReadInt32();
-                        short grade = reader.ReadInt16();
-                        decimal height = reader.ReadDecimal();
-                        char favouriteSymbol = reader.ReadChar();
-
-                        var record = new FileCabinetRecord()
+                        reader.BaseStream.Seek(-2, SeekOrigin.Current);
+                        reader.BaseStream.Seek(6, SeekOrigin.Current);
+                        string recordFirstName = reader.ReadString();
+                        if (firstName == recordFirstName)
                         {
-                            Id = id,
-                            Name = new Name
+                            reader.BaseStream.Seek(-(recordFirstName.Length + 5), SeekOrigin.Current);
+                            int id = reader.ReadInt32();
+                            reader.BaseStream.Seek(120, SeekOrigin.Current);
+                            string lastName = reader.ReadString();
+                            reader.BaseStream.Seek(120 - lastName.Length - 1, SeekOrigin.Current);
+                            int year = reader.ReadInt32();
+                            int month = reader.ReadInt32();
+                            int day = reader.ReadInt32();
+                            short grade = reader.ReadInt16();
+                            decimal height = reader.ReadDecimal();
+                            char favouriteSymbol = reader.ReadChar();
+
+                            var record = new FileCabinetRecord()
                             {
-                                FirstName = firstName,
-                                LastName = lastName,
-                            },
-                            DateOfBirth = new DateTime(year, month, day),
-                            Grade = grade,
-                            Height = height,
-                            FavouriteSymbol = favouriteSymbol,
-                        };
-                        listOfRecords.Add(record);
+                                Id = id,
+                                Name = new Name
+                                {
+                                    FirstName = firstName,
+                                    LastName = lastName,
+                                },
+                                DateOfBirth = new DateTime(year, month, day),
+                                Grade = grade,
+                                Height = height,
+                                FavouriteSymbol = favouriteSymbol,
+                            };
+                            listOfRecords.Add(record);
+                        }
+                        else
+                        {
+                            reader.BaseStream.Seek(RecordSize - recordFirstName.Length - 7, SeekOrigin.Current);
+                        }
                     }
                     else
                     {
-                        reader.BaseStream.Seek(RecordSize - recordFirstName.Length - 7, SeekOrigin.Current);
+                        reader.BaseStream.Seek(RecordSize - 2, SeekOrigin.Current);
                     }
                 }
             }
@@ -241,40 +267,49 @@ namespace FileCabinetApp
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
                 while (reader.PeekChar() > -1)
                 {
-                    reader.BaseStream.Seek(126, SeekOrigin.Current);
-                    string recordLastName = reader.ReadString();
-                    if (lastName == recordLastName)
+                    int deleted = reader.ReadInt16();
+                    if (deleted == 0)
                     {
-                        reader.BaseStream.Seek(-(120 + recordLastName.Length + 5), SeekOrigin.Current);
-                        int id = reader.ReadInt32();
-                        string firstName = reader.ReadString();
-                        reader.BaseStream.Seek(120 - firstName.Length - 1, SeekOrigin.Current);
-                        reader.BaseStream.Seek(120, SeekOrigin.Current);
-                        int year = reader.ReadInt32();
-                        int month = reader.ReadInt32();
-                        int day = reader.ReadInt32();
-                        short grade = reader.ReadInt16();
-                        decimal height = reader.ReadDecimal();
-                        char favouriteSymbol = reader.ReadChar();
-
-                        var record = new FileCabinetRecord()
+                        reader.BaseStream.Seek(-2, SeekOrigin.Current);
+                        reader.BaseStream.Seek(126, SeekOrigin.Current);
+                        string recordLastName = reader.ReadString();
+                        if (lastName == recordLastName)
                         {
-                            Id = id,
-                            Name = new Name
+                            reader.BaseStream.Seek(-(120 + recordLastName.Length + 5), SeekOrigin.Current);
+                            int id = reader.ReadInt32();
+                            string firstName = reader.ReadString();
+                            reader.BaseStream.Seek(120 - firstName.Length - 1, SeekOrigin.Current);
+                            reader.BaseStream.Seek(120, SeekOrigin.Current);
+                            int year = reader.ReadInt32();
+                            int month = reader.ReadInt32();
+                            int day = reader.ReadInt32();
+                            short grade = reader.ReadInt16();
+                            decimal height = reader.ReadDecimal();
+                            char favouriteSymbol = reader.ReadChar();
+
+                            var record = new FileCabinetRecord()
                             {
-                                FirstName = firstName,
-                                LastName = lastName,
-                            },
-                            DateOfBirth = new DateTime(year, month, day),
-                            Grade = grade,
-                            Height = height,
-                            FavouriteSymbol = favouriteSymbol,
-                        };
-                        listOfRecords.Add(record);
+                                Id = id,
+                                Name = new Name
+                                {
+                                    FirstName = firstName,
+                                    LastName = lastName,
+                                },
+                                DateOfBirth = new DateTime(year, month, day),
+                                Grade = grade,
+                                Height = height,
+                                FavouriteSymbol = favouriteSymbol,
+                            };
+                            listOfRecords.Add(record);
+                        }
+                        else
+                        {
+                            reader.BaseStream.Seek(RecordSize - recordLastName.Length - 7 - 120, SeekOrigin.Current);
+                        }
                     }
                     else
                     {
-                        reader.BaseStream.Seek(RecordSize - recordLastName.Length - 7 - 120, SeekOrigin.Current);
+                        reader.BaseStream.Seek(RecordSize - 2, SeekOrigin.Current);
                     }
                 }
             }
@@ -349,6 +384,35 @@ namespace FileCabinetApp
         }
 
         /// <summary>
+        /// Removes the record by id.
+        /// </summary>
+        /// <param name="id">The id of record to remove.</param>
+        public void Remove(int id)
+        {
+            int removeId = -1;
+            using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
+            {
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                using (var writer = new BinaryWriter(this.fileStream, Encoding.ASCII, true))
+                {
+                    while (id != removeId)
+                    {
+                        reader.BaseStream.Seek(2, SeekOrigin.Current);
+                        removeId = reader.ReadInt32();
+                        if (id != removeId)
+                        {
+                            reader.BaseStream.Seek(RecordSize - 6, SeekOrigin.Current);
+                        }
+                    }
+
+                    reader.BaseStream.Seek(-2 - 4, SeekOrigin.Current);
+                    short deleted = 4;
+                    writer.Write(deleted);
+                }
+            }
+        }
+
+        /// <summary>
         /// Restores the state of records from the snapshot.
         /// </summary>
         /// <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
@@ -419,6 +483,37 @@ namespace FileCabinetApp
 
                 return false;
             }
+        }
+
+        private int FindLastID()
+        {
+            int lastID = 0;
+            using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
+            {
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                while (reader.PeekChar() > -1)
+                {
+                    int deleted = reader.ReadInt16();
+                    if (deleted == 0)
+                    {
+                        reader.BaseStream.Seek(-2, SeekOrigin.Current);
+                        reader.BaseStream.Seek(2, SeekOrigin.Current);
+                        int recordID = reader.ReadInt32();
+                        if (lastID < recordID)
+                        {
+                            lastID = recordID;
+                        }
+
+                        reader.BaseStream.Seek(RecordSize - 6, SeekOrigin.Current);
+                    }
+                    else
+                    {
+                        reader.BaseStream.Seek(RecordSize - 2, SeekOrigin.Current);
+                    }
+                }
+            }
+
+            return lastID;
         }
     }
 }

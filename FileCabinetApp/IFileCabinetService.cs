@@ -59,6 +59,12 @@ namespace FileCabinetApp
         public void EditRecord(FileCabinetRecord recordInfo);
 
         /// <summary>
+        /// Removes the record by id.
+        /// </summary>
+        /// <param name="id">The id of record to remove.</param>
+        public void Remove(int id);
+
+        /// <summary>
         /// Gets amount of records.
         /// </summary>
         /// <returns>The total number of records.</returns>
