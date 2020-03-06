@@ -71,6 +71,11 @@ namespace FileCabinetApp
         public int GetStat();
 
         /// <summary>
+        /// Defragments the data file - removes the spaces in the data file.
+        /// </summary>
+        public void Purge();
+
+        /// <summary>
         /// Makes the snapshot of current records.
         /// </summary>
         /// <returns>The snapshot of file cabinet service.</returns>

@@ -292,6 +292,13 @@ namespace FileCabinetApp
         }
 
         /// <summary>
+        /// Does nothing.
+        /// </summary>
+        public void Purge()
+        {
+        }
+
+        /// <summary>
         /// Make the snapshot of the current state of records.
         /// </summary>
         /// <returns>The snapshot of the current state of records.</returns>

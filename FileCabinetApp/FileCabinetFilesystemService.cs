@@ -11,7 +11,7 @@ namespace FileCabinetApp
     /// <summary>
     /// The FileCabinetFilesystemService class.
     /// </summary>
-    public class FileCabinetFilesystemService : IFileCabinetService
+    public class FileCabinetFilesystemService : IFileCabinetService, IDisposable
     {
         private const int RecordSize = 277;
         private FileStream fileStream;
@@ -85,7 +85,7 @@ namespace FileCabinetApp
                 {
                     while (reader.PeekChar() > -1 && id != recordInfo.Id)
                     {
-                        int deleted = reader.ReadInt16();
+                        short deleted = reader.ReadInt16();
                         if (deleted == 0)
                         {
                             id = reader.ReadInt32();
@@ -134,7 +134,7 @@ namespace FileCabinetApp
                     reader.BaseStream.Seek(0, SeekOrigin.Begin);
                     while (reader.PeekChar() > -1)
                     {
-                        int deleted = reader.ReadInt16();
+                        short deleted = reader.ReadInt16();
                         if (deleted == 0)
                         {
                             reader.BaseStream.Seek(-2, SeekOrigin.Current);
@@ -204,7 +204,7 @@ namespace FileCabinetApp
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
                 while (reader.PeekChar() > -1)
                 {
-                    int deleted = reader.ReadInt16();
+                    short deleted = reader.ReadInt16();
                     if (deleted == 0)
                     {
                         reader.BaseStream.Seek(-2, SeekOrigin.Current);
@@ -267,7 +267,7 @@ namespace FileCabinetApp
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
                 while (reader.PeekChar() > -1)
                 {
-                    int deleted = reader.ReadInt16();
+                    short deleted = reader.ReadInt16();
                     if (deleted == 0)
                     {
                         reader.BaseStream.Seek(-2, SeekOrigin.Current);
@@ -375,6 +375,66 @@ namespace FileCabinetApp
         }
 
         /// <summary>
+        /// Defragments the data file - removes the spaces in the data file.
+        /// </summary>
+        public void Purge()
+        {
+            string tempFile = Path.GetTempFileName();
+            using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
+            {
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                using (var writer = new BinaryWriter(new FileStream(tempFile, FileMode.OpenOrCreate, FileAccess.ReadWrite), Encoding.ASCII))
+                {
+                    while (reader.PeekChar() > -1)
+                    {
+                        short deleted = reader.ReadInt16();
+                        if (deleted == 0)
+                        {
+                            int id = reader.ReadInt32();
+                            string firstName = reader.ReadString();
+                            reader.BaseStream.Seek(120 - firstName.Length - 1, SeekOrigin.Current);
+                            string lastName = reader.ReadString();
+                            reader.BaseStream.Seek(120 - lastName.Length - 1, SeekOrigin.Current);
+                            int year = reader.ReadInt32();
+                            int month = reader.ReadInt32();
+                            int day = reader.ReadInt32();
+                            short grade = reader.ReadInt16();
+                            decimal height = reader.ReadDecimal();
+                            char favouriteSymbol = reader.ReadChar();
+
+                            writer.BaseStream.Seek(0, SeekOrigin.End);
+                            int amountOfRecords = (int)writer.BaseStream.Length / RecordSize;
+                            writer.Write(deleted);
+                            writer.Write(id);
+                            writer.Write(firstName);
+                            writer.Seek((RecordSize * amountOfRecords) + 126, SeekOrigin.Begin);
+                            writer.Write(lastName);
+                            writer.Seek((RecordSize * amountOfRecords) + 246, SeekOrigin.Begin);
+                            writer.Write(year);
+                            writer.Write(month);
+                            writer.Write(day);
+                            writer.Write(grade);
+                            writer.Write(height);
+                            writer.Write(favouriteSymbol);
+                        }
+                        else
+                        {
+                            reader.BaseStream.Seek(RecordSize - 2, SeekOrigin.Current);
+                        }
+                    }
+                }
+            }
+
+            this.fileStream.Close();
+            this.fileStream.Dispose();
+
+            File.Delete("cabinet-records.db");
+            File.Move(tempFile, "cabinet-records.db");
+
+            this.fileStream = new FileStream("cabinet-records.db", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+        }
+
+        /// <summary>
         /// Make the snapshot of the current state of records.
         /// </summary>
         /// <returns>The snapshot of the current state of records.</returns>
@@ -464,6 +524,30 @@ namespace FileCabinetApp
             return importedRecordsCount;
         }
 
+        /// <summary>
+        /// Frees the resources.
+        /// </summary>
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Frees the resources.
+        /// </summary>
+        /// <param name="disposing">Flag to dispose managed resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.fileStream != null)
+                {
+                    this.fileStream.Close();
+                }
+            }
+        }
+
         private bool ContainsID(int id)
         {
             using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
@@ -493,7 +577,7 @@ namespace FileCabinetApp
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
                 while (reader.PeekChar() > -1)
                 {
-                    int deleted = reader.ReadInt16();
+                    short deleted = reader.ReadInt16();
                     if (deleted == 0)
                     {
                         reader.BaseStream.Seek(-2, SeekOrigin.Current);

@@ -260,6 +260,11 @@
             </summary>
             <returns>The total number of records.</returns>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.Purge">
+            <summary>
+            Defragments the data file - removes the spaces in the data file.
+            </summary>
+        </member>
         <member name="M:FileCabinetApp.FileCabinetFilesystemService.MakeSnapshot">
             <summary>
             Make the snapshot of the current state of records.
@@ -278,6 +283,17 @@
             </summary>
             <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
             <returns>The amount of imported records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.Dispose">
+            <summary>
+            Frees the resources.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.Dispose(System.Boolean)">
+            <summary>
+            Frees the resources.
+            </summary>
+            <param name="disposing">Flag to dispose managed resources.</param>
         </member>
         <member name="T:FileCabinetApp.FileCabinetMemoryService">
             <summary>
@@ -353,6 +369,11 @@
             Gets amount of records.
             </summary>
             <returns>The total number of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetMemoryService.Purge">
+            <summary>
+            Does nothing.
+            </summary>
         </member>
         <member name="M:FileCabinetApp.FileCabinetMemoryService.MakeSnapshot">
             <summary>
@@ -608,6 +629,11 @@
             Gets amount of records.
             </summary>
             <returns>The total number of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.Purge">
+            <summary>
+            Defragments the data file - removes the spaces in the data file.
+            </summary>
         </member>
         <member name="M:FileCabinetApp.IFileCabinetService.MakeSnapshot">
             <summary>
