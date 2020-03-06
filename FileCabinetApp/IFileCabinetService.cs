@@ -68,7 +68,7 @@ namespace FileCabinetApp
         /// Gets amount of records.
         /// </summary>
         /// <returns>The total number of records.</returns>
-        public int GetStat();
+        public (int total, int deleted) GetStat();
 
         /// <summary>
         /// Defragments the data file - removes the spaces in the data file.

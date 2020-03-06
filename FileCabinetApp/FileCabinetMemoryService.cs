@@ -283,12 +283,12 @@ namespace FileCabinetApp
         }
 
         /// <summary>
-        /// Gets amount of records.
+        /// Gets amount of total and deleted records.
         /// </summary>
-        /// <returns>The total number of records.</returns>
-        public int GetStat()
+        /// <returns>The total number of records and deleted number of records.</returns>
+        public (int total, int deleted) GetStat()
         {
-            return this.list.Count;
+            return (total: this.list.Count, deleted: 0);
         }
 
         /// <summary>

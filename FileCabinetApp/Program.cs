@@ -432,17 +432,18 @@ namespace FileCabinetApp
 
         private static void Stat(string parameters)
         {
-            var recordsCount = Program.fileCabinetService.GetStat();
-            Console.WriteLine($"{recordsCount} record(s).");
+            var totalRecordsCount = Program.fileCabinetService.GetStat().total;
+            var deletedRecordsCount = Program.fileCabinetService.GetStat().deleted;
+            Console.WriteLine($"Totally {totalRecordsCount} record(s). Need to delete {deletedRecordsCount} record(s).");
         }
 
         private static void Purge(string parameters)
         {
             if (Program.fileCabinetService is FileCabinetFilesystemService)
             {
-                var totalAmountOfRecords = Program.fileCabinetService.GetStat();
+                var totalAmountOfRecords = Program.fileCabinetService.GetStat().total;
                 Program.fileCabinetService.Purge();
-                var purgedRecords = totalAmountOfRecords - Program.fileCabinetService.GetStat();
+                var purgedRecords = totalAmountOfRecords - Program.fileCabinetService.GetStat().total;
                 Console.WriteLine($"Data file processing is completed: {purgedRecords} of {totalAmountOfRecords} were purged.");
             }
         }

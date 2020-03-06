@@ -366,9 +366,9 @@
         </member>
         <member name="M:FileCabinetApp.FileCabinetMemoryService.GetStat">
             <summary>
-            Gets amount of records.
+            Gets amount of total and deleted records.
             </summary>
-            <returns>The total number of records.</returns>
+            <returns>The total number of records and deleted number of records.</returns>
         </member>
         <member name="M:FileCabinetApp.FileCabinetMemoryService.Purge">
             <summary>
