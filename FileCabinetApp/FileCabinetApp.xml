@@ -260,11 +260,22 @@
             </summary>
             <returns>The total number of records.</returns>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.Purge">
+            <summary>
+            Defragments the data file - removes the spaces in the data file.
+            </summary>
+        </member>
         <member name="M:FileCabinetApp.FileCabinetFilesystemService.MakeSnapshot">
             <summary>
             Make the snapshot of the current state of records.
             </summary>
             <returns>The snapshot of the current state of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.Remove(System.Int32)">
+            <summary>
+            Removes the record by id.
+            </summary>
+            <param name="id">The id of record to remove.</param>
         </member>
         <member name="M:FileCabinetApp.FileCabinetFilesystemService.Restore(FileCabinetApp.FileCabinetServiceSnapshot)">
             <summary>
@@ -272,6 +283,17 @@
             </summary>
             <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
             <returns>The amount of imported records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.Dispose">
+            <summary>
+            Frees the resources.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.Dispose(System.Boolean)">
+            <summary>
+            Frees the resources.
+            </summary>
+            <param name="disposing">Flag to dispose managed resources.</param>
         </member>
         <member name="T:FileCabinetApp.FileCabinetMemoryService">
             <summary>
@@ -336,11 +358,22 @@
             <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
             <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
         </member>
+        <member name="M:FileCabinetApp.FileCabinetMemoryService.Remove(System.Int32)">
+            <summary>
+            Removes the record by id.
+            </summary>
+            <param name="id">The id of record to remove.</param>
+        </member>
         <member name="M:FileCabinetApp.FileCabinetMemoryService.GetStat">
             <summary>
-            Gets amount of records.
+            Gets amount of total and deleted records.
             </summary>
-            <returns>The total number of records.</returns>
+            <returns>The total number of records and deleted number of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.FileCabinetMemoryService.Purge">
+            <summary>
+            Does nothing.
+            </summary>
         </member>
         <member name="M:FileCabinetApp.FileCabinetMemoryService.MakeSnapshot">
             <summary>
@@ -585,11 +618,22 @@
             </summary>
             <param name="recordInfo">The record information.</param>
         </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.Remove(System.Int32)">
+            <summary>
+            Removes the record by id.
+            </summary>
+            <param name="id">The id of record to remove.</param>
+        </member>
         <member name="M:FileCabinetApp.IFileCabinetService.GetStat">
             <summary>
             Gets amount of records.
             </summary>
             <returns>The total number of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.IFileCabinetService.Purge">
+            <summary>
+            Defragments the data file - removes the spaces in the data file.
+            </summary>
         </member>
         <member name="M:FileCabinetApp.IFileCabinetService.MakeSnapshot">
             <summary>

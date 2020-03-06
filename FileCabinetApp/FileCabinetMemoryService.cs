@@ -45,9 +45,19 @@ namespace FileCabinetApp
         {
             this.validator.ValidateParameters(recordInfo);
 
+            int recordId;
+            if (this.list.Count == 0)
+            {
+                recordId = 1;
+            }
+            else
+            {
+                recordId = this.list[this.list.Count - 1].Id + 1;
+            }
+
             var record = new FileCabinetRecord
             {
-                Id = this.list.Count + 1,
+                Id = recordId,
                 Name = new Name
                 {
                     FirstName = recordInfo.Name.FirstName,
@@ -252,12 +262,40 @@ namespace FileCabinetApp
         }
 
         /// <summary>
-        /// Gets amount of records.
+        /// Removes the record by id.
         /// </summary>
-        /// <returns>The total number of records.</returns>
-        public int GetStat()
+        /// <param name="id">The id of record to remove.</param>
+        public void Remove(int id)
         {
-            return this.list.Count;
+            var indexToRemove = this.list.FindIndex((record) => record.Id == id);
+            if (indexToRemove == -1)
+            {
+                throw new ArgumentException("No record with such id found.", nameof(id));
+            }
+
+            var recordToRemove = this.list[indexToRemove];
+
+            this.firstNameDictionary[recordToRemove.Name.FirstName.ToLower(null)].Remove(recordToRemove);
+            this.lastNameDictionary[recordToRemove.Name.LastName.ToLower(null)].Remove(recordToRemove);
+            this.dateOfBirthDictionary[recordToRemove.DateOfBirth].Remove(recordToRemove);
+
+            this.list.RemoveAt(indexToRemove);
+        }
+
+        /// <summary>
+        /// Gets amount of total and deleted records.
+        /// </summary>
+        /// <returns>The total number of records and deleted number of records.</returns>
+        public (int total, int deleted) GetStat()
+        {
+            return (total: this.list.Count, deleted: 0);
+        }
+
+        /// <summary>
+        /// Does nothing.
+        /// </summary>
+        public void Purge()
+        {
         }
 
         /// <summary>

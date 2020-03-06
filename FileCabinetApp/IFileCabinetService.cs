@@ -59,10 +59,21 @@ namespace FileCabinetApp
         public void EditRecord(FileCabinetRecord recordInfo);
 
         /// <summary>
+        /// Removes the record by id.
+        /// </summary>
+        /// <param name="id">The id of record to remove.</param>
+        public void Remove(int id);
+
+        /// <summary>
         /// Gets amount of records.
         /// </summary>
         /// <returns>The total number of records.</returns>
-        public int GetStat();
+        public (int total, int deleted) GetStat();
+
+        /// <summary>
+        /// Defragments the data file - removes the spaces in the data file.
+        /// </summary>
+        public void Purge();
 
         /// <summary>
         /// Makes the snapshot of current records.
