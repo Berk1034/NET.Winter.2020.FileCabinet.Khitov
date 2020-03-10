@@ -4,6 +4,72 @@
         <name>FileCabinetApp</name>
     </assembly>
     <members>
+        <member name="T:FileCabinetApp.CommandHandlers.AppCommandRequest">
+            <summary>
+            The AppCommandRequest class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.CommandHandlers.AppCommandRequest.Command">
+            <summary>
+            Gets or sets the command.
+            </summary>
+            <value>
+            The command.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.CommandHandlers.AppCommandRequest.Parameters">
+            <summary>
+            Gets or sets the parameters for the command.
+            </summary>
+            <value>
+            The parameters for the command.
+            </value>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.CommandHandler">
+            <summary>
+            The CommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.CommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.CommandHandlerBase">
+            <summary>
+            The CommandHandlerBase class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.CommandHandlerBase.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.CommandHandlerBase.SetNext(FileCabinetApp.CommandHandlers.ICommandHandler)">
+            <summary>
+            Sets the next command handler.
+            </summary>
+            <param name="commandHandler">The command handler.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ICommandHandler">
+            <summary>
+            The ICommandHandler interface.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ICommandHandler.SetNext(FileCabinetApp.CommandHandlers.ICommandHandler)">
+            <summary>
+            Sets the next command handler.
+            </summary>
+            <param name="commandHandler">The command handler.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ICommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
         <member name="T:FileCabinetApp.CustomValidator">
             <summary>
             The CustomValidator class.
