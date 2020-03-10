@@ -25,14 +25,29 @@ namespace FileCabinetApp
         {
             string validationRules = "default";
             int argsAmount = args.Length;
-            IRecordValidator validator = new DefaultValidator();
+            IRecordValidator validator = new ValidatorBuilder()
+                .ValidateFirstName(ValidationRules.DefaultMinLengthInSymbols, ValidationRules.DefaultMaxLengthInSymbols)
+                .ValidateLastName(ValidationRules.DefaultMinLengthInSymbols, ValidationRules.DefaultMaxLengthInSymbols)
+                .ValidateDateOfBirth(ValidationRules.DefaultMinimalDate, ValidationRules.DefaultMaximalDate)
+                .ValidateGrade(ValidationRules.DefaultMinGradeInPoints, ValidationRules.DefaultMaxGradeInPoints)
+                .ValidateHeight(ValidationRules.DefaultMinHeightInMeters, ValidationRules.DefaultMaxHeightInMeters)
+                .ValidateFavouriteSymbol(ValidationRules.DefaultBannedChar)
+                .Create();
+
             for (int i = 0; i < args.Length; i++)
             {
                 if (args[i].Contains("--validation-rules=", StringComparison.OrdinalIgnoreCase))
                 {
                     if (args[i].Remove(0, "--validation-rules=".Length).ToLower(null) == "custom")
                     {
-                        validator = new CustomValidator();
+                        validator = new ValidatorBuilder()
+                            .ValidateFirstName(ValidationRules.CustomMinLengthInSymbols, ValidationRules.CustomMaxLengthInSymbols)
+                            .ValidateLastName(ValidationRules.CustomMinLengthInSymbols, ValidationRules.CustomMaxLengthInSymbols)
+                            .ValidateDateOfBirth(ValidationRules.CustomMinimalDate, ValidationRules.CustomMaximalDate)
+                            .ValidateGrade(ValidationRules.CustomMinGradeInPoints, ValidationRules.CustomMaxGradeInPoints)
+                            .ValidateHeight(ValidationRules.CustomMinHeightInMeters, ValidationRules.CustomMaxHeightInMeters)
+                            .ValidateFavouriteSymbol(ValidationRules.CustomBannedChar)
+                            .Create();
                         validationRules = "custom";
                         ValidationRules.DefaultValidation = false;
                     }
@@ -42,7 +57,14 @@ namespace FileCabinetApp
                 {
                     if (args[i + 1].ToLower(null) == "custom")
                     {
-                        validator = new CustomValidator();
+                        validator = new ValidatorBuilder()
+                            .ValidateFirstName(ValidationRules.CustomMinLengthInSymbols, ValidationRules.CustomMaxLengthInSymbols)
+                            .ValidateLastName(ValidationRules.CustomMinLengthInSymbols, ValidationRules.CustomMaxLengthInSymbols)
+                            .ValidateDateOfBirth(ValidationRules.CustomMinimalDate, ValidationRules.CustomMaximalDate)
+                            .ValidateGrade(ValidationRules.CustomMinGradeInPoints, ValidationRules.CustomMaxGradeInPoints)
+                            .ValidateHeight(ValidationRules.CustomMinHeightInMeters, ValidationRules.CustomMaxHeightInMeters)
+                            .ValidateFavouriteSymbol(ValidationRules.CustomBannedChar)
+                            .Create();
                         validationRules = "custom";
                         ValidationRules.DefaultValidation = false;
                     }

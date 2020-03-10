@@ -801,16 +801,6 @@
             </summary>
             <param name="recordInfo">The record informaton.</param>
         </member>
-        <member name="T:FileCabinetApp.Validators.CustomValidator">
-            <summary>
-            The CustomValidator class.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.Validators.CustomValidator.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.CustomValidator"/> class.
-            </summary>
-        </member>
         <member name="T:FileCabinetApp.Validators.DateOfBirthValidator">
             <summary>
             The DateOfBirthValidator class.
@@ -828,16 +818,6 @@
             Validates the record information.
             </summary>
             <param name="recordInfo">The record informaton.</param>
-        </member>
-        <member name="T:FileCabinetApp.Validators.DefaultValidator">
-            <summary>
-            The DefaultValidator class.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.Validators.DefaultValidator.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.DefaultValidator"/> class.
-            </summary>
         </member>
         <member name="T:FileCabinetApp.Validators.FavouriteSymbolValidator">
             <summary>
@@ -1038,6 +1018,64 @@
             <summary>
             The flag to determine which rules to use.
             </summary>
+        </member>
+        <member name="T:FileCabinetApp.Validators.ValidatorBuilder">
+            <summary>
+            The ValidatorBuilder class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateFirstName(System.Int32,System.Int32)">
+            <summary>
+            Adds new instance of FirstNameValidator with parameters to the list of validators.
+            </summary>
+            <param name="min">The minimal length for the firstname.</param>
+            <param name="max">The maximal length for the firstname.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateLastName(System.Int32,System.Int32)">
+            <summary>
+            Adds new instance of LastNameValidator with parameters to the list of validators.
+            </summary>
+            <param name="min">The minimal length for the lastname.</param>
+            <param name="max">The maximal length for the lastname.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateDateOfBirth(System.DateTime,System.DateTime)">
+            <summary>
+            Adds new instance of DateOfBirthValidator with parameters to the list of validators.
+            </summary>
+            <param name="from">The minimal date for the dateofbirth.</param>
+            <param name="to">The maximal date for the dateofbirth.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateGrade(System.Int16,System.Int16)">
+            <summary>
+            Adds new instance of GradeValidator with parameters to the list of validators.
+            </summary>
+            <param name="min">The minimal value for the grade.</param>
+            <param name="max">The maximal value for the grade.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateHeight(System.Decimal,System.Decimal)">
+            <summary>
+            Adds new instance of HeightValidator with parameters to the list of validators.
+            </summary>
+            <param name="min">The minimal value for the height.</param>
+            <param name="max">The maximal value for the height.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateFavouriteSymbol(System.Char)">
+            <summary>
+            Adds new instance of FavouriteSymbolValidator with parameters to the list of validators.
+            </summary>
+            <param name="bannedSymbol">The symbol to ban for favouritesymbol.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.Create">
+            <summary>
+            Creates the new instance of CompositeValidator with added validators.
+            </summary>
+            <returns>The IRecordValidator reference.</returns>
         </member>
     </members>
 </doc>

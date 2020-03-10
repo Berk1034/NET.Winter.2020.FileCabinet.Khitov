@@ -15,7 +15,14 @@ namespace FileCabinetApp
         /// Initializes a new instance of the <see cref="FileCabinetCustomService"/> class.
         /// </summary>
         public FileCabinetCustomService()
-            : base(new CustomValidator())
+            : base(new ValidatorBuilder()
+                  .ValidateFirstName(ValidationRules.CustomMinLengthInSymbols, ValidationRules.CustomMaxLengthInSymbols)
+                  .ValidateLastName(ValidationRules.CustomMinLengthInSymbols, ValidationRules.CustomMaxLengthInSymbols)
+                  .ValidateDateOfBirth(ValidationRules.CustomMinimalDate, ValidationRules.CustomMaximalDate)
+                  .ValidateGrade(ValidationRules.CustomMinGradeInPoints, ValidationRules.CustomMaxGradeInPoints)
+                  .ValidateHeight(ValidationRules.CustomMinHeightInMeters, ValidationRules.CustomMaxHeightInMeters)
+                  .ValidateFavouriteSymbol(ValidationRules.CustomBannedChar)
+                  .Create())
         {
         }
     }
