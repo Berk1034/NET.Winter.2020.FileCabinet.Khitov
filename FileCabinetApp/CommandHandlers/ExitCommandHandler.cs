@@ -7,17 +7,15 @@ namespace FileCabinetApp.CommandHandlers
     /// <summary>
     /// The ExitCommandHandler class.
     /// </summary>
-    public class ExitCommandHandler : CommandHandlerBase
+    public class ExitCommandHandler : ServiceCommandHandlerBase
     {
-        private IFileCabinetService service;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ExitCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
         public ExitCommandHandler(IFileCabinetService service)
+            : base(service)
         {
-            this.service = service;
         }
 
         /// <summary>
