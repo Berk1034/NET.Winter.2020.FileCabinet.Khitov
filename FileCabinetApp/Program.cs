@@ -111,16 +111,14 @@ namespace FileCabinetApp
 
         private static ICommandHandler CreateCommandHandlers()
         {
-            var recordPrinter = new DefaultRecordPrinter();
-
             var helpHandler = new HelpCommandHandler();
             var createHandler = new CreateCommandHandler(Program.fileCabinetService);
             var editHandler = new EditCommandHandler(Program.fileCabinetService);
-            var exitHandler = new ExitCommandHandler(Program.fileCabinetService, ChangeIsRunning);
+            var exitHandler = new ExitCommandHandler(Program.fileCabinetService, Program.ChangeIsRunning);
             var exportHandler = new ExportCommandHandler(Program.fileCabinetService);
-            var findHandler = new FindCommandHandler(Program.fileCabinetService, recordPrinter);
+            var findHandler = new FindCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint);
             var importHandler = new ImportCommandHandler(Program.fileCabinetService);
-            var listHandler = new ListCommandHandler(Program.fileCabinetService, recordPrinter);
+            var listHandler = new ListCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint);
             var purgeHandler = new PurgeCommandHandler(Program.fileCabinetService);
             var removeHandler = new RemoveCommandHandler(Program.fileCabinetService);
             var statHandler = new StatCommandHandler(Program.fileCabinetService);
@@ -144,6 +142,14 @@ namespace FileCabinetApp
         private static void ChangeIsRunning(bool value)
         {
             isRunning = value;
+        }
+
+        private static void DefaultRecordPrint(IEnumerable<FileCabinetRecord> records)
+        {
+            foreach (var record in records)
+            {
+                Console.WriteLine($"#{record.Id}, {record.Name.FirstName}, {record.Name.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
+            }
         }
     }
 }
