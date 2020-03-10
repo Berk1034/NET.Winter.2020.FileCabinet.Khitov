@@ -103,6 +103,16 @@ namespace FileCabinetApp
                 throw new ArgumentNullException(nameof(recordInfo), "Record information is null.");
             }
 
+            this.ValidateFirstName(recordInfo);
+            this.ValidateLastName(recordInfo);
+            this.ValidateDateOfBirth(recordInfo);
+            this.ValidateGrade(recordInfo);
+            this.ValidateHeight(recordInfo);
+            this.ValidateFavouriteSymbol(recordInfo);
+        }
+
+        private void ValidateFirstName(FileCabinetRecord recordInfo)
+        {
             if (recordInfo.Name.FirstName is null)
             {
                 throw new ArgumentNullException(nameof(recordInfo.Name.FirstName), "Firstname can't be null.");
@@ -117,7 +127,10 @@ namespace FileCabinetApp
             {
                 throw new ArgumentException($"Firstname length should be in range [{MinLengthInSymbols};{MaxLengthInSymbols}].", nameof(recordInfo.Name.FirstName));
             }
+        }
 
+        private void ValidateLastName(FileCabinetRecord recordInfo)
+        {
             if (recordInfo.Name.LastName is null)
             {
                 throw new ArgumentNullException(nameof(recordInfo.Name.LastName), "Lastname can't be null.");
@@ -132,22 +145,34 @@ namespace FileCabinetApp
             {
                 throw new ArgumentException($"Lastname length should be in range [{MinLengthInSymbols};{MaxLengthInSymbols}.", nameof(recordInfo.Name.LastName));
             }
+        }
 
+        private void ValidateDateOfBirth(FileCabinetRecord recordInfo)
+        {
             if (recordInfo.DateOfBirth < this.MinimalDate || recordInfo.DateOfBirth > this.MaximalDate)
             {
                 throw new ArgumentException($"Date should start from {this.MinimalDate.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))} till {this.MaximalDate.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}.", nameof(recordInfo.DateOfBirth));
             }
+        }
 
+        private void ValidateGrade(FileCabinetRecord recordInfo)
+        {
             if (recordInfo.Grade < MinGradeInPoints || recordInfo.Grade > MaxGradeInPoints)
             {
                 throw new ArgumentException($"Grade should be in range [{MinGradeInPoints};{MaxGradeInPoints}].", nameof(recordInfo.Grade));
             }
+        }
 
+        private void ValidateHeight(FileCabinetRecord recordInfo)
+        {
             if (recordInfo.Height < MinHeightInMeters || recordInfo.Height > MaxHeightInMeters)
             {
                 throw new ArgumentException($"Height can't be lower {MinHeightInMeters} and higher than {MaxHeightInMeters}.", nameof(recordInfo.Height));
             }
+        }
 
+        private void ValidateFavouriteSymbol(FileCabinetRecord recordInfo)
+        {
             if (recordInfo.FavouriteSymbol == BannedChar)
             {
                 throw new ArgumentException($"{BannedChar} is not valid symbol.", nameof(recordInfo.FavouriteSymbol));
