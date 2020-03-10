@@ -1077,5 +1077,24 @@
             </summary>
             <returns>The IRecordValidator reference.</returns>
         </member>
+        <member name="T:FileCabinetApp.Validators.ValidatorBuilderExtensions">
+            <summary>
+            The ValidatorBuilderExtensions class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilderExtensions.CreateDefault(FileCabinetApp.Validators.ValidatorBuilder)">
+            <summary>
+            The extension method for ValidatorBuilder class to create a DefaultValidator.
+            </summary>
+            <param name="validatorBuilder">The validator builder instance.</param>
+            <returns>The IRecordValidator reference.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilderExtensions.CreateCustom(FileCabinetApp.Validators.ValidatorBuilder)">
+            <summary>
+            The extension method for ValidatorBuilder class to create a CustomValidator.
+            </summary>
+            <param name="validatorBuilder">The Validator builder instance.</param>
+            <returns>The IRecordValidator reference.</returns>
+        </member>
     </members>
 </doc>
