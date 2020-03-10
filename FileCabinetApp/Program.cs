@@ -11,11 +11,10 @@ namespace FileCabinetApp
     /// </summary>
     public static class Program
     {
-        public static bool isRunning = true;
-
         private const string DeveloperName = "Constantin Hitov";
         private const string HintMessage = "Enter your command, or enter 'help' to get help.";
         private static IFileCabinetService fileCabinetService;
+        private static bool isRunning = true;
 
         /// <summary>
         /// The start point of the program.
@@ -115,7 +114,7 @@ namespace FileCabinetApp
             var helpHandler = new HelpCommandHandler();
             var createHandler = new CreateCommandHandler(Program.fileCabinetService);
             var editHandler = new EditCommandHandler(Program.fileCabinetService);
-            var exitHandler = new ExitCommandHandler(Program.fileCabinetService);
+            var exitHandler = new ExitCommandHandler(Program.fileCabinetService, ChangeIsRunning);
             var exportHandler = new ExportCommandHandler(Program.fileCabinetService);
             var findHandler = new FindCommandHandler(Program.fileCabinetService);
             var importHandler = new ImportCommandHandler(Program.fileCabinetService);
@@ -138,6 +137,11 @@ namespace FileCabinetApp
             exitHandler.SetNext(missedHandler);
 
             return helpHandler;
+        }
+
+        private static void ChangeIsRunning(bool value)
+        {
+            isRunning = value;
         }
     }
 }
