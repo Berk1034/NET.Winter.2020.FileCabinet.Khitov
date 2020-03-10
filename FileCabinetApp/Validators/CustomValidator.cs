@@ -23,12 +23,12 @@ namespace FileCabinetApp.Validators
                 throw new ArgumentNullException(nameof(recordInfo), "Record information is null.");
             }
 
-            new CustomFirstNameValidator().ValidateParameters(recordInfo);
-            new CustomLastNameValidator().ValidateParameters(recordInfo);
-            new CustomDateOfBirthValidator().ValidateParameters(recordInfo);
-            new CustomGradeValidator().ValidateParameters(recordInfo);
-            new CustomHeightValidator().ValidateParameters(recordInfo);
-            new CustomFavouriteSymbolValidator().ValidateParameters(recordInfo);
+            new FirstNameValidator(ValidationRules.CustomMinLengthInSymbols, ValidationRules.CustomMaxLengthInSymbols).ValidateParameters(recordInfo);
+            new LastNameValidator(ValidationRules.CustomMinLengthInSymbols, ValidationRules.CustomMaxLengthInSymbols).ValidateParameters(recordInfo);
+            new DateOfBirthValidator(ValidationRules.CustomMinimalDate, ValidationRules.CustomMaximalDate).ValidateParameters(recordInfo);
+            new GradeValidator(ValidationRules.CustomMinGradeInPoints, ValidationRules.CustomMaxGradeInPoints).ValidateParameters(recordInfo);
+            new HeightValidator(ValidationRules.CustomMinHeightInMeters, ValidationRules.CustomMaxHeightInMeters).ValidateParameters(recordInfo);
+            new FavouriteSymbolValidator(ValidationRules.CustomBannedChar).ValidateParameters(recordInfo);
         }
     }
 }

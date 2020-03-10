@@ -4,8 +4,17 @@ using System.Text;
 
 namespace FileCabinetApp.Validators
 {
-    public class DefaultFirstNameValidator : IRecordValidator
+    public class FirstNameValidator : IRecordValidator
     {
+        private int minLength;
+        private int maxLength;
+
+        public FirstNameValidator(int minLength, int maxLength)
+        {
+            this.minLength = minLength;
+            this.maxLength = maxLength;
+        }
+
         public void ValidateParameters(FileCabinetRecord recordInfo)
         {
             if (recordInfo.Name.FirstName is null)
@@ -18,9 +27,9 @@ namespace FileCabinetApp.Validators
                 throw new ArgumentException("Firstname cannot contain only spaces.", nameof(recordInfo.Name.FirstName));
             }
 
-            if (recordInfo.Name.FirstName.Length < ValidationRules.DefaultMinLengthInSymbols || recordInfo.Name.FirstName.Length > ValidationRules.DefaultMaxLengthInSymbols)
+            if (recordInfo.Name.FirstName.Length < this.minLength || recordInfo.Name.FirstName.Length > this.maxLength)
             {
-                throw new ArgumentException($"Firstname length should be in range [{ValidationRules.DefaultMinLengthInSymbols};{ValidationRules.DefaultMaxLengthInSymbols}].", nameof(recordInfo.Name.FirstName));
+                throw new ArgumentException($"Firstname length should be in range [{this.minLength};{this.maxLength}].", nameof(recordInfo.Name.FirstName));
             }
         }
     }
