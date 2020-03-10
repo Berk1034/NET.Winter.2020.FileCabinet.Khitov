@@ -25,21 +25,18 @@
             The parameters for the command.
             </value>
         </member>
-        <member name="T:FileCabinetApp.CommandHandlers.CommandHandler">
-            <summary>
-            The CommandHandler class.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.CommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
-            <summary>
-            Executes the request.
-            </summary>
-            <param name="appCommandRequest">The app command request.</param>
-        </member>
         <member name="T:FileCabinetApp.CommandHandlers.CommandHandlerBase">
             <summary>
             The CommandHandlerBase class.
             </summary>
+        </member>
+        <member name="P:FileCabinetApp.CommandHandlers.CommandHandlerBase.NextHandler">
+            <summary>
+            Gets the nextHandler.
+            </summary>
+            <value>
+            The nextHandler.
+            </value>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.CommandHandlerBase.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -53,6 +50,72 @@
             </summary>
             <param name="commandHandler">The command handler.</param>
         </member>
+        <member name="T:FileCabinetApp.CommandHandlers.CreateCommandHandler">
+            <summary>
+            The CreateCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.EditCommandHandler">
+            <summary>
+            The EditCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.EditCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ExitCommandHandler">
+            <summary>
+            The ExitCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ExitCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ExportCommandHandler">
+            <summary>
+            The ExportCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ExportCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.FindCommandHandler">
+            <summary>
+            The FindCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.FindCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.HelpCommandHandler">
+            <summary>
+            The HelpCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.HelpCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
         <member name="T:FileCabinetApp.CommandHandlers.ICommandHandler">
             <summary>
             The ICommandHandler interface.
@@ -65,6 +128,72 @@
             <param name="commandHandler">The command handler.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.ICommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ImportCommandHandler">
+            <summary>
+            The ImportCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ImportCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ListCommandHandler">
+            <summary>
+            The ListCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ListCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.MissedCommandHandler">
+            <summary>
+            The MissedCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.MissedCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.PurgeCommandHandler">
+            <summary>
+            The PurgeCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.PurgeCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.RemoveCommandHandler">
+            <summary>
+            The RemoveCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.RemoveCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.StatCommandHandler">
+            <summary>
+            The StatCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.StatCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
             Executes the request.
             </summary>

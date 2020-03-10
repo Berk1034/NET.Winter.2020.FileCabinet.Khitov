@@ -12,6 +12,20 @@ namespace FileCabinetApp.CommandHandlers
         private ICommandHandler nextHandler;
 
         /// <summary>
+        /// Gets the nextHandler.
+        /// </summary>
+        /// <value>
+        /// The nextHandler.
+        /// </value>
+        public ICommandHandler NextHandler
+        {
+            get
+            {
+                return this.nextHandler;
+            }
+        }
+
+        /// <summary>
         /// Executes the request.
         /// </summary>
         /// <param name="appCommandRequest">The app command request.</param>
