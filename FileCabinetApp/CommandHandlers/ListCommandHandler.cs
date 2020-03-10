@@ -10,6 +10,17 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class ListCommandHandler : CommandHandlerBase
     {
+        private IFileCabinetService service;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListCommandHandler"/> class.
+        /// </summary>
+        /// <param name="service">The IFileCabinetService service.</param>
+        public ListCommandHandler(IFileCabinetService service)
+        {
+            this.service = service;
+        }
+
         /// <summary>
         /// Executes the request.
         /// </summary>
@@ -18,7 +29,7 @@ namespace FileCabinetApp.CommandHandlers
         {
             if (appCommandRequest.Command == "list")
             {
-                var listOfRecords = Program.fileCabinetService.GetRecords();
+                var listOfRecords = this.service.GetRecords();
 
                 foreach (var record in listOfRecords)
                 {

@@ -10,6 +10,17 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class ExportCommandHandler : CommandHandlerBase
     {
+        private IFileCabinetService service;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExportCommandHandler"/> class.
+        /// </summary>
+        /// <param name="service">The IFileCabinetService service.</param>
+        public ExportCommandHandler(IFileCabinetService service)
+        {
+            this.service = service;
+        }
+
         /// <summary>
         /// Executes the request.
         /// </summary>
@@ -40,7 +51,7 @@ namespace FileCabinetApp.CommandHandlers
                                 if (rewriteFlag)
                                 {
                                     StreamWriter writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
-                                    var snapshot = Program.fileCabinetService.MakeSnapshot();
+                                    var snapshot = this.service.MakeSnapshot();
                                     snapshot.SaveToCsv(writer);
                                     Console.WriteLine("All records are exported to file {0}.", args[1]);
                                     writer.Close();
@@ -69,7 +80,7 @@ namespace FileCabinetApp.CommandHandlers
                                 if (rewriteFlag)
                                 {
                                     StreamWriter writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
-                                    var snapshot = Program.fileCabinetService.MakeSnapshot();
+                                    var snapshot = this.service.MakeSnapshot();
                                     snapshot.SaveToXml(writer);
                                     Console.WriteLine("All records are exported to file {0}.", args[1]);
                                     writer.Close();

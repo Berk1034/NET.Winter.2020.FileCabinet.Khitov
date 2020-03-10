@@ -11,11 +11,11 @@ namespace FileCabinetApp
     /// </summary>
     public static class Program
     {
-        public static IFileCabinetService fileCabinetService;
         public static bool isRunning = true;
 
         private const string DeveloperName = "Constantin Hitov";
         private const string HintMessage = "Enter your command, or enter 'help' to get help.";
+        private static IFileCabinetService fileCabinetService;
 
         /// <summary>
         /// The start point of the program.
@@ -113,16 +113,16 @@ namespace FileCabinetApp
         private static ICommandHandler CreateCommandHandlers()
         {
             var helpHandler = new HelpCommandHandler();
-            var createHandler = new CreateCommandHandler();
-            var editHandler = new EditCommandHandler();
-            var exitHandler = new ExitCommandHandler();
-            var exportHandler = new ExportCommandHandler();
-            var findHandler = new FindCommandHandler();
-            var importHandler = new ImportCommandHandler();
-            var listHandler = new ListCommandHandler();
-            var purgeHandler = new PurgeCommandHandler();
-            var removeHandler = new RemoveCommandHandler();
-            var statHandler = new StatCommandHandler();
+            var createHandler = new CreateCommandHandler(Program.fileCabinetService);
+            var editHandler = new EditCommandHandler(Program.fileCabinetService);
+            var exitHandler = new ExitCommandHandler(Program.fileCabinetService);
+            var exportHandler = new ExportCommandHandler(Program.fileCabinetService);
+            var findHandler = new FindCommandHandler(Program.fileCabinetService);
+            var importHandler = new ImportCommandHandler(Program.fileCabinetService);
+            var listHandler = new ListCommandHandler(Program.fileCabinetService);
+            var purgeHandler = new PurgeCommandHandler(Program.fileCabinetService);
+            var removeHandler = new RemoveCommandHandler(Program.fileCabinetService);
+            var statHandler = new StatCommandHandler(Program.fileCabinetService);
             var missedHandler = new MissedCommandHandler();
 
             helpHandler.SetNext(createHandler);

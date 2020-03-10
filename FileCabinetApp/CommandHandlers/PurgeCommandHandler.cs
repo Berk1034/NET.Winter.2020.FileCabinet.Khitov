@@ -9,6 +9,17 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class PurgeCommandHandler : CommandHandlerBase
     {
+        private IFileCabinetService service;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PurgeCommandHandler"/> class.
+        /// </summary>
+        /// <param name="service">The IFileCabinetService service.</param>
+        public PurgeCommandHandler(IFileCabinetService service)
+        {
+            this.service = service;
+        }
+
         /// <summary>
         /// Executes the request.
         /// </summary>
@@ -17,11 +28,11 @@ namespace FileCabinetApp.CommandHandlers
         {
             if (appCommandRequest.Command == "purge")
             {
-                if (Program.fileCabinetService is FileCabinetFilesystemService)
+                if (this.service is FileCabinetFilesystemService)
                 {
-                    var totalAmountOfRecords = Program.fileCabinetService.GetStat().total;
-                    Program.fileCabinetService.Purge();
-                    var purgedRecords = totalAmountOfRecords - Program.fileCabinetService.GetStat().total;
+                    var totalAmountOfRecords = this.service.GetStat().total;
+                    this.service.Purge();
+                    var purgedRecords = totalAmountOfRecords - this.service.GetStat().total;
                     Console.WriteLine($"Data file processing is completed: {purgedRecords} of {totalAmountOfRecords} were purged.");
                 }
             }

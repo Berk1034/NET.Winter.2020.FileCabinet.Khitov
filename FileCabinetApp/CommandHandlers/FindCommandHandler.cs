@@ -10,6 +10,17 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class FindCommandHandler : CommandHandlerBase
     {
+        private IFileCabinetService service;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FindCommandHandler"/> class.
+        /// </summary>
+        /// <param name="service">The IFileCabinetService service.</param>
+        public FindCommandHandler(IFileCabinetService service)
+        {
+            this.service = service;
+        }
+
         /// <summary>
         /// Executes the request.
         /// </summary>
@@ -25,13 +36,13 @@ namespace FileCabinetApp.CommandHandlers
                     switch (args[0].ToLower(null))
                     {
                         case "firstname":
-                            searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByFirstName(args[1].Trim('"')));
+                            searchResult = new List<FileCabinetRecord>(this.service.FindByFirstName(args[1].Trim('"')));
                             break;
                         case "lastname":
-                            searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByLastName(args[1].Trim('"')));
+                            searchResult = new List<FileCabinetRecord>(this.service.FindByLastName(args[1].Trim('"')));
                             break;
                         case "dateofbirth":
-                            searchResult = new List<FileCabinetRecord>(Program.fileCabinetService.FindByDateOfBirth(args[1].Trim('"')));
+                            searchResult = new List<FileCabinetRecord>(this.service.FindByDateOfBirth(args[1].Trim('"')));
                             break;
                         default:
                             Console.WriteLine("Nothing found.");

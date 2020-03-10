@@ -10,6 +10,17 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class ImportCommandHandler : CommandHandlerBase
     {
+        private IFileCabinetService service;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImportCommandHandler"/> class.
+        /// </summary>
+        /// <param name="service">The IFileCabinetService service.</param>
+        public ImportCommandHandler(IFileCabinetService service)
+        {
+            this.service = service;
+        }
+
         /// <summary>
         /// Executes the request.
         /// </summary>
@@ -29,7 +40,7 @@ namespace FileCabinetApp.CommandHandlers
                                 StreamReader reader = new StreamReader(new FileStream(args[1], FileMode.Open));
                                 FileCabinetServiceSnapshot snapshot = new FileCabinetServiceSnapshot();
                                 snapshot.LoadFromCsv(reader);
-                                int importedRecordsCount = Program.fileCabinetService.Restore(snapshot);
+                                int importedRecordsCount = this.service.Restore(snapshot);
                                 Console.WriteLine("{0} records were imported from {1}.", importedRecordsCount, args[1]);
                                 reader.Close();
                             }
@@ -49,7 +60,7 @@ namespace FileCabinetApp.CommandHandlers
                                 StreamReader reader = new StreamReader(new FileStream(args[1], FileMode.Open));
                                 FileCabinetServiceSnapshot snapshot = new FileCabinetServiceSnapshot();
                                 snapshot.LoadFromXml(reader);
-                                int importedRecordsCount = Program.fileCabinetService.Restore(snapshot);
+                                int importedRecordsCount = this.service.Restore(snapshot);
                                 Console.WriteLine("{0} records were imported from {1}.", importedRecordsCount, args[1]);
                                 reader.Close();
                             }

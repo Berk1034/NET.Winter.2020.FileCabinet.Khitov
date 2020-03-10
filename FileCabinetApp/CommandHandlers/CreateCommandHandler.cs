@@ -10,6 +10,17 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class CreateCommandHandler : CommandHandlerBase
     {
+        private IFileCabinetService service;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateCommandHandler"/> class.
+        /// </summary>
+        /// <param name="service">The IFileCabinetService service.</param>
+        public CreateCommandHandler(IFileCabinetService service)
+        {
+            this.service = service;
+        }
+
         /// <summary>
         /// Executes the request.
         /// </summary>
@@ -36,7 +47,7 @@ namespace FileCabinetApp.CommandHandlers
                 Console.Write("Favourite symbol: ");
                 var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
-                var recordId = Program.fileCabinetService.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                var recordId = this.service.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
                 Console.WriteLine($"Record #{recordId} is created.");
             }
             else if (this.NextHandler != null)
@@ -45,7 +56,7 @@ namespace FileCabinetApp.CommandHandlers
             }
         }
 
-        private static T ReadInput<T>(Func<string, Tuple<bool, string, T>> converter, Func<T, Tuple<bool, string>> validator)
+        private T ReadInput<T>(Func<string, Tuple<bool, string, T>> converter, Func<T, Tuple<bool, string>> validator)
         {
             do
             {
@@ -74,12 +85,12 @@ namespace FileCabinetApp.CommandHandlers
             while (true);
         }
 
-        private static Tuple<bool, string, string> StringConverter(string source)
+        private Tuple<bool, string, string> StringConverter(string source)
         {
             return new Tuple<bool, string, string>(true, source, source);
         }
 
-        private static Tuple<bool, string, DateTime> DateConverter(string dateOfBirth)
+        private Tuple<bool, string, DateTime> DateConverter(string dateOfBirth)
         {
             DateTime birthday;
             bool dateSuccess = DateTime.TryParseExact(dateOfBirth, "MM'/'dd'/'yyyy", null, DateTimeStyles.None, out birthday);
@@ -87,7 +98,7 @@ namespace FileCabinetApp.CommandHandlers
             return new Tuple<bool, string, DateTime>(dateSuccess, dateOfBirth, birthday);
         }
 
-        private static Tuple<bool, string, short> ShortConverter(string source)
+        private Tuple<bool, string, short> ShortConverter(string source)
         {
             short grade;
             bool gradeSuccess = short.TryParse(source, out grade);
@@ -95,7 +106,7 @@ namespace FileCabinetApp.CommandHandlers
             return new Tuple<bool, string, short>(gradeSuccess, source, grade);
         }
 
-        private static Tuple<bool, string, decimal> DecimalConverter(string source)
+        private Tuple<bool, string, decimal> DecimalConverter(string source)
         {
             decimal height;
             bool heightSuccess = decimal.TryParse(source, out height);
@@ -103,7 +114,7 @@ namespace FileCabinetApp.CommandHandlers
             return new Tuple<bool, string, decimal>(heightSuccess, source, height);
         }
 
-        private static Tuple<bool, string, char> CharConverter(string source)
+        private Tuple<bool, string, char> CharConverter(string source)
         {
             if (source is null || source.Length == 0)
             {
@@ -113,9 +124,9 @@ namespace FileCabinetApp.CommandHandlers
             return new Tuple<bool, string, char>(true, source, source[0]);
         }
 
-        private static Tuple<bool, string> FirstNameValidator(string firstName)
+        private Tuple<bool, string> FirstNameValidator(string firstName)
         {
-            if (firstName is null || firstName.Trim().Length == 0 || firstName.Length < Program.fileCabinetService.Validator.MinLength || firstName.Length > Program.fileCabinetService.Validator.MaxLength)
+            if (firstName is null || firstName.Trim().Length == 0 || firstName.Length < this.service.Validator.MinLength || firstName.Length > this.service.Validator.MaxLength)
             {
                 return new Tuple<bool, string>(false, firstName);
             }
@@ -123,9 +134,9 @@ namespace FileCabinetApp.CommandHandlers
             return new Tuple<bool, string>(true, firstName);
         }
 
-        private static Tuple<bool, string> LastNameValidator(string lastName)
+        private Tuple<bool, string> LastNameValidator(string lastName)
         {
-            if (lastName is null || lastName.Trim().Length == 0 || lastName.Length < Program.fileCabinetService.Validator.MinLength || lastName.Length > Program.fileCabinetService.Validator.MaxLength)
+            if (lastName is null || lastName.Trim().Length == 0 || lastName.Length < this.service.Validator.MinLength || lastName.Length > this.service.Validator.MaxLength)
             {
                 return new Tuple<bool, string>(false, lastName);
             }
@@ -133,9 +144,9 @@ namespace FileCabinetApp.CommandHandlers
             return new Tuple<bool, string>(true, lastName);
         }
 
-        private static Tuple<bool, string> DateOfBirthValidator(DateTime dateOfBirth)
+        private Tuple<bool, string> DateOfBirthValidator(DateTime dateOfBirth)
         {
-            if (dateOfBirth < Program.fileCabinetService.Validator.MinimalDate || dateOfBirth > Program.fileCabinetService.Validator.MaximalDate)
+            if (dateOfBirth < this.service.Validator.MinimalDate || dateOfBirth > this.service.Validator.MaximalDate)
             {
                 return new Tuple<bool, string>(false, dateOfBirth.ToString("MM'/'dd'/'yyyy", null));
             }
@@ -143,9 +154,9 @@ namespace FileCabinetApp.CommandHandlers
             return new Tuple<bool, string>(true, dateOfBirth.ToString("MM'/'dd'/'yyyy", null));
         }
 
-        private static Tuple<bool, string> GradeValidator(short grade)
+        private Tuple<bool, string> GradeValidator(short grade)
         {
-            if (grade < Program.fileCabinetService.Validator.MinGrade || grade > Program.fileCabinetService.Validator.MaxGrade)
+            if (grade < this.service.Validator.MinGrade || grade > this.service.Validator.MaxGrade)
             {
                 return new Tuple<bool, string>(false, grade.ToString());
             }
@@ -153,9 +164,9 @@ namespace FileCabinetApp.CommandHandlers
             return new Tuple<bool, string>(true, grade.ToString());
         }
 
-        private static Tuple<bool, string> HeightValidator(decimal height)
+        private Tuple<bool, string> HeightValidator(decimal height)
         {
-            if (height < Program.fileCabinetService.Validator.MinHeight || height > Program.fileCabinetService.Validator.MaxHeight)
+            if (height < this.service.Validator.MinHeight || height > this.service.Validator.MaxHeight)
             {
                 return new Tuple<bool, string>(false, height.ToString());
             }
@@ -163,9 +174,9 @@ namespace FileCabinetApp.CommandHandlers
             return new Tuple<bool, string>(true, height.ToString());
         }
 
-        private static Tuple<bool, string> FavouriteSymbolValidator(char favouriteSymbol)
+        private Tuple<bool, string> FavouriteSymbolValidator(char favouriteSymbol)
         {
-            if (favouriteSymbol == Program.fileCabinetService.Validator.ExcludeChar)
+            if (favouriteSymbol == this.service.Validator.ExcludeChar)
             {
                 return new Tuple<bool, string>(false, favouriteSymbol.ToString());
             }

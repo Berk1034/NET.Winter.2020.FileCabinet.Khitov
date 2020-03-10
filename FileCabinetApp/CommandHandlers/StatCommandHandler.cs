@@ -9,6 +9,17 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class StatCommandHandler : CommandHandlerBase
     {
+        private IFileCabinetService service;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StatCommandHandler"/> class.
+        /// </summary>
+        /// <param name="service">The IFileCabinetService service.</param>
+        public StatCommandHandler(IFileCabinetService service)
+        {
+            this.service = service;
+        }
+
         /// <summary>
         /// Executes the request.
         /// </summary>
@@ -17,8 +28,8 @@ namespace FileCabinetApp.CommandHandlers
         {
             if (appCommandRequest.Command == "stat")
             {
-                var totalRecordsCount = Program.fileCabinetService.GetStat().total;
-                var deletedRecordsCount = Program.fileCabinetService.GetStat().deleted;
+                var totalRecordsCount = this.service.GetStat().total;
+                var deletedRecordsCount = this.service.GetStat().deleted;
                 Console.WriteLine($"Totally {totalRecordsCount} record(s). Need to delete {deletedRecordsCount} record(s).");
             }
             else if (this.NextHandler != null)
