@@ -10,13 +10,17 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class FindCommandHandler : ServiceCommandHandlerBase
     {
+        private IRecordPrinter printer;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FindCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
-        public FindCommandHandler(IFileCabinetService service)
+        /// <param name="printer">The IRecordPrinter printer.</param>
+        public FindCommandHandler(IFileCabinetService service, IRecordPrinter printer)
             : base(service)
         {
+            this.printer = printer;
         }
 
         /// <summary>
@@ -47,10 +51,7 @@ namespace FileCabinetApp.CommandHandlers
                             break;
                     }
 
-                    for (int i = 0; i < searchResult.Count; i++)
-                    {
-                        Console.WriteLine($"#{searchResult[i].Id}, {searchResult[i].Name.FirstName}, {searchResult[i].Name.LastName}, {searchResult[i].DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {searchResult[i].Grade}, {searchResult[i].Height}, {searchResult[i].FavouriteSymbol}");
-                    }
+                    this.printer.Print(searchResult);
                 }
                 else
                 {
