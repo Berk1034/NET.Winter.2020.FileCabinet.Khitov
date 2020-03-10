@@ -142,7 +142,21 @@ namespace FileCabinetApp.CommandHandlers
 
         private Tuple<bool, string> FirstNameValidator(string firstName)
         {
-            if (firstName is null || firstName.Trim().Length == 0 || firstName.Length < this.service.Validator.MinLength || firstName.Length > this.service.Validator.MaxLength)
+            int minLength;
+            int maxLength;
+
+            if (Validators.ValidationRules.DefaultValidation)
+            {
+                minLength = Validators.ValidationRules.DefaultMinLengthInSymbols;
+                maxLength = Validators.ValidationRules.DefaultMaxLengthInSymbols;
+            }
+            else
+            {
+                minLength = Validators.ValidationRules.CustomMinLengthInSymbols;
+                maxLength = Validators.ValidationRules.CustomMaxLengthInSymbols;
+            }
+
+            if (firstName is null || firstName.Trim().Length == 0 || firstName.Length < minLength || firstName.Length > maxLength)
             {
                 return new Tuple<bool, string>(false, firstName);
             }
@@ -152,7 +166,21 @@ namespace FileCabinetApp.CommandHandlers
 
         private Tuple<bool, string> LastNameValidator(string lastName)
         {
-            if (lastName is null || lastName.Trim().Length == 0 || lastName.Length < this.service.Validator.MinLength || lastName.Length > this.service.Validator.MaxLength)
+            int minLength;
+            int maxLength;
+
+            if (Validators.ValidationRules.DefaultValidation)
+            {
+                minLength = Validators.ValidationRules.DefaultMinLengthInSymbols;
+                maxLength = Validators.ValidationRules.DefaultMaxLengthInSymbols;
+            }
+            else
+            {
+                minLength = Validators.ValidationRules.CustomMinLengthInSymbols;
+                maxLength = Validators.ValidationRules.CustomMaxLengthInSymbols;
+            }
+
+            if (lastName is null || lastName.Trim().Length == 0 || lastName.Length < minLength || lastName.Length > maxLength)
             {
                 return new Tuple<bool, string>(false, lastName);
             }
@@ -162,7 +190,21 @@ namespace FileCabinetApp.CommandHandlers
 
         private Tuple<bool, string> DateOfBirthValidator(DateTime dateOfBirth)
         {
-            if (dateOfBirth < this.service.Validator.MinimalDate || dateOfBirth > this.service.Validator.MaximalDate)
+            DateTime minimalDate;
+            DateTime maximalDate;
+
+            if (Validators.ValidationRules.DefaultValidation)
+            {
+                minimalDate = Validators.ValidationRules.DefaultMinimalDate;
+                maximalDate = Validators.ValidationRules.DefaultMaximalDate;
+            }
+            else
+            {
+                minimalDate = Validators.ValidationRules.CustomMinimalDate;
+                maximalDate = Validators.ValidationRules.CustomMaximalDate;
+            }
+
+            if (dateOfBirth < minimalDate || dateOfBirth > maximalDate)
             {
                 return new Tuple<bool, string>(false, dateOfBirth.ToString("MM'/'dd'/'yyyy", null));
             }
@@ -172,7 +214,21 @@ namespace FileCabinetApp.CommandHandlers
 
         private Tuple<bool, string> GradeValidator(short grade)
         {
-            if (grade < this.service.Validator.MinGrade || grade > this.service.Validator.MaxGrade)
+            short minGrade;
+            short maxGrade;
+
+            if (Validators.ValidationRules.DefaultValidation)
+            {
+                minGrade = Validators.ValidationRules.DefaultMinGradeInPoints;
+                maxGrade = Validators.ValidationRules.DefaultMaxGradeInPoints;
+            }
+            else
+            {
+                minGrade = Validators.ValidationRules.CustomMinGradeInPoints;
+                maxGrade = Validators.ValidationRules.CustomMaxGradeInPoints;
+            }
+
+            if (grade < minGrade || grade > maxGrade)
             {
                 return new Tuple<bool, string>(false, grade.ToString());
             }
@@ -182,7 +238,21 @@ namespace FileCabinetApp.CommandHandlers
 
         private Tuple<bool, string> HeightValidator(decimal height)
         {
-            if (height < this.service.Validator.MinHeight || height > this.service.Validator.MaxHeight)
+            decimal minHeight;
+            decimal maxHeight;
+
+            if (Validators.ValidationRules.DefaultValidation)
+            {
+                minHeight = Validators.ValidationRules.DefaultMinHeightInMeters;
+                maxHeight = Validators.ValidationRules.DefaultMaxHeightInMeters;
+            }
+            else
+            {
+                minHeight = Validators.ValidationRules.CustomMinHeightInMeters;
+                maxHeight = Validators.ValidationRules.CustomMaxHeightInMeters;
+            }
+
+            if (height < minHeight || height > maxHeight)
             {
                 return new Tuple<bool, string>(false, height.ToString());
             }
@@ -192,7 +262,17 @@ namespace FileCabinetApp.CommandHandlers
 
         private Tuple<bool, string> FavouriteSymbolValidator(char favouriteSymbol)
         {
-            if (favouriteSymbol == this.service.Validator.ExcludeChar)
+            char bannedChar;
+            if (Validators.ValidationRules.DefaultValidation)
+            {
+                bannedChar = Validators.ValidationRules.DefaultBannedChar;
+            }
+            else
+            {
+                bannedChar = Validators.ValidationRules.CustomBannedChar;
+            }
+
+            if (favouriteSymbol == bannedChar)
             {
                 return new Tuple<bool, string>(false, favouriteSymbol.ToString());
             }

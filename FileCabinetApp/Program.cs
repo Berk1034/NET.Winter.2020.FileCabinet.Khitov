@@ -34,6 +34,7 @@ namespace FileCabinetApp
                     {
                         validator = new CustomValidator();
                         validationRules = "custom";
+                        ValidationRules.DefaultValidation = false;
                     }
                 }
 
@@ -43,6 +44,7 @@ namespace FileCabinetApp
                     {
                         validator = new CustomValidator();
                         validationRules = "custom";
+                        ValidationRules.DefaultValidation = false;
                     }
                 }
             }

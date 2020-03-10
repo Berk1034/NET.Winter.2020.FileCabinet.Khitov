@@ -789,78 +789,6 @@
             The CustomValidator class.
             </summary>
         </member>
-        <member name="P:FileCabinetApp.Validators.CustomValidator.MinLength">
-            <summary>
-            Gets the value of MinLengthInSymbols const.
-            </summary>
-            <value>
-            The value of MinLengthInSymbols const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.CustomValidator.MaxLength">
-            <summary>
-            Gets the value of MaxLengthInSymbols const.
-            </summary>
-            <value>
-            The value of MaxLengthInSymbols const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.CustomValidator.MinGrade">
-            <summary>
-            Gets the value of MinGradeInPoints const.
-            </summary>
-            <value>
-            The value of MinGradeInPoints const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.CustomValidator.MaxGrade">
-            <summary>
-            Gets the value of MaxGradeInPoints const.
-            </summary>
-            <value>
-            The value of MaxGradeInPoints const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.CustomValidator.MinHeight">
-            <summary>
-            Gets the value of MinHeight const.
-            </summary>
-            <value>
-            The value of MinHeight const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.CustomValidator.MaxHeight">
-            <summary>
-            Gets the value of MaxHeight const.
-            </summary>
-            <value>
-            The value of MaxHeight const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.CustomValidator.MinimalDate">
-            <summary>
-            Gets the value of minimal DateTime.
-            </summary>
-            <value>
-            The value of minimal DateTime.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.CustomValidator.MaximalDate">
-            <summary>
-            Gets the value of DateTime.Now.
-            </summary>
-            <value>
-            The value of DateTime.Now.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.CustomValidator.ExcludeChar">
-            <summary>
-            Gets the value of BannedChar const.
-            </summary>
-            <value>
-            The value of BannedChar const.
-            </value>
-        </member>
         <member name="M:FileCabinetApp.Validators.CustomValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Validates the record information.
@@ -873,78 +801,6 @@
             <summary>
             The DefaultValidator class.
             </summary>
-        </member>
-        <member name="P:FileCabinetApp.Validators.DefaultValidator.MinLength">
-            <summary>
-            Gets the value of MinLengthInSymbols const.
-            </summary>
-            <value>
-            The value of MinLengthInSymbols const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.DefaultValidator.MaxLength">
-            <summary>
-            Gets the value of MaxLengthInSymbols const.
-            </summary>
-            <value>
-            The value of MaxLengthInSymbols const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.DefaultValidator.MinGrade">
-            <summary>
-            Gets the value of MinGradeInPoints const.
-            </summary>
-            <value>
-            The value of MinGradeInPoints const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.DefaultValidator.MaxGrade">
-            <summary>
-            Gets the value of MaxGradeInPoints const.
-            </summary>
-            <value>
-            The value of MaxGradeInPoints const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.DefaultValidator.MinHeight">
-            <summary>
-            Gets the value of MinHeight const.
-            </summary>
-            <value>
-            The value of MinHeight const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.DefaultValidator.MaxHeight">
-            <summary>
-            Gets the value of MaxHeight const.
-            </summary>
-            <value>
-            The value of MaxHeight const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.DefaultValidator.MinimalDate">
-            <summary>
-            Gets the value of minimal DateTime.
-            </summary>
-            <value>
-            The value of minimal DateTime.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.DefaultValidator.MaximalDate">
-            <summary>
-            Gets the value of DateTime.Now.
-            </summary>
-            <value>
-            The value of DateTime.Now.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.DefaultValidator.ExcludeChar">
-            <summary>
-            Gets the value of BannedChar const.
-            </summary>
-            <value>
-            The value of BannedChar const.
-            </value>
         </member>
         <member name="M:FileCabinetApp.Validators.DefaultValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
             <summary>
@@ -959,83 +815,111 @@
             The IRecordValidator interface.
             </summary>
         </member>
-        <member name="P:FileCabinetApp.Validators.IRecordValidator.MinLength">
-            <summary>
-            Gets the value of MinLength.
-            </summary>
-            <value>
-            The value of MinLength.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.IRecordValidator.MaxLength">
-            <summary>
-            Gets the value of MaxLength.
-            </summary>
-            <value>
-            The value of MaxLength.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.IRecordValidator.MinGrade">
-            <summary>
-            Gets the value of MinGrade.
-            </summary>
-            <value>
-            The value of MinGrade.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.IRecordValidator.MaxGrade">
-            <summary>
-            Gets the value of MaxGrade.
-            </summary>
-            <value>
-            The value of MaxGrade.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.IRecordValidator.MinHeight">
-            <summary>
-            Gets the value of MinHeight.
-            </summary>
-            <value>
-            The value of MinHeight.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.IRecordValidator.MaxHeight">
-            <summary>
-            Gets the value of MaxHeight.
-            </summary>
-            <value>
-            The value of MaxHeight.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.IRecordValidator.MinimalDate">
-            <summary>
-            Gets the value of minimal DateTime.
-            </summary>
-            <value>
-            The value of minimal DateTime.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.IRecordValidator.MaximalDate">
-            <summary>
-            Gets the value of maximal DateTime.
-            </summary>
-            <value>
-            The value of maximal DateTime.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.Validators.IRecordValidator.ExcludeChar">
-            <summary>
-            Gets the value of exclude char.
-            </summary>
-            <value>
-            The value of exclude char.
-            </value>
-        </member>
         <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
             <summary>
             Validates the parameters.
             </summary>
             <param name="recordInfo">The record information for validation.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.ValidationRules">
+            <summary>
+            The ValidationRules class.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinLengthInSymbols">
+            <summary>
+            The minimal length for the record first and last names for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaxLengthInSymbols">
+            <summary>
+            The maximal length for the record first and last names for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinGradeInPoints">
+            <summary>
+            The minimal value for the record grade for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaxGradeInPoints">
+            <summary>
+            The maximal value for the record grade for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinHeightInMeters">
+            <summary>
+            The minimal value for the record height for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaxHeightInMeters">
+            <summary>
+            The maximal value for the record height for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultBannedChar">
+            <summary>
+            The banned char for the record favourite symbol for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinimalDate">
+            <summary>
+            The minimal datetime for the record date of birth for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaximalDate">
+            <summary>
+            The maximal datetime for the record date of birth for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinLengthInSymbols">
+            <summary>
+            The minimal length for the record first and last names for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaxLengthInSymbols">
+            <summary>
+            The maximal length for the record first and last names for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinGradeInPoints">
+            <summary>
+            The minimal value for the record grade for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaxGradeInPoints">
+            <summary>
+            The maximal value for the record grade for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinHeightInMeters">
+            <summary>
+            The minimal value for the record height for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaxHeightInMeters">
+            <summary>
+            The maximal value for the record height for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomBannedChar">
+            <summary>
+            The banned char for the record favourite symbol for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinimalDate">
+            <summary>
+            The minimal datetime for the record date of birth for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaximalDate">
+            <summary>
+            The maximal datetime for the record date of birth for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultValidation">
+            <summary>
+            The flag to determine which rules to use.
+            </summary>
         </member>
     </members>
 </doc>

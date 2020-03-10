@@ -10,86 +10,6 @@ namespace FileCabinetApp.Validators
     /// </summary>
     public class DefaultValidator : IRecordValidator
     {
-        private const int MinLengthInSymbols = 2;
-        private const int MaxLengthInSymbols = 60;
-        private const short MinGradeInPoints = -10;
-        private const short MaxGradeInPoints = 10;
-        private const decimal MinHeightInMeters = 0.3m;
-        private const decimal MaxHeightInMeters = 3m;
-        private const char BannedChar = ' ';
-
-        /// <summary>
-        /// Gets the value of MinLengthInSymbols const.
-        /// </summary>
-        /// <value>
-        /// The value of MinLengthInSymbols const.
-        /// </value>
-        public int MinLength => MinLengthInSymbols;
-
-        /// <summary>
-        /// Gets the value of MaxLengthInSymbols const.
-        /// </summary>
-        /// <value>
-        /// The value of MaxLengthInSymbols const.
-        /// </value>
-        public int MaxLength => MaxLengthInSymbols;
-
-        /// <summary>
-        /// Gets the value of MinGradeInPoints const.
-        /// </summary>
-        /// <value>
-        /// The value of MinGradeInPoints const.
-        /// </value>
-        public short MinGrade => MinGradeInPoints;
-
-        /// <summary>
-        /// Gets the value of MaxGradeInPoints const.
-        /// </summary>
-        /// <value>
-        /// The value of MaxGradeInPoints const.
-        /// </value>
-        public short MaxGrade => MaxGradeInPoints;
-
-        /// <summary>
-        /// Gets the value of MinHeight const.
-        /// </summary>
-        /// <value>
-        /// The value of MinHeight const.
-        /// </value>
-        public decimal MinHeight => MinHeightInMeters;
-
-        /// <summary>
-        /// Gets the value of MaxHeight const.
-        /// </summary>
-        /// <value>
-        /// The value of MaxHeight const.
-        /// </value>
-        public decimal MaxHeight => MaxHeightInMeters;
-
-        /// <summary>
-        /// Gets the value of minimal DateTime.
-        /// </summary>
-        /// <value>
-        /// The value of minimal DateTime.
-        /// </value>
-        public DateTime MinimalDate => new DateTime(1950, 1, 1);
-
-        /// <summary>
-        /// Gets the value of DateTime.Now.
-        /// </summary>
-        /// <value>
-        /// The value of DateTime.Now.
-        /// </value>
-        public DateTime MaximalDate => DateTime.Now;
-
-        /// <summary>
-        /// Gets the value of BannedChar const.
-        /// </summary>
-        /// <value>
-        /// The value of BannedChar const.
-        /// </value>
-        public char ExcludeChar => BannedChar;
-
         /// <summary>
         /// Validates the record information.
         /// </summary>
@@ -123,9 +43,9 @@ namespace FileCabinetApp.Validators
                 throw new ArgumentException("Firstname cannot contain only spaces.", nameof(recordInfo.Name.FirstName));
             }
 
-            if (recordInfo.Name.FirstName.Length < MinLengthInSymbols || recordInfo.Name.FirstName.Length > MaxLengthInSymbols)
+            if (recordInfo.Name.FirstName.Length < ValidationRules.DefaultMinLengthInSymbols || recordInfo.Name.FirstName.Length > ValidationRules.DefaultMaxLengthInSymbols)
             {
-                throw new ArgumentException($"Firstname length should be in range [{MinLengthInSymbols};{MaxLengthInSymbols}].", nameof(recordInfo.Name.FirstName));
+                throw new ArgumentException($"Firstname length should be in range [{ValidationRules.DefaultMinLengthInSymbols};{ValidationRules.DefaultMaxLengthInSymbols}].", nameof(recordInfo.Name.FirstName));
             }
         }
 
@@ -141,41 +61,41 @@ namespace FileCabinetApp.Validators
                 throw new ArgumentException("Lastname cannot contain only spaces.", nameof(recordInfo.Name.LastName));
             }
 
-            if (recordInfo.Name.LastName.Length < MinLengthInSymbols || recordInfo.Name.LastName.Length > MaxLengthInSymbols)
+            if (recordInfo.Name.LastName.Length < ValidationRules.DefaultMinLengthInSymbols || recordInfo.Name.LastName.Length > ValidationRules.DefaultMaxLengthInSymbols)
             {
-                throw new ArgumentException($"Lastname length should be in range [{MinLengthInSymbols};{MaxLengthInSymbols}.", nameof(recordInfo.Name.LastName));
+                throw new ArgumentException($"Lastname length should be in range [{ValidationRules.DefaultMinLengthInSymbols};{ValidationRules.DefaultMaxLengthInSymbols}.", nameof(recordInfo.Name.LastName));
             }
         }
 
         private void ValidateDateOfBirth(FileCabinetRecord recordInfo)
         {
-            if (recordInfo.DateOfBirth < this.MinimalDate || recordInfo.DateOfBirth > this.MaximalDate)
+            if (recordInfo.DateOfBirth < ValidationRules.DefaultMinimalDate || recordInfo.DateOfBirth > ValidationRules.DefaultMaximalDate)
             {
-                throw new ArgumentException($"Date should start from {this.MinimalDate.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))} till {this.MaximalDate.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}.", nameof(recordInfo.DateOfBirth));
+                throw new ArgumentException($"Date should start from {ValidationRules.DefaultMinimalDate.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))} till {ValidationRules.DefaultMaximalDate.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}.", nameof(recordInfo.DateOfBirth));
             }
         }
 
         private void ValidateGrade(FileCabinetRecord recordInfo)
         {
-            if (recordInfo.Grade < MinGradeInPoints || recordInfo.Grade > MaxGradeInPoints)
+            if (recordInfo.Grade < ValidationRules.DefaultMinGradeInPoints || recordInfo.Grade > ValidationRules.DefaultMaxGradeInPoints)
             {
-                throw new ArgumentException($"Grade should be in range [{MinGradeInPoints};{MaxGradeInPoints}].", nameof(recordInfo.Grade));
+                throw new ArgumentException($"Grade should be in range [{ValidationRules.DefaultMinGradeInPoints};{ValidationRules.DefaultMaxGradeInPoints}].", nameof(recordInfo.Grade));
             }
         }
 
         private void ValidateHeight(FileCabinetRecord recordInfo)
         {
-            if (recordInfo.Height < MinHeightInMeters || recordInfo.Height > MaxHeightInMeters)
+            if (recordInfo.Height < ValidationRules.DefaultMinHeightInMeters || recordInfo.Height > ValidationRules.DefaultMaxHeightInMeters)
             {
-                throw new ArgumentException($"Height can't be lower {MinHeightInMeters} and higher than {MaxHeightInMeters}.", nameof(recordInfo.Height));
+                throw new ArgumentException($"Height can't be lower {ValidationRules.DefaultMinHeightInMeters} and higher than {ValidationRules.DefaultMaxHeightInMeters}.", nameof(recordInfo.Height));
             }
         }
 
         private void ValidateFavouriteSymbol(FileCabinetRecord recordInfo)
         {
-            if (recordInfo.FavouriteSymbol == BannedChar)
+            if (recordInfo.FavouriteSymbol == ValidationRules.DefaultBannedChar)
             {
-                throw new ArgumentException($"{BannedChar} is not valid symbol.", nameof(recordInfo.FavouriteSymbol));
+                throw new ArgumentException($"{ValidationRules.DefaultBannedChar} is not valid symbol.", nameof(recordInfo.FavouriteSymbol));
             }
         }
     }
