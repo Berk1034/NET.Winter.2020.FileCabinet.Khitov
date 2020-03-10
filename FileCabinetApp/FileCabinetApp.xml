@@ -4,202 +4,286 @@
         <name>FileCabinetApp</name>
     </assembly>
     <members>
-        <member name="T:FileCabinetApp.CustomValidator">
+        <member name="T:FileCabinetApp.CommandHandlers.AppCommandRequest">
             <summary>
-            The CustomValidator class.
+            The AppCommandRequest class.
             </summary>
         </member>
-        <member name="P:FileCabinetApp.CustomValidator.MinLength">
+        <member name="P:FileCabinetApp.CommandHandlers.AppCommandRequest.Command">
             <summary>
-            Gets the value of MinLengthInSymbols const.
+            Gets or sets the command.
             </summary>
             <value>
-            The value of MinLengthInSymbols const.
+            The command.
             </value>
         </member>
-        <member name="P:FileCabinetApp.CustomValidator.MaxLength">
+        <member name="P:FileCabinetApp.CommandHandlers.AppCommandRequest.Parameters">
             <summary>
-            Gets the value of MaxLengthInSymbols const.
+            Gets or sets the parameters for the command.
             </summary>
             <value>
-            The value of MaxLengthInSymbols const.
+            The parameters for the command.
             </value>
         </member>
-        <member name="P:FileCabinetApp.CustomValidator.MinGrade">
+        <member name="T:FileCabinetApp.CommandHandlers.CommandHandlerBase">
             <summary>
-            Gets the value of MinGradeInPoints const.
+            The CommandHandlerBase class.
+            </summary>
+        </member>
+        <member name="P:FileCabinetApp.CommandHandlers.CommandHandlerBase.NextHandler">
+            <summary>
+            Gets the nextHandler.
             </summary>
             <value>
-            The value of MinGradeInPoints const.
+            The nextHandler.
             </value>
         </member>
-        <member name="P:FileCabinetApp.CustomValidator.MaxGrade">
+        <member name="M:FileCabinetApp.CommandHandlers.CommandHandlerBase.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
-            Gets the value of MaxGradeInPoints const.
+            Executes the request.
             </summary>
-            <value>
-            The value of MaxGradeInPoints const.
-            </value>
+            <param name="appCommandRequest">The app command request.</param>
         </member>
-        <member name="P:FileCabinetApp.CustomValidator.MinHeight">
+        <member name="M:FileCabinetApp.CommandHandlers.CommandHandlerBase.SetNext(FileCabinetApp.CommandHandlers.ICommandHandler)">
             <summary>
-            Gets the value of MinHeight const.
+            Sets the next command handler.
             </summary>
-            <value>
-            The value of MinHeight const.
-            </value>
+            <param name="commandHandler">The command handler.</param>
         </member>
-        <member name="P:FileCabinetApp.CustomValidator.MaxHeight">
+        <member name="T:FileCabinetApp.CommandHandlers.CreateCommandHandler">
             <summary>
-            Gets the value of MaxHeight const.
-            </summary>
-            <value>
-            The value of MaxHeight const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.CustomValidator.MinimalDate">
-            <summary>
-            Gets the value of minimal DateTime.
-            </summary>
-            <value>
-            The value of minimal DateTime.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.CustomValidator.MaximalDate">
-            <summary>
-            Gets the value of DateTime.Now.
-            </summary>
-            <value>
-            The value of DateTime.Now.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.CustomValidator.ExcludeChar">
-            <summary>
-            Gets the value of BannedChar const.
-            </summary>
-            <value>
-            The value of BannedChar const.
-            </value>
-        </member>
-        <member name="M:FileCabinetApp.CustomValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
-            <summary>
-            Validates the record information.
-            </summary>
-            <param name="recordInfo">The record informaton.</param>
-            <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
-            <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
-        </member>
-        <member name="T:FileCabinetApp.DefaultValidator">
-            <summary>
-            The DefaultValidator class.
+            The CreateCommandHandler class.
             </summary>
         </member>
-        <member name="P:FileCabinetApp.DefaultValidator.MinLength">
+        <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
             <summary>
-            Gets the value of MinLengthInSymbols const.
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.CreateCommandHandler"/> class.
             </summary>
-            <value>
-            The value of MinLengthInSymbols const.
-            </value>
+            <param name="service">The IFileCabinetService service.</param>
         </member>
-        <member name="P:FileCabinetApp.DefaultValidator.MaxLength">
+        <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
-            Gets the value of MaxLengthInSymbols const.
+            Executes the request.
             </summary>
-            <value>
-            The value of MaxLengthInSymbols const.
-            </value>
+            <param name="appCommandRequest">The app command request.</param>
         </member>
-        <member name="P:FileCabinetApp.DefaultValidator.MinGrade">
+        <member name="T:FileCabinetApp.CommandHandlers.EditCommandHandler">
             <summary>
-            Gets the value of MinGradeInPoints const.
-            </summary>
-            <value>
-            The value of MinGradeInPoints const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.DefaultValidator.MaxGrade">
-            <summary>
-            Gets the value of MaxGradeInPoints const.
-            </summary>
-            <value>
-            The value of MaxGradeInPoints const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.DefaultValidator.MinHeight">
-            <summary>
-            Gets the value of MinHeight const.
-            </summary>
-            <value>
-            The value of MinHeight const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.DefaultValidator.MaxHeight">
-            <summary>
-            Gets the value of MaxHeight const.
-            </summary>
-            <value>
-            The value of MaxHeight const.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.DefaultValidator.MinimalDate">
-            <summary>
-            Gets the value of minimal DateTime.
-            </summary>
-            <value>
-            The value of minimal DateTime.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.DefaultValidator.MaximalDate">
-            <summary>
-            Gets the value of DateTime.Now.
-            </summary>
-            <value>
-            The value of DateTime.Now.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.DefaultValidator.ExcludeChar">
-            <summary>
-            Gets the value of BannedChar const.
-            </summary>
-            <value>
-            The value of BannedChar const.
-            </value>
-        </member>
-        <member name="M:FileCabinetApp.DefaultValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
-            <summary>
-            Validates the record information.
-            </summary>
-            <param name="recordInfo">The record informaton.</param>
-            <exception cref="M:System.ArgumentException.#ctor">Thrown when no record with such id found or when record information do not meet the requirements: firstname and lastname length should be in range [2;60], contain not only space symbols, dateofbirth should be in range [01.01.1950;DateTime.Now], grade should be in range [-10;10], height should be in range [0,3m;3m], favouritesymbol can't be a space symbol.</exception>
-            <exception cref="M:System.ArgumentNullException.#ctor">Thrown when firstname or lastname is null.</exception>
-        </member>
-        <member name="T:FileCabinetApp.FileCabinetCustomService">
-            <summary>
-            The FileCabinetCustomService class.
+            The EditCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetCustomService.#ctor">
+        <member name="M:FileCabinetApp.CommandHandlers.EditCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
             <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetCustomService"/> class.
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.EditCommandHandler"/> class.
+            </summary>
+            <param name="service">The IFileCabinetService service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.EditCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ExitCommandHandler">
+            <summary>
+            The ExitCommandHandler class.
             </summary>
         </member>
-        <member name="T:FileCabinetApp.FileCabinetDefaultService">
+        <member name="M:FileCabinetApp.CommandHandlers.ExitCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Boolean})">
             <summary>
-            The FileCabinetDefaultService class.
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ExitCommandHandler"/> class.
+            </summary>
+            <param name="service">The IFileCabinetService service.</param>
+            <param name="action">The Action delegate to contol exit.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ExitCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ExportCommandHandler">
+            <summary>
+            The ExportCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetDefaultService.#ctor">
+        <member name="M:FileCabinetApp.CommandHandlers.ExportCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
             <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetDefaultService"/> class.
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ExportCommandHandler"/> class.
             </summary>
+            <param name="service">The IFileCabinetService service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ExportCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.FindCommandHandler">
+            <summary>
+            The FindCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.FindCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.FindCommandHandler"/> class.
+            </summary>
+            <param name="service">The IFileCabinetService service.</param>
+            <param name="printer">The IRecordPrinter printer.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.FindCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.HelpCommandHandler">
+            <summary>
+            The HelpCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.HelpCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ICommandHandler">
+            <summary>
+            The ICommandHandler interface.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ICommandHandler.SetNext(FileCabinetApp.CommandHandlers.ICommandHandler)">
+            <summary>
+            Sets the next command handler.
+            </summary>
+            <param name="commandHandler">The command handler.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ICommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ImportCommandHandler">
+            <summary>
+            The ImportCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ImportCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ImportCommandHandler"/> class.
+            </summary>
+            <param name="service">The IFileCabinetService service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ImportCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ListCommandHandler">
+            <summary>
+            The ListCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ListCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ListCommandHandler"/> class.
+            </summary>
+            <param name="service">The IFileCabinetService service.</param>
+            <param name="printer">The IRecordPrinter printer.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ListCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.MissedCommandHandler">
+            <summary>
+            The MissedCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.MissedCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.PurgeCommandHandler">
+            <summary>
+            The PurgeCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.PurgeCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.PurgeCommandHandler"/> class.
+            </summary>
+            <param name="service">The IFileCabinetService service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.PurgeCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.RemoveCommandHandler">
+            <summary>
+            The RemoveCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.RemoveCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.RemoveCommandHandler"/> class.
+            </summary>
+            <param name="service">The IFileCabinetService service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.RemoveCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase">
+            <summary>
+            The ServiceCommandHandlerBase class.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase.service">
+            <summary>
+            The service to use.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase.#ctor(FileCabinetApp.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase"/> class.
+            </summary>
+            <param name="service">The IFileCabinetService service.</param>
+        </member>
+        <member name="T:FileCabinetApp.CommandHandlers.StatCommandHandler">
+            <summary>
+            The StatCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.StatCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.StatCommandHandler"/> class.
+            </summary>
+            <param name="service">The IFileCabinetService service.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.StatCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
         </member>
         <member name="T:FileCabinetApp.FileCabinetFilesystemService">
             <summary>
             The FileCabinetFilesystemService class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetFilesystemService.#ctor(System.IO.FileStream,FileCabinetApp.IRecordValidator)">
+        <member name="M:FileCabinetApp.FileCabinetFilesystemService.#ctor(System.IO.FileStream,FileCabinetApp.Validators.IRecordValidator)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetFilesystemService"/> class.
             </summary>
@@ -300,7 +384,7 @@
             The FileCabinetService class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.FileCabinetMemoryService.#ctor(FileCabinetApp.IRecordValidator)">
+        <member name="M:FileCabinetApp.FileCabinetMemoryService.#ctor(FileCabinetApp.Validators.IRecordValidator)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.FileCabinetMemoryService"/> class.
             </summary>
@@ -648,89 +732,6 @@
             <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
             <returns>The amount of imported records.</returns>
         </member>
-        <member name="T:FileCabinetApp.IRecordValidator">
-            <summary>
-            The IRecordValidator interface.
-            </summary>
-        </member>
-        <member name="P:FileCabinetApp.IRecordValidator.MinLength">
-            <summary>
-            Gets the value of MinLength.
-            </summary>
-            <value>
-            The value of MinLength.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.IRecordValidator.MaxLength">
-            <summary>
-            Gets the value of MaxLength.
-            </summary>
-            <value>
-            The value of MaxLength.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.IRecordValidator.MinGrade">
-            <summary>
-            Gets the value of MinGrade.
-            </summary>
-            <value>
-            The value of MinGrade.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.IRecordValidator.MaxGrade">
-            <summary>
-            Gets the value of MaxGrade.
-            </summary>
-            <value>
-            The value of MaxGrade.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.IRecordValidator.MinHeight">
-            <summary>
-            Gets the value of MinHeight.
-            </summary>
-            <value>
-            The value of MinHeight.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.IRecordValidator.MaxHeight">
-            <summary>
-            Gets the value of MaxHeight.
-            </summary>
-            <value>
-            The value of MaxHeight.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.IRecordValidator.MinimalDate">
-            <summary>
-            Gets the value of minimal DateTime.
-            </summary>
-            <value>
-            The value of minimal DateTime.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.IRecordValidator.MaximalDate">
-            <summary>
-            Gets the value of maximal DateTime.
-            </summary>
-            <value>
-            The value of maximal DateTime.
-            </value>
-        </member>
-        <member name="P:FileCabinetApp.IRecordValidator.ExcludeChar">
-            <summary>
-            Gets the value of exclude char.
-            </summary>
-            <value>
-            The value of exclude char.
-            </value>
-        </member>
-        <member name="M:FileCabinetApp.IRecordValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
-            <summary>
-            Validates the parameters.
-            </summary>
-            <param name="recordInfo">The record information for validation.</param>
-        </member>
         <member name="T:FileCabinetApp.Name">
             <summary>
             The Name class.
@@ -762,6 +763,318 @@
             The start point of the program.
             </summary>
             <param name="args">The arguments passed to the program.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.CompositeValidator">
+            <summary>
+            The CompositeValidator class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CompositeValidator.#ctor(System.Collections.Generic.IEnumerable{FileCabinetApp.Validators.IRecordValidator})">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.CompositeValidator"/> class.
+            </summary>
+            <param name="validators">The list of validators to use.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.CompositeValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Validates the record information using validators.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.DateOfBirthValidator">
+            <summary>
+            The DateOfBirthValidator class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DateOfBirthValidator.#ctor(System.DateTime,System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.DateOfBirthValidator"/> class.
+            </summary>
+            <param name="from">The date from for validation.</param>
+            <param name="to">The date to for validation.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.DateOfBirthValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.FavouriteSymbolValidator">
+            <summary>
+            The FavouriteSymbolValidator class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FavouriteSymbolValidator.#ctor(System.Char)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.FavouriteSymbolValidator"/> class.
+            </summary>
+            <param name="bannedSymbol">The banned symbol for validation.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FavouriteSymbolValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.FirstNameValidator">
+            <summary>
+            The FirstNameValidator class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FirstNameValidator.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.FirstNameValidator"/> class.
+            </summary>
+            <param name="minLength">The minimal length for validation.</param>
+            <param name="maxLength">The maximal length for validation.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.FirstNameValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.GradeValidator">
+            <summary>
+            The GradeValidator class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.GradeValidator.#ctor(System.Int16,System.Int16)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.GradeValidator"/> class.
+            </summary>
+            <param name="minGrade">The minimal grade for validation.</param>
+            <param name="maxGrade">The maximal grade for validation.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.GradeValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.HeightValidator">
+            <summary>
+            The HeightValidator class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.HeightValidator.#ctor(System.Decimal,System.Decimal)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.HeightValidator"/> class.
+            </summary>
+            <param name="minHeight">The minimal height for validation.</param>
+            <param name="maxHeight">The maximal height for validation.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.HeightValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.IRecordValidator">
+            <summary>
+            The IRecordValidator interface.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.IRecordValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Validates the parameters.
+            </summary>
+            <param name="recordInfo">The record information for validation.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.LastNameValidator">
+            <summary>
+            The LastNameValidator class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.LastNameValidator.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.Validators.LastNameValidator"/> class.
+            </summary>
+            <param name="minLength">The minimal length for validation.</param>
+            <param name="maxLength">The maximal length for validation.</param>
+        </member>
+        <member name="M:FileCabinetApp.Validators.LastNameValidator.ValidateParameters(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Validates the record information.
+            </summary>
+            <param name="recordInfo">The record informaton.</param>
+        </member>
+        <member name="T:FileCabinetApp.Validators.ValidationRules">
+            <summary>
+            The ValidationRules class.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinLengthInSymbols">
+            <summary>
+            The minimal length for the record first and last names for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaxLengthInSymbols">
+            <summary>
+            The maximal length for the record first and last names for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinGradeInPoints">
+            <summary>
+            The minimal value for the record grade for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaxGradeInPoints">
+            <summary>
+            The maximal value for the record grade for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinHeightInMeters">
+            <summary>
+            The minimal value for the record height for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaxHeightInMeters">
+            <summary>
+            The maximal value for the record height for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultBannedChar">
+            <summary>
+            The banned char for the record favourite symbol for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinimalDate">
+            <summary>
+            The minimal datetime for the record date of birth for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaximalDate">
+            <summary>
+            The maximal datetime for the record date of birth for default validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinLengthInSymbols">
+            <summary>
+            The minimal length for the record first and last names for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaxLengthInSymbols">
+            <summary>
+            The maximal length for the record first and last names for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinGradeInPoints">
+            <summary>
+            The minimal value for the record grade for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaxGradeInPoints">
+            <summary>
+            The maximal value for the record grade for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinHeightInMeters">
+            <summary>
+            The minimal value for the record height for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaxHeightInMeters">
+            <summary>
+            The maximal value for the record height for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomBannedChar">
+            <summary>
+            The banned char for the record favourite symbol for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinimalDate">
+            <summary>
+            The minimal datetime for the record date of birth for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaximalDate">
+            <summary>
+            The maximal datetime for the record date of birth for custom validation.
+            </summary>
+        </member>
+        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultValidation">
+            <summary>
+            The flag to determine which rules to use.
+            </summary>
+        </member>
+        <member name="T:FileCabinetApp.Validators.ValidatorBuilder">
+            <summary>
+            The ValidatorBuilder class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateFirstName(System.Int32,System.Int32)">
+            <summary>
+            Adds new instance of FirstNameValidator with parameters to the list of validators.
+            </summary>
+            <param name="min">The minimal length for the firstname.</param>
+            <param name="max">The maximal length for the firstname.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateLastName(System.Int32,System.Int32)">
+            <summary>
+            Adds new instance of LastNameValidator with parameters to the list of validators.
+            </summary>
+            <param name="min">The minimal length for the lastname.</param>
+            <param name="max">The maximal length for the lastname.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateDateOfBirth(System.DateTime,System.DateTime)">
+            <summary>
+            Adds new instance of DateOfBirthValidator with parameters to the list of validators.
+            </summary>
+            <param name="from">The minimal date for the dateofbirth.</param>
+            <param name="to">The maximal date for the dateofbirth.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateGrade(System.Int16,System.Int16)">
+            <summary>
+            Adds new instance of GradeValidator with parameters to the list of validators.
+            </summary>
+            <param name="min">The minimal value for the grade.</param>
+            <param name="max">The maximal value for the grade.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateHeight(System.Decimal,System.Decimal)">
+            <summary>
+            Adds new instance of HeightValidator with parameters to the list of validators.
+            </summary>
+            <param name="min">The minimal value for the height.</param>
+            <param name="max">The maximal value for the height.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.ValidateFavouriteSymbol(System.Char)">
+            <summary>
+            Adds new instance of FavouriteSymbolValidator with parameters to the list of validators.
+            </summary>
+            <param name="bannedSymbol">The symbol to ban for favouritesymbol.</param>
+            <returns>The reference to the current instance of the ValidatorBuilder class.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilder.Create">
+            <summary>
+            Creates the new instance of CompositeValidator with added validators.
+            </summary>
+            <returns>The IRecordValidator reference.</returns>
+        </member>
+        <member name="T:FileCabinetApp.Validators.ValidatorBuilderExtensions">
+            <summary>
+            The ValidatorBuilderExtensions class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilderExtensions.CreateDefault(FileCabinetApp.Validators.ValidatorBuilder)">
+            <summary>
+            The extension method for ValidatorBuilder class to create a DefaultValidator.
+            </summary>
+            <param name="validatorBuilder">The validator builder instance.</param>
+            <returns>The IRecordValidator reference.</returns>
+        </member>
+        <member name="M:FileCabinetApp.Validators.ValidatorBuilderExtensions.CreateCustom(FileCabinetApp.Validators.ValidatorBuilder)">
+            <summary>
+            The extension method for ValidatorBuilder class to create a CustomValidator.
+            </summary>
+            <param name="validatorBuilder">The Validator builder instance.</param>
+            <returns>The IRecordValidator reference.</returns>
         </member>
     </members>
 </doc>

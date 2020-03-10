@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 using FileCabinetApp;
+using FileCabinetApp.Validators;
 
 namespace FileCabinetGenerator
 {
@@ -12,7 +13,6 @@ namespace FileCabinetGenerator
         private static int startId;
         private static int recordsAmount;
         private static string outputFileName;
-        private static IRecordValidator recordValidator = new DefaultValidator();
         private static Random random = new Random(Environment.TickCount);
         public static void Main(string[] args)
         {
@@ -82,13 +82,13 @@ namespace FileCabinetGenerator
                     Id = startId,
                     Name = new Name 
                     { 
-                        FirstName = random.NextString(recordValidator.MinLength, recordValidator.MaxLength),
-                        LastName = random.NextString(recordValidator.MinLength, recordValidator.MaxLength),
+                        FirstName = random.NextString(ValidationRules.DefaultMinLengthInSymbols, ValidationRules.DefaultMaxLengthInSymbols),
+                        LastName = random.NextString(ValidationRules.DefaultMinLengthInSymbols, ValidationRules.DefaultMaxLengthInSymbols),
                     },
-                    DateOfBirth = random.NextDateTime(recordValidator.MinimalDate, recordValidator.MaximalDate),
-                    Height = random.NextDecimal(recordValidator.MinHeight, recordValidator.MaxHeight),
-                    Grade = random.NextShort(recordValidator.MinGrade, recordValidator.MaxGrade),
-                    FavouriteSymbol = random.NextChar(recordValidator.ExcludeChar),
+                    DateOfBirth = random.NextDateTime(ValidationRules.DefaultMinimalDate, ValidationRules.DefaultMaximalDate),
+                    Height = random.NextDecimal(ValidationRules.DefaultMinHeightInMeters, ValidationRules.DefaultMaxHeightInMeters),
+                    Grade = random.NextShort(ValidationRules.DefaultMinGradeInPoints, ValidationRules.DefaultMaxGradeInPoints),
+                    FavouriteSymbol = random.NextChar(ValidationRules.DefaultBannedChar),
                 };
                 startId++;
                 records.Add(record);
@@ -134,7 +134,7 @@ namespace FileCabinetGenerator
         public static char NextChar(this Random rnd, char exclude)
         {
             char result = Convert.ToChar(rnd.Next(32, 127 + 1));
-            if (result == recordValidator.ExcludeChar)
+            if (result == exclude)
             {
                 result = Convert.ToChar(Convert.ToInt32(exclude) + 10);
             }
