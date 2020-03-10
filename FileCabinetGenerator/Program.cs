@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Xml.Serialization;
 using FileCabinetApp;
+using FileCabinetApp.Validators;
 
 namespace FileCabinetGenerator
 {

@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace FileCabinetApp
+namespace FileCabinetApp.Validators
 {
     /// <summary>
-    /// The CustomValidator class.
+    /// The DefaultValidator class.
     /// </summary>
-    public class CustomValidator : IRecordValidator
+    public class DefaultValidator : IRecordValidator
     {
         private const int MinLengthInSymbols = 2;
-        private const int MaxLengthInSymbols = 40;
-        private const short MinGradeInPoints = 0;
-        private const short MaxGradeInPoints = 5;
-        private const decimal MinHeightInMeters = 0.4m;
+        private const int MaxLengthInSymbols = 60;
+        private const short MinGradeInPoints = -10;
+        private const short MaxGradeInPoints = 10;
+        private const decimal MinHeightInMeters = 0.3m;
         private const decimal MaxHeightInMeters = 3m;
         private const char BannedChar = ' ';
 
@@ -72,7 +72,7 @@ namespace FileCabinetApp
         /// <value>
         /// The value of minimal DateTime.
         /// </value>
-        public DateTime MinimalDate => new DateTime(1960, 1, 1);
+        public DateTime MinimalDate => new DateTime(1950, 1, 1);
 
         /// <summary>
         /// Gets the value of DateTime.Now.

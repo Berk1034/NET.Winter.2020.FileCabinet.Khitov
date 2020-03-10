@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FileCabinetApp
+namespace FileCabinetApp.Validators
 {
     /// <summary>
     /// The IRecordValidator interface.
