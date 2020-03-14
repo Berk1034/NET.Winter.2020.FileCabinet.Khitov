@@ -10,16 +10,20 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class ImportCommandHandler : ServiceCommandHandlerBase
     {
-        private bool useStopWatch;
+        private ServiceMeter serviceMeter;
+        private ServiceLogger serviceLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImportCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
-        public ImportCommandHandler(IFileCabinetService service, bool useStopWatch)
+        /// <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
+        /// <param name="serviceLogger">The service logger to log every method call of service methods.</param>
+        public ImportCommandHandler(IFileCabinetService service, ServiceMeter serviceMeter, ServiceLogger serviceLogger)
             : base(service)
         {
-            this.useStopWatch = useStopWatch;
+            this.serviceMeter = serviceMeter;
+            this.serviceLogger = serviceLogger;
         }
 
         /// <summary>
@@ -43,10 +47,13 @@ namespace FileCabinetApp.CommandHandlers
                                 snapshot.LoadFromCsv(reader);
 
                                 int importedRecordsCount;
-                                if (this.useStopWatch)
+                                if (this.serviceLogger != null)
                                 {
-                                    ServiceMeter serviceMeter = new ServiceMeter(this.service);
-                                    importedRecordsCount = serviceMeter.Restore(snapshot);
+                                    importedRecordsCount = this.serviceLogger.Restore(snapshot);
+                                }
+                                else if (this.serviceMeter != null)
+                                {
+                                    importedRecordsCount = this.serviceMeter.Restore(snapshot);
                                 }
                                 else
                                 {
@@ -74,10 +81,13 @@ namespace FileCabinetApp.CommandHandlers
                                 snapshot.LoadFromXml(reader);
 
                                 int importedRecordsCount;
-                                if (this.useStopWatch)
+                                if (this.serviceLogger != null)
                                 {
-                                    ServiceMeter serviceMeter = new ServiceMeter(this.service);
-                                    importedRecordsCount = serviceMeter.Restore(snapshot);
+                                    importedRecordsCount = this.serviceLogger.Restore(snapshot);
+                                }
+                                else if (this.serviceMeter != null)
+                                {
+                                    importedRecordsCount = this.serviceMeter.Restore(snapshot);
                                 }
                                 else
                                 {

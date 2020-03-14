@@ -10,16 +10,20 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class ExportCommandHandler : ServiceCommandHandlerBase
     {
-        private bool useStopWatch;
+        private ServiceMeter serviceMeter;
+        private ServiceLogger serviceLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExportCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
-        public ExportCommandHandler(IFileCabinetService service, bool useStopWatch)
+        /// <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
+        /// <param name="serviceLogger">The service logger to log every method call of service methods.</param>
+        public ExportCommandHandler(IFileCabinetService service, ServiceMeter serviceMeter, ServiceLogger serviceLogger)
             : base(service)
         {
-            this.useStopWatch = useStopWatch;
+            this.serviceMeter = serviceMeter;
+            this.serviceLogger = serviceLogger;
         }
 
         /// <summary>
@@ -54,10 +58,13 @@ namespace FileCabinetApp.CommandHandlers
                                     StreamWriter writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
 
                                     FileCabinetServiceSnapshot snapshot;
-                                    if (this.useStopWatch)
+                                    if (this.serviceLogger != null)
                                     {
-                                        ServiceMeter serviceMeter = new ServiceMeter(this.service);
-                                        snapshot = serviceMeter.MakeSnapshot();
+                                        snapshot = this.serviceLogger.MakeSnapshot();
+                                    }
+                                    else if (this.serviceMeter != null)
+                                    {
+                                        snapshot = this.serviceMeter.MakeSnapshot();
                                     }
                                     else
                                     {
@@ -94,10 +101,13 @@ namespace FileCabinetApp.CommandHandlers
                                     StreamWriter writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
 
                                     FileCabinetServiceSnapshot snapshot;
-                                    if (this.useStopWatch)
+                                    if (this.serviceLogger != null)
                                     {
-                                        ServiceMeter serviceMeter = new ServiceMeter(this.service);
-                                        snapshot = serviceMeter.MakeSnapshot();
+                                        snapshot = this.serviceLogger.MakeSnapshot();
+                                    }
+                                    else if (this.serviceMeter != null)
+                                    {
+                                        snapshot = this.serviceMeter.MakeSnapshot();
                                     }
                                     else
                                     {

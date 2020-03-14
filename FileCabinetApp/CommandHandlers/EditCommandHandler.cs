@@ -12,18 +12,22 @@ namespace FileCabinetApp.CommandHandlers
     public class EditCommandHandler : ServiceCommandHandlerBase
     {
         private ValidationRules validationRules;
-        private bool useStopWatch;
+        private ServiceMeter serviceMeter;
+        private ServiceLogger serviceLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
         /// <param name="validationRules">The validation rules.</param>
-        public EditCommandHandler(IFileCabinetService service, ValidationRules validationRules, bool useStopWatch)
+        /// <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
+        /// <param name="serviceLogger">The service logger to log every method call of service methods.</param>
+        public EditCommandHandler(IFileCabinetService service, ValidationRules validationRules, ServiceMeter serviceMeter, ServiceLogger serviceLogger)
             : base(service)
         {
             this.validationRules = validationRules;
-            this.useStopWatch = useStopWatch;
+            this.serviceMeter = serviceMeter;
+            this.serviceLogger = serviceLogger;
         }
 
         /// <summary>
@@ -68,10 +72,13 @@ namespace FileCabinetApp.CommandHandlers
                         Console.Write("Favourite symbol: ");
                         var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
-                        if (this.useStopWatch)
+                        if (this.serviceLogger != null)
                         {
-                            ServiceMeter serviceMeter = new ServiceMeter(this.service);
-                            serviceMeter.EditRecord(new FileCabinetRecord { Id = listOfRecords[index].Id, Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                            this.serviceLogger.EditRecord(new FileCabinetRecord { Id = listOfRecords[index].Id, Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                        }
+                        else if (this.serviceMeter != null)
+                        {
+                            this.serviceMeter.EditRecord(new FileCabinetRecord { Id = listOfRecords[index].Id, Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
                         }
                         else
                         {
