@@ -9,13 +9,16 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class RemoveCommandHandler : ServiceCommandHandlerBase
     {
+        private bool useStopWatch;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoveCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
-        public RemoveCommandHandler(IFileCabinetService service)
+        public RemoveCommandHandler(IFileCabinetService service, bool useStopWatch)
             : base(service)
         {
+            this.useStopWatch = useStopWatch;
         }
 
         /// <summary>
@@ -42,7 +45,16 @@ namespace FileCabinetApp.CommandHandlers
                     }
                     else
                     {
-                        this.service.Remove(removeId);
+                        if (this.useStopWatch)
+                        {
+                            ServiceMeter serviceMeter = new ServiceMeter(this.service);
+                            serviceMeter.Remove(removeId);
+                        }
+                        else
+                        {
+                            this.service.Remove(removeId);
+                        }
+
                         Console.WriteLine($"Record #{removeId} is removed.");
                     }
                 }

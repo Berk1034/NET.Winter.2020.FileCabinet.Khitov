@@ -11,16 +11,18 @@ namespace FileCabinetApp.CommandHandlers
     public class FindCommandHandler : ServiceCommandHandlerBase
     {
         private Action<IEnumerable<FileCabinetRecord>> printer;
+        private bool useStopWatch;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FindCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
         /// <param name="printer">The IRecordPrinter printer.</param>
-        public FindCommandHandler(IFileCabinetService service, Action<IEnumerable<FileCabinetRecord>> printer)
+        public FindCommandHandler(IFileCabinetService service, Action<IEnumerable<FileCabinetRecord>> printer, bool useStopWatch)
             : base(service)
         {
             this.printer = printer;
+            this.useStopWatch = useStopWatch;
         }
 
         /// <summary>
@@ -38,13 +40,40 @@ namespace FileCabinetApp.CommandHandlers
                     switch (args[0].ToLower(null))
                     {
                         case "firstname":
-                            searchResult = new List<FileCabinetRecord>(this.service.FindByFirstName(args[1].Trim('"')));
+                            if (this.useStopWatch)
+                            {
+                                ServiceMeter serviceMeter = new ServiceMeter(this.service);
+                                searchResult = new List<FileCabinetRecord>(serviceMeter.FindByFirstName(args[1].Trim('"')));
+                            }
+                            else
+                            {
+                                searchResult = new List<FileCabinetRecord>(this.service.FindByFirstName(args[1].Trim('"')));
+                            }
+
                             break;
                         case "lastname":
-                            searchResult = new List<FileCabinetRecord>(this.service.FindByLastName(args[1].Trim('"')));
+                            if (this.useStopWatch)
+                            {
+                                ServiceMeter serviceMeter = new ServiceMeter(this.service);
+                                searchResult = new List<FileCabinetRecord>(serviceMeter.FindByLastName(args[1].Trim('"')));
+                            }
+                            else
+                            {
+                                searchResult = new List<FileCabinetRecord>(this.service.FindByLastName(args[1].Trim('"')));
+                            }
+
                             break;
                         case "dateofbirth":
-                            searchResult = new List<FileCabinetRecord>(this.service.FindByDateOfBirth(args[1].Trim('"')));
+                            if (this.useStopWatch)
+                            {
+                                ServiceMeter serviceMeter = new ServiceMeter(this.service);
+                                searchResult = new List<FileCabinetRecord>(serviceMeter.FindByDateOfBirth(args[1].Trim('"')));
+                            }
+                            else
+                            {
+                                searchResult = new List<FileCabinetRecord>(this.service.FindByDateOfBirth(args[1].Trim('"')));
+                            }
+
                             break;
                         default:
                             Console.WriteLine("Nothing found.");

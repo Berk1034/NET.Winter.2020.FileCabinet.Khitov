@@ -9,13 +9,15 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class StatCommandHandler : ServiceCommandHandlerBase
     {
+        private bool useStopWatch;
         /// <summary>
         /// Initializes a new instance of the <see cref="StatCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
-        public StatCommandHandler(IFileCabinetService service)
+        public StatCommandHandler(IFileCabinetService service, bool useStopWatch)
             : base(service)
         {
+            this.useStopWatch = useStopWatch;
         }
 
         /// <summary>
@@ -26,8 +28,23 @@ namespace FileCabinetApp.CommandHandlers
         {
             if (appCommandRequest.Command == "stat")
             {
+                int totalRecordsCount;
+                int deletedRecordsCount;
+
+                if (this.useStopWatch)
+                {
+                    ServiceMeter serviceMeter = new ServiceMeter(this.service);
+                    (totalRecordsCount, deletedRecordsCount) = serviceMeter.GetStat();
+                }
+                else
+                {
+                    (totalRecordsCount, deletedRecordsCount) = this.service.GetStat();
+                }
+
+                /*
                 var totalRecordsCount = this.service.GetStat().total;
                 var deletedRecordsCount = this.service.GetStat().deleted;
+                */
                 Console.WriteLine($"Totally {totalRecordsCount} record(s). Need to delete {deletedRecordsCount} record(s).");
             }
             else if (this.NextHandler != null)

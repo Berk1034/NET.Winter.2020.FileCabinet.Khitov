@@ -55,7 +55,7 @@
             The CreateCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules)">
+        <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.CreateCommandHandler"/> class.
             </summary>
@@ -73,7 +73,7 @@
             The EditCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.EditCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules)">
+        <member name="M:FileCabinetApp.CommandHandlers.EditCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.EditCommandHandler"/> class.
             </summary>
@@ -109,7 +109,7 @@
             The ExportCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.ExportCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
+        <member name="M:FileCabinetApp.CommandHandlers.ExportCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ExportCommandHandler"/> class.
             </summary>
@@ -126,7 +126,7 @@
             The FindCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.FindCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
+        <member name="M:FileCabinetApp.CommandHandlers.FindCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}},System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.FindCommandHandler"/> class.
             </summary>
@@ -172,7 +172,7 @@
             The ImportCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.ImportCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
+        <member name="M:FileCabinetApp.CommandHandlers.ImportCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ImportCommandHandler"/> class.
             </summary>
@@ -189,7 +189,7 @@
             The ListCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.ListCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
+        <member name="M:FileCabinetApp.CommandHandlers.ListCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}},System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ListCommandHandler"/> class.
             </summary>
@@ -218,7 +218,7 @@
             The PurgeCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.PurgeCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
+        <member name="M:FileCabinetApp.CommandHandlers.PurgeCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.PurgeCommandHandler"/> class.
             </summary>
@@ -235,7 +235,7 @@
             The RemoveCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.RemoveCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
+        <member name="M:FileCabinetApp.CommandHandlers.RemoveCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.RemoveCommandHandler"/> class.
             </summary>
@@ -268,7 +268,7 @@
             The StatCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.StatCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
+        <member name="M:FileCabinetApp.CommandHandlers.StatCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.StatCommandHandler"/> class.
             </summary>
@@ -765,6 +765,95 @@
             The start point of the program.
             </summary>
             <param name="args">The arguments passed to the program.</param>
+        </member>
+        <member name="T:FileCabinetApp.ServiceMeter">
+            <summary>
+            The ServiceMeter class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.#ctor(FileCabinetApp.IFileCabinetService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.ServiceMeter"/> class.
+            </summary>
+            <param name="service">The service to measure its methods execution time.</param>
+        </member>
+        <member name="P:FileCabinetApp.ServiceMeter.Validator">
+            <summary>
+            Gets the service validator.
+            </summary>
+            <value>
+            The service validator.
+            </value>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.CreateRecord(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Measures the time of executing service CreateRecord method and Creates the record.
+            </summary>
+            <param name="recordInfo">The record information.</param>
+            <returns>The id of the created record.</returns>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.EditRecord(FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Measures the time of executing service EditRecord method and Edits the record.
+            </summary>
+            <param name="recordInfo">The record information.</param>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.FindByDateOfBirth(System.String)">
+            <summary>
+            Measures the time of executing service FindByDateOfBirth method and finds the records by the date of birth.
+            </summary>
+            <param name="dateOfBirth">The date of birth to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.FindByFirstName(System.String)">
+            <summary>
+            Measures the time of executing service FindByFirstName method and Finds the records by the firstname.
+            </summary>
+            <param name="firstName">The first name to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.FindByLastName(System.String)">
+            <summary>
+            Measures the time of executing service FindByLastName method and Finds the records by the last name.
+            </summary>
+            <param name="lastName">The last name to find the records by it.</param>
+            <returns>The ReadOnlyCollection of found records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.GetRecords">
+            <summary>
+            Measures the time of executing service GetRecords method and Gets all the records.
+            </summary>
+            <returns>The ReadOnlyCollection of all current records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.GetStat">
+            <summary>
+            Measures the time of executing service GetStat method and Gets amount of total and deleted records.
+            </summary>
+            <returns>The total number of records and deleted number of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.MakeSnapshot">
+            <summary>
+            Measures the time of executing service MakeSnapshot method and Makes the snapshot of the current state of records.
+            </summary>
+            <returns>The snapshot of the current state of records.</returns>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.Purge">
+            <summary>
+            Measures the time of executing service Purge method and Defragments the data file - removes the spaces in the data file.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.Remove(System.Int32)">
+            <summary>
+            Measures the time of executing service Remove method and Removes the record by id.
+            </summary>
+            <param name="id">The id of record to remove.</param>
+        </member>
+        <member name="M:FileCabinetApp.ServiceMeter.Restore(FileCabinetApp.FileCabinetServiceSnapshot)">
+            <summary>
+            Measures the time of executing service Restore method and Restores the state of records from the snapshot.
+            </summary>
+            <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
+            <returns>The amount of imported records.</returns>
         </member>
         <member name="T:FileCabinetApp.Validators.CompositeValidator">
             <summary>

@@ -12,16 +12,18 @@ namespace FileCabinetApp.CommandHandlers
     public class EditCommandHandler : ServiceCommandHandlerBase
     {
         private ValidationRules validationRules;
+        private bool useStopWatch;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
         /// <param name="validationRules">The validation rules.</param>
-        public EditCommandHandler(IFileCabinetService service, ValidationRules validationRules)
+        public EditCommandHandler(IFileCabinetService service, ValidationRules validationRules, bool useStopWatch)
             : base(service)
         {
             this.validationRules = validationRules;
+            this.useStopWatch = useStopWatch;
         }
 
         /// <summary>
@@ -66,7 +68,16 @@ namespace FileCabinetApp.CommandHandlers
                         Console.Write("Favourite symbol: ");
                         var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
-                        this.service.EditRecord(new FileCabinetRecord { Id = listOfRecords[index].Id, Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                        if (this.useStopWatch)
+                        {
+                            ServiceMeter serviceMeter = new ServiceMeter(this.service);
+                            serviceMeter.EditRecord(new FileCabinetRecord { Id = listOfRecords[index].Id, Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                        }
+                        else
+                        {
+                            this.service.EditRecord(new FileCabinetRecord { Id = listOfRecords[index].Id, Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                        }
+
                         Console.WriteLine($"Record #{appCommandRequest.Parameters} is updated.");
                     }
                 }

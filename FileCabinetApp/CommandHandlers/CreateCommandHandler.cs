@@ -12,16 +12,18 @@ namespace FileCabinetApp.CommandHandlers
     public class CreateCommandHandler : ServiceCommandHandlerBase
     {
         private ValidationRules validationRules;
+        private bool useStopWatch;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
         /// <param name="validationRules">The validation rules.</param>
-        public CreateCommandHandler(IFileCabinetService service, ValidationRules validationRules)
+        public CreateCommandHandler(IFileCabinetService service, ValidationRules validationRules, bool useStopWatch)
             : base(service)
         {
             this.validationRules = validationRules;
+            this.useStopWatch = useStopWatch;
         }
 
         /// <summary>
@@ -50,7 +52,17 @@ namespace FileCabinetApp.CommandHandlers
                 Console.Write("Favourite symbol: ");
                 var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
-                var recordId = this.service.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                int recordId;
+                if (this.useStopWatch)
+                {
+                    ServiceMeter serviceMeter = new ServiceMeter(this.service);
+                    recordId = serviceMeter.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                }
+                else
+                {
+                    recordId = this.service.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                }
+
                 Console.WriteLine($"Record #{recordId} is created.");
             }
             else if (this.NextHandler != null)

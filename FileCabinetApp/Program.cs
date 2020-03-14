@@ -17,6 +17,7 @@ namespace FileCabinetApp
         private const string HintMessage = "Enter your command, or enter 'help' to get help.";
         private static IFileCabinetService fileCabinetService;
         private static bool isRunning = true;
+        private static bool useStopWatch = false;
         private static ValidationRules validationRules;
 
         /// <summary>
@@ -81,6 +82,14 @@ namespace FileCabinetApp
                 fileCabinetService = new FileCabinetMemoryService(validator);
             }
 
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (args[i] == "use-stopwatch")
+                {
+                    useStopWatch = true;
+                }
+            }
+
             string basePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
             var builder = new ConfigurationBuilder().SetBasePath(basePath).AddJsonFile("validation-rules.json");
             var config = builder.Build();
@@ -121,16 +130,16 @@ namespace FileCabinetApp
         private static ICommandHandler CreateCommandHandlers()
         {
             var helpHandler = new HelpCommandHandler();
-            var createHandler = new CreateCommandHandler(Program.fileCabinetService, validationRules);
-            var editHandler = new EditCommandHandler(Program.fileCabinetService, validationRules);
+            var createHandler = new CreateCommandHandler(Program.fileCabinetService, validationRules, useStopWatch);
+            var editHandler = new EditCommandHandler(Program.fileCabinetService, validationRules, useStopWatch);
             var exitHandler = new ExitCommandHandler(Program.fileCabinetService, Program.ChangeIsRunning);
-            var exportHandler = new ExportCommandHandler(Program.fileCabinetService);
-            var findHandler = new FindCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint);
-            var importHandler = new ImportCommandHandler(Program.fileCabinetService);
-            var listHandler = new ListCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint);
-            var purgeHandler = new PurgeCommandHandler(Program.fileCabinetService);
-            var removeHandler = new RemoveCommandHandler(Program.fileCabinetService);
-            var statHandler = new StatCommandHandler(Program.fileCabinetService);
+            var exportHandler = new ExportCommandHandler(Program.fileCabinetService, useStopWatch);
+            var findHandler = new FindCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint, useStopWatch);
+            var importHandler = new ImportCommandHandler(Program.fileCabinetService, useStopWatch);
+            var listHandler = new ListCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint, useStopWatch);
+            var purgeHandler = new PurgeCommandHandler(Program.fileCabinetService, useStopWatch);
+            var removeHandler = new RemoveCommandHandler(Program.fileCabinetService, useStopWatch);
+            var statHandler = new StatCommandHandler(Program.fileCabinetService, useStopWatch);
             var missedHandler = new MissedCommandHandler();
 
             helpHandler.SetNext(createHandler);
