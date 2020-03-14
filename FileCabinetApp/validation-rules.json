@@ -1,0 +1,28 @@
+{
+	"default": {
+		"firstNameMinLengthInSymbols" : 2,
+		"firstNameMaxLengthInSymbols" : 60,
+		"lastNameMinLengthInSymbols" : 2,
+		"lastNameMaxLengthInSymbols" : 60,
+		"dateOfBirthMinimalDate" : "01.01.1950",
+		"DateOfBirthMaximalDate" : "03.12.2020",
+		"gradeMinValueInPoints" : -10,
+		"gradeMaxValueInPoints" : 10,
+		"heightMinValueInMeters" : 0.3,
+		"heightMaxValueInMeters" : 3,
+		"favouriteSymbolBannedChar" : " "
+	},
+	"custom": {
+		"firstNameMinLengthInSymbols" : 2,
+		"firstNameMaxLengthInSymbols" : 40,
+		"lastNameMinLengthInSymbols" : 2,
+		"lastNameMaxLengthInSymbols" : 40,
+		"dateOfBirthMinimalDate" : "01.01.1960",
+		"DateOfBirthMaximalDate" : "03.12.2020",
+		"gradeMinValueInPoints" : 0,
+		"gradeMaxValueInPoints" : 5,
+		"heightMinValueInMeters" : 0.4,
+		"heightMaxValueInMeters" : 3,
+		"favouriteSymbolBannedChar" : " "
+	}
+}

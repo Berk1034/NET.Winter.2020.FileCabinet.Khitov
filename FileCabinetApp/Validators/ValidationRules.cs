@@ -7,101 +7,94 @@ namespace FileCabinetApp.Validators
     /// <summary>
     /// The ValidationRules class.
     /// </summary>
-    public static class ValidationRules
+    public class ValidationRules
     {
         /// <summary>
-        /// The minimal length for the record first and last names for default validation.
+        /// Gets or sets the minimal length for the record first name.
         /// </summary>
-        public const int DefaultMinLengthInSymbols = 2;
+        /// <value>
+        /// The minimal length for the record first name.
+        /// </value>
+        public int FirstNameMinLengthInSymbols { get; set; }
 
         /// <summary>
-        /// The maximal length for the record first and last names for default validation.
+        /// Gets or sets the maximal length for the record first name.
         /// </summary>
-        public const int DefaultMaxLengthInSymbols = 60;
+        /// <value>
+        /// The maximal length for the record first name.
+        /// </value>
+        public int FirstNameMaxLengthInSymbols { get; set; }
 
         /// <summary>
-        /// The minimal value for the record grade for default validation.
+        /// Gets or sets the minimal length for the record last name.
         /// </summary>
-        public const short DefaultMinGradeInPoints = -10;
+        /// <value>
+        /// The minimal length for the record last name.
+        /// </value>
+        public int LastNameMinLengthInSymbols { get; set; }
 
         /// <summary>
-        /// The maximal value for the record grade for default validation.
+        /// Gets or sets the maximal length for the record last name.
         /// </summary>
-        public const short DefaultMaxGradeInPoints = 10;
+        /// <value>
+        /// The maximal length for the record last name.
+        /// </value>
+        public int LastNameMaxLengthInSymbols { get; set; }
 
         /// <summary>
-        /// The minimal value for the record height for default validation.
+        /// Gets or sets the minimal datetime for the record date of birth.
         /// </summary>
-        public const decimal DefaultMinHeightInMeters = 0.3m;
+        /// <value>
+        /// The minimal datetime for the record date of birth.
+        /// </value>
+        public DateTime DateOfBirthMinimalDate { get; set; }
 
         /// <summary>
-        /// The maximal value for the record height for default validation.
+        /// Gets or sets the maximal datetime for the record date of birth.
         /// </summary>
-        public const decimal DefaultMaxHeightInMeters = 3m;
+        /// <value>
+        /// The maximal datetime for the record date of birth.
+        /// </value>
+        public DateTime DateOfBirthMaximalDate { get; set; }
 
         /// <summary>
-        /// The banned char for the record favourite symbol for default validation.
+        /// Gets or sets the minimal value for the record grade.
         /// </summary>
-        public const char DefaultBannedChar = ' ';
+        /// <value>
+        /// The minimal value for the record grade.
+        /// </value>
+        public short GradeMinValueInPoints { get; set; }
 
         /// <summary>
-        /// The minimal datetime for the record date of birth for default validation.
+        /// Gets or sets the maximal value for the record grade.
         /// </summary>
-        public static readonly DateTime DefaultMinimalDate = new DateTime(1950, 1, 1);
+        /// <value>
+        /// The maximal value for the record grade.
+        /// </value>
+        public short GradeMaxValueInPoints { get; set; }
 
         /// <summary>
-        /// The maximal datetime for the record date of birth for default validation.
+        /// Gets or sets the minimal value for the record height.
         /// </summary>
-        public static readonly DateTime DefaultMaximalDate = DateTime.Now;
+        /// <value>
+        /// The minimal value for the record height.
+        /// </value>
+        public decimal HeightMinValueInMeters { get; set; }
 
         /// <summary>
-        /// The minimal length for the record first and last names for custom validation.
+        /// Gets or sets the maximal value for the record height.
         /// </summary>
-        public const int CustomMinLengthInSymbols = 2;
+        /// <value>
+        /// The maximal value for the record height.
+        /// </value>
+        public decimal HeightMaxValueInMeters { get; set; }
 
         /// <summary>
-        /// The maximal length for the record first and last names for custom validation.
+        /// Gets or sets the banned char for the record favourite symbol.
         /// </summary>
-        public const int CustomMaxLengthInSymbols = 40;
-
-        /// <summary>
-        /// The minimal value for the record grade for custom validation.
-        /// </summary>
-        public const short CustomMinGradeInPoints = 0;
-
-        /// <summary>
-        /// The maximal value for the record grade for custom validation.
-        /// </summary>
-        public const short CustomMaxGradeInPoints = 5;
-
-        /// <summary>
-        /// The minimal value for the record height for custom validation.
-        /// </summary>
-        public const decimal CustomMinHeightInMeters = 0.4m;
-
-        /// <summary>
-        /// The maximal value for the record height for custom validation.
-        /// </summary>
-        public const decimal CustomMaxHeightInMeters = 3m;
-
-        /// <summary>
-        /// The banned char for the record favourite symbol for custom validation.
-        /// </summary>
-        public const char CustomBannedChar = ' ';
-
-        /// <summary>
-        /// The minimal datetime for the record date of birth for custom validation.
-        /// </summary>
-        public static readonly DateTime CustomMinimalDate = new DateTime(1960, 1, 1);
-
-        /// <summary>
-        /// The maximal datetime for the record date of birth for custom validation.
-        /// </summary>
-        public static readonly DateTime CustomMaximalDate = DateTime.Now;
-
-        /// <summary>
-        /// The flag to determine which rules to use.
-        /// </summary>
-        public static bool DefaultValidation = true;
+        /// <value>
+        /// The banned char for the record favourite symbol.
+        /// </value>
+        public char FavouriteSymbolBannedChar { get; set; }
     }
 }

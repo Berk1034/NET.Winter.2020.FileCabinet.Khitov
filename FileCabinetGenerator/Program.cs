@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml.Serialization;
 using FileCabinetApp;
 using FileCabinetApp.Validators;
+using Microsoft.Extensions.Configuration;
 
 namespace FileCabinetGenerator
 {
@@ -74,6 +75,10 @@ namespace FileCabinetGenerator
                 }
             }
 
+            var builder = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("validation-rules.json");
+            var config = builder.Build();
+            var validationConfig = config.GetSection("default").Get<ValidationRules>();
+
             List<FileCabinetRecord> records = new List<FileCabinetRecord>();
             for (int i = 0; i < recordsAmount; i++)
             {
@@ -82,13 +87,13 @@ namespace FileCabinetGenerator
                     Id = startId,
                     Name = new Name 
                     { 
-                        FirstName = random.NextString(ValidationRules.DefaultMinLengthInSymbols, ValidationRules.DefaultMaxLengthInSymbols),
-                        LastName = random.NextString(ValidationRules.DefaultMinLengthInSymbols, ValidationRules.DefaultMaxLengthInSymbols),
+                        FirstName = random.NextString(validationConfig.FirstNameMinLengthInSymbols, validationConfig.FirstNameMaxLengthInSymbols),
+                        LastName = random.NextString(validationConfig.LastNameMinLengthInSymbols, validationConfig.LastNameMaxLengthInSymbols),
                     },
-                    DateOfBirth = random.NextDateTime(ValidationRules.DefaultMinimalDate, ValidationRules.DefaultMaximalDate),
-                    Height = random.NextDecimal(ValidationRules.DefaultMinHeightInMeters, ValidationRules.DefaultMaxHeightInMeters),
-                    Grade = random.NextShort(ValidationRules.DefaultMinGradeInPoints, ValidationRules.DefaultMaxGradeInPoints),
-                    FavouriteSymbol = random.NextChar(ValidationRules.DefaultBannedChar),
+                    DateOfBirth = random.NextDateTime(validationConfig.DateOfBirthMinimalDate, validationConfig.DateOfBirthMaximalDate),
+                    Height = random.NextDecimal(validationConfig.HeightMinValueInMeters, validationConfig.HeightMaxValueInMeters),
+                    Grade = random.NextShort(validationConfig.GradeMinValueInPoints, validationConfig.GradeMaxValueInPoints),
+                    FavouriteSymbol = random.NextChar(validationConfig.FavouriteSymbolBannedChar),
                 };
                 startId++;
                 records.Add(record);

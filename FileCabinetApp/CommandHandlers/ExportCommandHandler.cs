@@ -10,13 +10,20 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class ExportCommandHandler : ServiceCommandHandlerBase
     {
+        private ServiceMeter serviceMeter;
+        private ServiceLogger serviceLogger;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ExportCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
-        public ExportCommandHandler(IFileCabinetService service)
+        /// <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
+        /// <param name="serviceLogger">The service logger to log every method call of service methods.</param>
+        public ExportCommandHandler(IFileCabinetService service, ServiceMeter serviceMeter, ServiceLogger serviceLogger)
             : base(service)
         {
+            this.serviceMeter = serviceMeter;
+            this.serviceLogger = serviceLogger;
         }
 
         /// <summary>
@@ -49,7 +56,21 @@ namespace FileCabinetApp.CommandHandlers
                                 if (rewriteFlag)
                                 {
                                     StreamWriter writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
-                                    var snapshot = this.service.MakeSnapshot();
+
+                                    FileCabinetServiceSnapshot snapshot;
+                                    if (this.serviceLogger != null)
+                                    {
+                                        snapshot = this.serviceLogger.MakeSnapshot();
+                                    }
+                                    else if (this.serviceMeter != null)
+                                    {
+                                        snapshot = this.serviceMeter.MakeSnapshot();
+                                    }
+                                    else
+                                    {
+                                        snapshot = this.service.MakeSnapshot();
+                                    }
+
                                     snapshot.SaveToCsv(writer);
                                     Console.WriteLine("All records are exported to file {0}.", args[1]);
                                     writer.Close();
@@ -78,7 +99,21 @@ namespace FileCabinetApp.CommandHandlers
                                 if (rewriteFlag)
                                 {
                                     StreamWriter writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
-                                    var snapshot = this.service.MakeSnapshot();
+
+                                    FileCabinetServiceSnapshot snapshot;
+                                    if (this.serviceLogger != null)
+                                    {
+                                        snapshot = this.serviceLogger.MakeSnapshot();
+                                    }
+                                    else if (this.serviceMeter != null)
+                                    {
+                                        snapshot = this.serviceMeter.MakeSnapshot();
+                                    }
+                                    else
+                                    {
+                                        snapshot = this.service.MakeSnapshot();
+                                    }
+
                                     snapshot.SaveToXml(writer);
                                     Console.WriteLine("All records are exported to file {0}.", args[1]);
                                     writer.Close();
