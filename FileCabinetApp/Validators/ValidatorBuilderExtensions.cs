@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace FileCabinetApp.Validators
 {
@@ -16,13 +18,18 @@ namespace FileCabinetApp.Validators
         /// <returns>The IRecordValidator reference.</returns>
         public static IRecordValidator CreateDefault(this ValidatorBuilder validatorBuilder)
         {
+            string basePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
+            var builder = new ConfigurationBuilder().SetBasePath(basePath).AddJsonFile("validation-rules.json");
+            var config = builder.Build();
+            var validationConfig = config.GetSection("default").Get<ValidationRules>();
+
             return validatorBuilder
-                .ValidateFirstName(ValidationRules.DefaultMinLengthInSymbols, ValidationRules.DefaultMaxLengthInSymbols)
-                .ValidateLastName(ValidationRules.DefaultMinLengthInSymbols, ValidationRules.DefaultMaxLengthInSymbols)
-                .ValidateDateOfBirth(ValidationRules.DefaultMinimalDate, ValidationRules.DefaultMaximalDate)
-                .ValidateGrade(ValidationRules.DefaultMinGradeInPoints, ValidationRules.DefaultMaxGradeInPoints)
-                .ValidateHeight(ValidationRules.DefaultMinHeightInMeters, ValidationRules.DefaultMaxHeightInMeters)
-                .ValidateFavouriteSymbol(ValidationRules.DefaultBannedChar)
+                .ValidateFirstName(validationConfig.FirstNameMinLengthInSymbols, validationConfig.FirstNameMaxLengthInSymbols)
+                .ValidateLastName(validationConfig.LastNameMinLengthInSymbols, validationConfig.LastNameMaxLengthInSymbols)
+                .ValidateDateOfBirth(validationConfig.DateOfBirthMinimalDate, validationConfig.DateOfBirthMaximalDate)
+                .ValidateGrade(validationConfig.GradeMinValueInPoints, validationConfig.GradeMaxValueInPoints)
+                .ValidateHeight(validationConfig.HeightMinValueInMeters, validationConfig.HeightMaxValueInMeters)
+                .ValidateFavouriteSymbol(validationConfig.FavouriteSymbolBannedChar)
                 .Create();
         }
 
@@ -33,13 +40,18 @@ namespace FileCabinetApp.Validators
         /// <returns>The IRecordValidator reference.</returns>
         public static IRecordValidator CreateCustom(this ValidatorBuilder validatorBuilder)
         {
+            string basePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
+            var builder = new ConfigurationBuilder().SetBasePath(basePath).AddJsonFile("validation-rules.json");
+            var config = builder.Build();
+            var validationConfig = config.GetSection("custom").Get<ValidationRules>();
+
             return validatorBuilder
-                .ValidateFirstName(ValidationRules.CustomMinLengthInSymbols, ValidationRules.CustomMaxLengthInSymbols)
-                .ValidateLastName(ValidationRules.CustomMinLengthInSymbols, ValidationRules.CustomMaxLengthInSymbols)
-                .ValidateDateOfBirth(ValidationRules.CustomMinimalDate, ValidationRules.CustomMaximalDate)
-                .ValidateGrade(ValidationRules.CustomMinGradeInPoints, ValidationRules.CustomMaxGradeInPoints)
-                .ValidateHeight(ValidationRules.CustomMinHeightInMeters, ValidationRules.CustomMaxHeightInMeters)
-                .ValidateFavouriteSymbol(ValidationRules.CustomBannedChar)
+                .ValidateFirstName(validationConfig.FirstNameMinLengthInSymbols, validationConfig.FirstNameMaxLengthInSymbols)
+                .ValidateLastName(validationConfig.LastNameMinLengthInSymbols, validationConfig.LastNameMaxLengthInSymbols)
+                .ValidateDateOfBirth(validationConfig.DateOfBirthMinimalDate, validationConfig.DateOfBirthMaximalDate)
+                .ValidateGrade(validationConfig.GradeMinValueInPoints, validationConfig.GradeMaxValueInPoints)
+                .ValidateHeight(validationConfig.HeightMinValueInMeters, validationConfig.HeightMaxValueInMeters)
+                .ValidateFavouriteSymbol(validationConfig.FavouriteSymbolBannedChar)
                 .Create();
         }
     }

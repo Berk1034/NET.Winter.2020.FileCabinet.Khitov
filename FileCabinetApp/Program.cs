@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using FileCabinetApp.CommandHandlers;
 using FileCabinetApp.Validators;
+using Microsoft.Extensions.Configuration;
 
 namespace FileCabinetApp
 {
@@ -16,6 +17,7 @@ namespace FileCabinetApp
         private const string HintMessage = "Enter your command, or enter 'help' to get help.";
         private static IFileCabinetService fileCabinetService;
         private static bool isRunning = true;
+        private static ValidationRules validationRules;
 
         /// <summary>
         /// The start point of the program.
@@ -23,7 +25,7 @@ namespace FileCabinetApp
         /// <param name="args">The arguments passed to the program.</param>
         public static void Main(string[] args)
         {
-            string validationRules = "default";
+            string validation = "default";
             int argsAmount = args.Length;
             IRecordValidator validator = new ValidatorBuilder().CreateDefault();
 
@@ -34,8 +36,7 @@ namespace FileCabinetApp
                     if (args[i].Remove(0, "--validation-rules=".Length).ToLower(null) == "custom")
                     {
                         validator = new ValidatorBuilder().CreateCustom();
-                        validationRules = "custom";
-                        ValidationRules.DefaultValidation = false;
+                        validation = "custom";
                     }
                 }
 
@@ -44,8 +45,7 @@ namespace FileCabinetApp
                     if (args[i + 1].ToLower(null) == "custom")
                     {
                         validator = new ValidatorBuilder().CreateCustom();
-                        validationRules = "custom";
-                        ValidationRules.DefaultValidation = false;
+                        validation = "custom";
                     }
                 }
             }
@@ -81,8 +81,13 @@ namespace FileCabinetApp
                 fileCabinetService = new FileCabinetMemoryService(validator);
             }
 
+            string basePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
+            var builder = new ConfigurationBuilder().SetBasePath(basePath).AddJsonFile("validation-rules.json");
+            var config = builder.Build();
+            validationRules = config.GetSection(validation).Get<ValidationRules>();
+
             Console.WriteLine($"File Cabinet Application, developed by {Program.DeveloperName}");
-            Console.WriteLine($"Using {validationRules} validation rules.");
+            Console.WriteLine($"Using {validation} validation rules.");
             Console.WriteLine(Program.HintMessage);
             Console.WriteLine();
 
@@ -116,8 +121,8 @@ namespace FileCabinetApp
         private static ICommandHandler CreateCommandHandlers()
         {
             var helpHandler = new HelpCommandHandler();
-            var createHandler = new CreateCommandHandler(Program.fileCabinetService);
-            var editHandler = new EditCommandHandler(Program.fileCabinetService);
+            var createHandler = new CreateCommandHandler(Program.fileCabinetService, validationRules);
+            var editHandler = new EditCommandHandler(Program.fileCabinetService, validationRules);
             var exitHandler = new ExitCommandHandler(Program.fileCabinetService, Program.ChangeIsRunning);
             var exportHandler = new ExportCommandHandler(Program.fileCabinetService);
             var findHandler = new FindCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint);

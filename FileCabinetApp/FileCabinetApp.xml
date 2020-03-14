@@ -55,11 +55,12 @@
             The CreateCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
+        <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.CreateCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
+            <param name="validationRules">The validation rules.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -72,11 +73,12 @@
             The EditCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.EditCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
+        <member name="M:FileCabinetApp.CommandHandlers.EditCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.EditCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
+            <param name="validationRules">The validation rules.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.EditCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -904,100 +906,93 @@
             The ValidationRules class.
             </summary>
         </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinLengthInSymbols">
+        <member name="P:FileCabinetApp.Validators.ValidationRules.FirstNameMinLengthInSymbols">
             <summary>
-            The minimal length for the record first and last names for default validation.
+            Gets or sets the minimal length for the record first name.
             </summary>
+            <value>
+            The minimal length for the record first name.
+            </value>
         </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaxLengthInSymbols">
+        <member name="P:FileCabinetApp.Validators.ValidationRules.FirstNameMaxLengthInSymbols">
             <summary>
-            The maximal length for the record first and last names for default validation.
+            Gets or sets the maximal length for the record first name.
             </summary>
+            <value>
+            The maximal length for the record first name.
+            </value>
         </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinGradeInPoints">
+        <member name="P:FileCabinetApp.Validators.ValidationRules.LastNameMinLengthInSymbols">
             <summary>
-            The minimal value for the record grade for default validation.
+            Gets or sets the minimal length for the record last name.
             </summary>
+            <value>
+            The minimal length for the record last name.
+            </value>
         </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaxGradeInPoints">
+        <member name="P:FileCabinetApp.Validators.ValidationRules.LastNameMaxLengthInSymbols">
             <summary>
-            The maximal value for the record grade for default validation.
+            Gets or sets the maximal length for the record last name.
             </summary>
+            <value>
+            The maximal length for the record last name.
+            </value>
         </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinHeightInMeters">
+        <member name="P:FileCabinetApp.Validators.ValidationRules.DateOfBirthMinimalDate">
             <summary>
-            The minimal value for the record height for default validation.
+            Gets or sets the minimal datetime for the record date of birth.
             </summary>
+            <value>
+            The minimal datetime for the record date of birth.
+            </value>
         </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaxHeightInMeters">
+        <member name="P:FileCabinetApp.Validators.ValidationRules.DateOfBirthMaximalDate">
             <summary>
-            The maximal value for the record height for default validation.
+            Gets or sets the maximal datetime for the record date of birth.
             </summary>
+            <value>
+            The maximal datetime for the record date of birth.
+            </value>
         </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultBannedChar">
+        <member name="P:FileCabinetApp.Validators.ValidationRules.GradeMinValueInPoints">
             <summary>
-            The banned char for the record favourite symbol for default validation.
+            Gets or sets the minimal value for the record grade.
             </summary>
+            <value>
+            The minimal value for the record grade.
+            </value>
         </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMinimalDate">
+        <member name="P:FileCabinetApp.Validators.ValidationRules.GradeMaxValueInPoints">
             <summary>
-            The minimal datetime for the record date of birth for default validation.
+            Gets or sets the maximal value for the record grade.
             </summary>
+            <value>
+            The maximal value for the record grade.
+            </value>
         </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultMaximalDate">
+        <member name="P:FileCabinetApp.Validators.ValidationRules.HeightMinValueInMeters">
             <summary>
-            The maximal datetime for the record date of birth for default validation.
+            Gets or sets the minimal value for the record height.
             </summary>
+            <value>
+            The minimal value for the record height.
+            </value>
         </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinLengthInSymbols">
+        <member name="P:FileCabinetApp.Validators.ValidationRules.HeightMaxValueInMeters">
             <summary>
-            The minimal length for the record first and last names for custom validation.
+            Gets or sets the maximal value for the record height.
             </summary>
+            <value>
+            The maximal value for the record height.
+            </value>
         </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaxLengthInSymbols">
+        <member name="P:FileCabinetApp.Validators.ValidationRules.FavouriteSymbolBannedChar">
             <summary>
-            The maximal length for the record first and last names for custom validation.
+            Gets or sets the banned char for the record favourite symbol.
             </summary>
-        </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinGradeInPoints">
-            <summary>
-            The minimal value for the record grade for custom validation.
-            </summary>
-        </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaxGradeInPoints">
-            <summary>
-            The maximal value for the record grade for custom validation.
-            </summary>
-        </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinHeightInMeters">
-            <summary>
-            The minimal value for the record height for custom validation.
-            </summary>
-        </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaxHeightInMeters">
-            <summary>
-            The maximal value for the record height for custom validation.
-            </summary>
-        </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomBannedChar">
-            <summary>
-            The banned char for the record favourite symbol for custom validation.
-            </summary>
-        </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMinimalDate">
-            <summary>
-            The minimal datetime for the record date of birth for custom validation.
-            </summary>
-        </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.CustomMaximalDate">
-            <summary>
-            The maximal datetime for the record date of birth for custom validation.
-            </summary>
-        </member>
-        <member name="F:FileCabinetApp.Validators.ValidationRules.DefaultValidation">
-            <summary>
-            The flag to determine which rules to use.
-            </summary>
+            <value>
+            The banned char for the record favourite symbol.
+            </value>
         </member>
         <member name="T:FileCabinetApp.Validators.ValidatorBuilder">
             <summary>
