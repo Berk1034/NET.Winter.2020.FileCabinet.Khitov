@@ -22,12 +22,6 @@ namespace FileCabinetApp
         private const int MonthSizeInBytes = 4;
         private const int DaySizeInBytes = 4;
 
-        /*
-        private const int GradeSizeInBytes = 2;
-        private const int HeightSizeInBytes = 16;
-        private const int SymbolSizeInBytes = 1;
-        */
-        
         private FileStream fileStream;
         private IRecordValidator validator;
 
