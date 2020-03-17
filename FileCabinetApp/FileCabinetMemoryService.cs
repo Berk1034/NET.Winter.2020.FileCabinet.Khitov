@@ -90,7 +90,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="firstName">The first name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
+        public IRecordIterator FindByFirstName(string firstName)
         {
             List<FileCabinetRecord> listOfFirstNames;
             if (!this.firstNameDictionary.TryGetValue(firstName?.ToLower(null), out listOfFirstNames))
@@ -98,7 +98,7 @@ namespace FileCabinetApp
                 listOfFirstNames = new List<FileCabinetRecord>();
             }
 
-            return listOfFirstNames.AsReadOnly();
+            return new MemoryIterator(listOfFirstNames.ToArray());
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="lastName">The last name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName)
+        public IRecordIterator FindByLastName(string lastName)
         {
             List<FileCabinetRecord> listOfLastNames;
             if (!this.lastNameDictionary.TryGetValue(lastName?.ToLower(null), out listOfLastNames))
@@ -114,7 +114,7 @@ namespace FileCabinetApp
                 listOfLastNames = new List<FileCabinetRecord>();
             }
 
-            return listOfLastNames.AsReadOnly();
+            return new MemoryIterator(listOfLastNames.ToArray());
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="dateOfBirth">The date of birth to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
+        public IRecordIterator FindByDateOfBirth(string dateOfBirth)
         {
             DateTime birthday;
             bool dateSuccess = DateTime.TryParseExact(dateOfBirth, "yyyy-MMM-dd", new CultureInfo("en-US"), DateTimeStyles.None, out birthday);
@@ -134,11 +134,11 @@ namespace FileCabinetApp
                     listOfDateOfBirth = new List<FileCabinetRecord>();
                 }
 
-                return listOfDateOfBirth.AsReadOnly();
+                return new MemoryIterator(listOfDateOfBirth.ToArray());
             }
             else
             {
-                return new ReadOnlyCollection<FileCabinetRecord>(new List<FileCabinetRecord>());
+                return new MemoryIterator(new List<FileCabinetRecord>().ToArray());
             }
         }
 
