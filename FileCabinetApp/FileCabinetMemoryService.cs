@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -90,7 +91,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="firstName">The first name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public IRecordIterator FindByFirstName(string firstName)
+        public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
             List<FileCabinetRecord> listOfFirstNames;
             if (!this.firstNameDictionary.TryGetValue(firstName?.ToLower(null), out listOfFirstNames))
@@ -98,7 +99,7 @@ namespace FileCabinetApp
                 listOfFirstNames = new List<FileCabinetRecord>();
             }
 
-            return new MemoryIterator(listOfFirstNames.ToArray());
+            return listOfFirstNames;
         }
 
         /// <summary>
@@ -106,7 +107,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="lastName">The last name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public IRecordIterator FindByLastName(string lastName)
+        public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
         {
             List<FileCabinetRecord> listOfLastNames;
             if (!this.lastNameDictionary.TryGetValue(lastName?.ToLower(null), out listOfLastNames))
@@ -114,7 +115,7 @@ namespace FileCabinetApp
                 listOfLastNames = new List<FileCabinetRecord>();
             }
 
-            return new MemoryIterator(listOfLastNames.ToArray());
+            return listOfLastNames;
         }
 
         /// <summary>
@@ -122,7 +123,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="dateOfBirth">The date of birth to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public IRecordIterator FindByDateOfBirth(string dateOfBirth)
+        public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             DateTime birthday;
             bool dateSuccess = DateTime.TryParseExact(dateOfBirth, "yyyy-MMM-dd", new CultureInfo("en-US"), DateTimeStyles.None, out birthday);
@@ -134,11 +135,11 @@ namespace FileCabinetApp
                     listOfDateOfBirth = new List<FileCabinetRecord>();
                 }
 
-                return new MemoryIterator(listOfDateOfBirth.ToArray());
+                return listOfDateOfBirth;
             }
             else
             {
-                return new MemoryIterator(new List<FileCabinetRecord>().ToArray());
+                return new List<FileCabinetRecord>();
             }
         }
 

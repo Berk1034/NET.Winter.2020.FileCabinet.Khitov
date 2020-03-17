@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -269,22 +270,12 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="dateOfBirth">The date of birth to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public IRecordIterator FindByDateOfBirth(string dateOfBirth)
+        public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             DateTime birthday;
-            var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true);
             bool dateSuccess = DateTime.TryParseExact(dateOfBirth, "yyyy-MMM-dd", new CultureInfo("en-US"), DateTimeStyles.None, out birthday);
             if (dateSuccess)
             {
-                List<long> listOfDateOfBirthOffsets;
-                if (!this.dateOfBirthDictionary.TryGetValue(birthday, out listOfDateOfBirthOffsets))
-                {
-                    listOfDateOfBirthOffsets = new List<long>();
-                }
-
-                listOfDateOfBirthOffsets.Sort();
-
-                /*
                 List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
                 using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
                 {
@@ -333,15 +324,11 @@ namespace FileCabinetApp
                     }
                 }
 
-                return listOfRecords.AsReadOnly();
-                */
-
-                return new FilesystemIterator(reader, listOfDateOfBirthOffsets.ToArray());
+                return listOfRecords;
             }
             else
             {
-                return new FilesystemIterator(reader, new List<long>().ToArray());
-                //return new ReadOnlyCollection<FileCabinetRecord>(new List<FileCabinetRecord>());
+                return new List<FileCabinetRecord>();
             }
         }
 
@@ -350,20 +337,10 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="firstName">The first name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public IRecordIterator FindByFirstName(string firstName)
+        public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
-            //List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
-            var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true);
-            List<long> listOfFirstNameOffsets;
+            List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
 
-            if (!this.firstNameDictionary.TryGetValue(firstName?.ToLower(null), out listOfFirstNameOffsets))
-            {
-                listOfFirstNameOffsets = new List<long>();
-            }
-
-            listOfFirstNameOffsets.Sort();
-            /*
-            List<long> offsets = new List<long>();
             using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
             {
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
@@ -375,7 +352,6 @@ namespace FileCabinetApp
                 }
 
                 listOfFirstNameOffsets.Sort();
-                offsets = listOfFirstNameOffsets;
                 int recordIndex = 0;
                 int recordsCount = listOfFirstNameOffsets.Count;
 
@@ -413,9 +389,7 @@ namespace FileCabinetApp
                 }
             }
 
-            return listOfRecord.AsReadOnly();
-            */
-            return new FilesystemIterator(reader, listOfFirstNameOffsets.ToArray());
+            return listOfRecords;
         }
 
         /// <summary>
@@ -423,18 +397,10 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="lastName">The last name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public IRecordIterator FindByLastName(string lastName)
+        public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
         {
-            //List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
-            var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true);
-            List<long> listOfLastNameOffsets;
-            if (!this.lastNameDictionary.TryGetValue(lastName?.ToLower(null), out listOfLastNameOffsets))
-            {
-                listOfLastNameOffsets = new List<long>();
-            }
+            List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
 
-            listOfLastNameOffsets.Sort();
-            /*
             using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
             {
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
@@ -483,9 +449,7 @@ namespace FileCabinetApp
                 }
             }
 
-            return listOfRecord.AsReadOnly();
-            */
-            return new FilesystemIterator(reader, listOfLastNameOffsets.ToArray());
+            return listOfRecords;
         }
 
         /// <summary>

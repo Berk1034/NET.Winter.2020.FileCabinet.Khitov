@@ -753,11 +753,6 @@
             <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
             <returns>The amount of imported records.</returns>
         </member>
-        <member name="T:FileCabinetApp.IRecordIterator">
-            <summary>
-            The IRecordIterator interface.
-            </summary>
-        </member>
         <member name="T:FileCabinetApp.Name">
             <summary>
             The Name class.

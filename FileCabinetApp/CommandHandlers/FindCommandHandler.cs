@@ -40,7 +40,7 @@ namespace FileCabinetApp.CommandHandlers
                 string[] args = appCommandRequest.Parameters.Split(' ');
                 if (args.Length == 2)
                 {
-                    IRecordIterator searchResult = null;
+                    IEnumerable<FileCabinetRecord> searchResult = null;
                     switch (args[0].ToLower(null))
                     {
                         case "firstname":
@@ -92,14 +92,9 @@ namespace FileCabinetApp.CommandHandlers
                             break;
                     }
 
-                    //this.printer(searchResult2);
                     if (searchResult != null)
                     {
-                        while (searchResult.HasMore())
-                        {
-                            var record = searchResult.GetNext();
-                            Console.WriteLine($"#{record.Id}, {record.Name.FirstName}, {record.Name.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
-                        }
+                        this.printer(searchResult);
                     }
                     else
                     {
