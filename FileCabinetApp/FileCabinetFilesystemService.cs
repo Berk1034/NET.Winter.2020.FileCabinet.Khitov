@@ -276,7 +276,6 @@ namespace FileCabinetApp
             bool dateSuccess = DateTime.TryParseExact(dateOfBirth, "yyyy-MMM-dd", new CultureInfo("en-US"), DateTimeStyles.None, out birthday);
             if (dateSuccess)
             {
-                List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
                 using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
                 {
                     reader.BaseStream.Seek(0, SeekOrigin.Begin);
@@ -319,16 +318,11 @@ namespace FileCabinetApp
                             Height = height,
                             FavouriteSymbol = favouriteSymbol,
                         };
-                        listOfRecords.Add(record);
+
+                        yield return record;
                         recordIndex++;
                     }
                 }
-
-                return listOfRecords;
-            }
-            else
-            {
-                return new List<FileCabinetRecord>();
             }
         }
 
@@ -339,8 +333,6 @@ namespace FileCabinetApp
         /// <returns>The ReadOnlyCollection of found records.</returns>
         public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
-            List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
-
             using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
             {
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
@@ -384,12 +376,11 @@ namespace FileCabinetApp
                         Height = height,
                         FavouriteSymbol = favouriteSymbol,
                     };
-                    listOfRecords.Add(record);
+
+                    yield return record;
                     recordIndex++;
                 }
             }
-
-            return listOfRecords;
         }
 
         /// <summary>
@@ -399,8 +390,6 @@ namespace FileCabinetApp
         /// <returns>The ReadOnlyCollection of found records.</returns>
         public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
         {
-            List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
-
             using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
             {
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
@@ -444,12 +433,11 @@ namespace FileCabinetApp
                         Height = height,
                         FavouriteSymbol = favouriteSymbol,
                     };
-                    listOfRecords.Add(record);
+
+                    yield return record;
                     recordIndex++;
                 }
             }
-
-            return listOfRecords;
         }
 
         /// <summary>
