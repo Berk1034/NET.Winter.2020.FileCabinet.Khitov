@@ -81,7 +81,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="dateOfBirth">The date of birth to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
+        public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             using (var streamWriter = new StreamWriter(this.fileStream, Encoding.ASCII, -1, true))
             {
@@ -93,7 +93,8 @@ namespace FileCabinetApp
                 var result = this.serviceMeter.FindByDateOfBirth(dateOfBirth);
                 date = DateTime.Now;
                 streamWriter.WriteLine(
-                    $"{date.ToString("MM'/'dd'/'yyyy", null)} {date.Hour}:{date.Minute} - FindByDateOfBirth() found '{result.Count}' records.");
+                    $"{date.ToString("MM'/'dd'/'yyyy", null)} {date.Hour}:{date.Minute} - FindByDateOfBirth() returned '{result}'.");
+
                 return result;
             }
         }
@@ -103,7 +104,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="firstName">The first name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
+        public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
             using (var streamWriter = new StreamWriter(this.fileStream, Encoding.ASCII, -1, true))
             {
@@ -115,7 +116,8 @@ namespace FileCabinetApp
                 var result = this.serviceMeter.FindByFirstName(firstName);
                 date = DateTime.Now;
                 streamWriter.WriteLine(
-                    $"{date.ToString("MM'/'dd'/'yyyy", null)} {date.Hour}:{date.Minute} - FindByFirstName() found '{result.Count}' records.");
+                    $"{date.ToString("MM'/'dd'/'yyyy", null)} {date.Hour}:{date.Minute} - FindByFirstName() returned {result}.");
+
                 return result;
             }
         }
@@ -125,7 +127,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="lastName">The last name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName)
+        public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
         {
             using (var streamWriter = new StreamWriter(this.fileStream, Encoding.ASCII, -1, true))
             {
@@ -137,7 +139,8 @@ namespace FileCabinetApp
                 var result = this.serviceMeter.FindByLastName(lastName);
                 date = DateTime.Now;
                 streamWriter.WriteLine(
-                    $"{date.ToString("MM'/'dd'/'yyyy", null)} {date.Hour}:{date.Minute} - FindByLastName() found '{result.Count}' records.");
+                    $"{date.ToString("MM'/'dd'/'yyyy", null)} {date.Hour}:{date.Minute} - FindByLastName() returned '{result}'.");
+
                 return result;
             }
         }

@@ -40,60 +40,66 @@ namespace FileCabinetApp.CommandHandlers
                 string[] args = appCommandRequest.Parameters.Split(' ');
                 if (args.Length == 2)
                 {
-                    List<FileCabinetRecord> searchResult = new List<FileCabinetRecord>();
+                    IEnumerable<FileCabinetRecord> searchResult = null;
                     switch (args[0].ToLower(null))
                     {
                         case "firstname":
                             if (this.serviceLogger != null)
                             {
-                                searchResult = new List<FileCabinetRecord>(this.serviceLogger.FindByFirstName(args[1].Trim('"')));
+                                searchResult = this.serviceLogger.FindByFirstName(args[1].Trim('"'));
                             }
                             else if (this.serviceMeter != null)
                             {
-                                searchResult = new List<FileCabinetRecord>(this.serviceMeter.FindByFirstName(args[1].Trim('"')));
+                                searchResult = this.serviceMeter.FindByFirstName(args[1].Trim('"'));
                             }
                             else
                             {
-                                searchResult = new List<FileCabinetRecord>(this.service.FindByFirstName(args[1].Trim('"')));
+                                searchResult = this.service.FindByFirstName(args[1].Trim('"'));
                             }
 
                             break;
                         case "lastname":
                             if (this.serviceLogger != null)
                             {
-                                searchResult = new List<FileCabinetRecord>(this.serviceLogger.FindByLastName(args[1].Trim('"')));
+                                searchResult = this.serviceLogger.FindByLastName(args[1].Trim('"'));
                             }
                             else if (this.serviceMeter != null)
                             {
-                                searchResult = new List<FileCabinetRecord>(this.serviceMeter.FindByLastName(args[1].Trim('"')));
+                                searchResult = this.serviceMeter.FindByLastName(args[1].Trim('"'));
                             }
                             else
                             {
-                                searchResult = new List<FileCabinetRecord>(this.service.FindByLastName(args[1].Trim('"')));
+                                searchResult = this.service.FindByLastName(args[1].Trim('"'));
                             }
 
                             break;
                         case "dateofbirth":
                             if (this.serviceLogger != null)
                             {
-                                searchResult = new List<FileCabinetRecord>(this.serviceLogger.FindByDateOfBirth(args[1].Trim('"')));
+                                searchResult = this.serviceLogger.FindByDateOfBirth(args[1].Trim('"'));
                             }
                             else if (this.serviceMeter != null)
                             {
-                                searchResult = new List<FileCabinetRecord>(this.serviceMeter.FindByDateOfBirth(args[1].Trim('"')));
+                                searchResult = this.serviceMeter.FindByDateOfBirth(args[1].Trim('"'));
                             }
                             else
                             {
-                                searchResult = new List<FileCabinetRecord>(this.service.FindByDateOfBirth(args[1].Trim('"')));
+                                searchResult = this.service.FindByDateOfBirth(args[1].Trim('"'));
                             }
 
                             break;
                         default:
-                            Console.WriteLine("Nothing found.");
                             break;
                     }
 
-                    this.printer(searchResult);
+                    if (searchResult != null)
+                    {
+                        this.printer(searchResult);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nothing found.");
+                    }
                 }
                 else
                 {

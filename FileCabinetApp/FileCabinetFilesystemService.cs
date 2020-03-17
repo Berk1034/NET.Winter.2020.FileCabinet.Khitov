@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -22,6 +23,9 @@ namespace FileCabinetApp
         private const int MonthSizeInBytes = 4;
         private const int DaySizeInBytes = 4;
 
+        private readonly Dictionary<string, List<long>> firstNameDictionary = new Dictionary<string, List<long>>();
+        private readonly Dictionary<string, List<long>> lastNameDictionary = new Dictionary<string, List<long>>();
+        private readonly Dictionary<DateTime, List<long>> dateOfBirthDictionary = new Dictionary<DateTime, List<long>>();
         private FileStream fileStream;
         private IRecordValidator validator;
 
@@ -34,6 +38,36 @@ namespace FileCabinetApp
         {
             this.fileStream = fileStream;
             this.validator = validator;
+            using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
+            {
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                while (reader.PeekChar() > -1)
+                {
+                    var recordOffset = reader.BaseStream.Position;
+                    short deleted = reader.ReadInt16();
+                    if (deleted == 0)
+                    {
+                        reader.BaseStream.Seek(-ReservedSizeInBytes, SeekOrigin.Current);
+                        reader.BaseStream.Seek(ReservedSizeInBytes + IdSizeInBytes, SeekOrigin.Current);
+                        string firstName = reader.ReadString();
+                        reader.BaseStream.Seek(StringSizeInBytes - firstName.Length - 1, SeekOrigin.Current);
+                        string lastName = reader.ReadString();
+                        reader.BaseStream.Seek(StringSizeInBytes - lastName.Length - 1, SeekOrigin.Current);
+                        int year = reader.ReadInt32();
+                        int month = reader.ReadInt32();
+                        int day = reader.ReadInt32();
+                        DateTime dateOfBirth = new DateTime(year, month, day);
+
+                        this.PopulateDictionariesWithOffset(firstName, lastName, dateOfBirth, recordOffset);
+
+                        reader.BaseStream.Seek(RecordSizeInBytes - (ReservedSizeInBytes + IdSizeInBytes + (StringSizeInBytes * 2) + YearSizeInBytes + MonthSizeInBytes + DaySizeInBytes), SeekOrigin.Current);
+                    }
+                    else
+                    {
+                        reader.BaseStream.Seek(RecordSizeInBytes - ReservedSizeInBytes, SeekOrigin.Current);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -57,6 +91,10 @@ namespace FileCabinetApp
             using (var writer = new BinaryWriter(this.fileStream, Encoding.ASCII, true))
             {
                 writer.BaseStream.Seek(0, SeekOrigin.End);
+                var recordOffset = writer.BaseStream.Position;
+
+                this.PopulateDictionariesWithOffset(recordInfo.Name.FirstName, recordInfo.Name.LastName, recordInfo.DateOfBirth, recordOffset);
+
                 int amountOfRecords = (int)writer.BaseStream.Length / RecordSizeInBytes;
                 recordId = this.FindLastID() + 1;
                 short reseved = 0;
@@ -110,6 +148,108 @@ namespace FileCabinetApp
 
                     if (id == recordInfo.Id)
                     {
+                        var previousOffset = reader.BaseStream.Position;
+                        reader.BaseStream.Seek(-(IdSizeInBytes + ReservedSizeInBytes), SeekOrigin.Current);
+                        var recordOffset = reader.BaseStream.Position;
+                        reader.BaseStream.Seek(IdSizeInBytes + ReservedSizeInBytes, SeekOrigin.Current);
+
+                        string firstName = reader.ReadString();
+                        reader.BaseStream.Seek(StringSizeInBytes - firstName.Length - 1, SeekOrigin.Current);
+                        string lastName = reader.ReadString();
+                        reader.BaseStream.Seek(StringSizeInBytes - lastName.Length - 1, SeekOrigin.Current);
+                        int year = reader.ReadInt32();
+                        int month = reader.ReadInt32();
+                        int day = reader.ReadInt32();
+                        DateTime dateOfBirth = new DateTime(year, month, day);
+                        reader.BaseStream.Seek(-(YearSizeInBytes + MonthSizeInBytes + DaySizeInBytes + (StringSizeInBytes * 2)), SeekOrigin.Current);
+
+                        List<long> listOfFirstNameOffsets;
+                        if (this.firstNameDictionary.TryGetValue(firstName.ToLower(null), out listOfFirstNameOffsets))
+                        {
+                            var indexToEditFirstNameOffsetsList = listOfFirstNameOffsets.FindIndex((offset) => offset == recordOffset);
+                            listOfFirstNameOffsets.RemoveAt(indexToEditFirstNameOffsetsList);
+
+                            List<long> newListOfFirstNameOffsets;
+                            if (this.firstNameDictionary.TryGetValue(recordInfo.Name.FirstName.ToLower(null), out newListOfFirstNameOffsets))
+                            {
+                                newListOfFirstNameOffsets.Add(recordOffset);
+                            }
+                            else
+                            {
+                                newListOfFirstNameOffsets = new List<long>
+                                {
+                                    recordOffset,
+                                };
+                                this.firstNameDictionary.Add(recordInfo.Name.FirstName.ToLower(null), newListOfFirstNameOffsets);
+                            }
+                        }
+                        else
+                        {
+                            listOfFirstNameOffsets = new List<long>
+                            {
+                                recordOffset,
+                            };
+                            this.firstNameDictionary.Add(recordInfo.Name.FirstName.ToLower(null), listOfFirstNameOffsets);
+                        }
+
+                        List<long> listOfLastNameOffsets;
+                        if (this.lastNameDictionary.TryGetValue(lastName.ToLower(null), out listOfLastNameOffsets))
+                        {
+                            var indexToEditLastNameOffsetsList = listOfLastNameOffsets.FindIndex((offset) => offset == recordOffset);
+                            listOfLastNameOffsets.RemoveAt(indexToEditLastNameOffsetsList);
+
+                            List<long> newListOfLastNameOffsets;
+                            if (this.lastNameDictionary.TryGetValue(recordInfo.Name.LastName.ToLower(null), out newListOfLastNameOffsets))
+                            {
+                                newListOfLastNameOffsets.Add(recordOffset);
+                            }
+                            else
+                            {
+                                newListOfLastNameOffsets = new List<long>
+                                {
+                                    recordOffset,
+                                };
+                                this.lastNameDictionary.Add(recordInfo.Name.LastName.ToLower(null), newListOfLastNameOffsets);
+                            }
+                        }
+                        else
+                        {
+                            listOfLastNameOffsets = new List<long>
+                            {
+                                recordOffset,
+                            };
+                            this.lastNameDictionary.Add(recordInfo.Name.LastName.ToLower(null), listOfLastNameOffsets);
+                        }
+
+                        List<long> listOfDateOfBirthOffsets;
+                        if (this.dateOfBirthDictionary.TryGetValue(dateOfBirth, out listOfDateOfBirthOffsets))
+                        {
+                            var indexToEditDateOfBirthOffsetsList = listOfDateOfBirthOffsets.FindIndex((offset) => offset == recordOffset);
+                            listOfDateOfBirthOffsets.RemoveAt(indexToEditDateOfBirthOffsetsList);
+
+                            List<long> newListOfDateOfBirthOffsets;
+                            if (this.dateOfBirthDictionary.TryGetValue(recordInfo.DateOfBirth, out newListOfDateOfBirthOffsets))
+                            {
+                                newListOfDateOfBirthOffsets.Add(recordOffset);
+                            }
+                            else
+                            {
+                                newListOfDateOfBirthOffsets = new List<long>
+                                {
+                                    recordOffset,
+                                };
+                                this.dateOfBirthDictionary.Add(recordInfo.DateOfBirth, newListOfDateOfBirthOffsets);
+                            }
+                        }
+                        else
+                        {
+                            listOfDateOfBirthOffsets = new List<long>
+                            {
+                                recordOffset,
+                            };
+                            this.dateOfBirthDictionary.Add(recordInfo.DateOfBirth, listOfDateOfBirthOffsets);
+                        }
+
                         writer.Write(recordInfo.Name.FirstName);
                         writer.Seek(StringSizeInBytes - recordInfo.Name.FirstName.Length - 1, SeekOrigin.Current);
                         writer.Write(recordInfo.Name.LastName);
@@ -130,72 +270,59 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="dateOfBirth">The date of birth to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
+        public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             DateTime birthday;
             bool dateSuccess = DateTime.TryParseExact(dateOfBirth, "yyyy-MMM-dd", new CultureInfo("en-US"), DateTimeStyles.None, out birthday);
             if (dateSuccess)
             {
-                List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
                 using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
                 {
                     reader.BaseStream.Seek(0, SeekOrigin.Begin);
-                    while (reader.PeekChar() > -1)
-                    {
-                        short deleted = reader.ReadInt16();
-                        if (deleted == 0)
-                        {
-                            reader.BaseStream.Seek(-ReservedSizeInBytes, SeekOrigin.Current);
-                            reader.BaseStream.Seek(ReservedSizeInBytes + IdSizeInBytes + (StringSizeInBytes * 2), SeekOrigin.Current);
-                            int year = reader.ReadInt32();
-                            int month = reader.ReadInt32();
-                            int day = reader.ReadInt32();
-                            DateTime recordDate = new DateTime(year, month, day);
-                            if (birthday == recordDate)
-                            {
-                                reader.BaseStream.Seek(-(IdSizeInBytes + (StringSizeInBytes * 2) + YearSizeInBytes + MonthSizeInBytes + DaySizeInBytes), SeekOrigin.Current);
-                                int id = reader.ReadInt32();
-                                string firstName = reader.ReadString();
-                                reader.BaseStream.Seek(StringSizeInBytes - firstName.Length - 1, SeekOrigin.Current);
-                                string lastName = reader.ReadString();
-                                reader.BaseStream.Seek(StringSizeInBytes - lastName.Length - 1, SeekOrigin.Current);
-                                reader.BaseStream.Seek(YearSizeInBytes + MonthSizeInBytes + DaySizeInBytes, SeekOrigin.Current);
-                                short grade = reader.ReadInt16();
-                                decimal height = reader.ReadDecimal();
-                                char favouriteSymbol = reader.ReadChar();
 
-                                var record = new FileCabinetRecord()
-                                {
-                                    Id = id,
-                                    Name = new Name
-                                    {
-                                        FirstName = firstName,
-                                        LastName = lastName,
-                                    },
-                                    DateOfBirth = new DateTime(year, month, day),
-                                    Grade = grade,
-                                    Height = height,
-                                    FavouriteSymbol = favouriteSymbol,
-                                };
-                                listOfRecords.Add(record);
-                            }
-                            else
-                            {
-                                reader.BaseStream.Seek(RecordSizeInBytes - (ReservedSizeInBytes + IdSizeInBytes + (StringSizeInBytes * 2) + YearSizeInBytes + MonthSizeInBytes + DaySizeInBytes), SeekOrigin.Current);
-                            }
-                        }
-                        else
+                    List<long> listOfDateOfBirthOffsets;
+                    if (!this.dateOfBirthDictionary.TryGetValue(birthday, out listOfDateOfBirthOffsets))
+                    {
+                        listOfDateOfBirthOffsets = new List<long>();
+                    }
+
+                    listOfDateOfBirthOffsets.Sort();
+                    int recordIndex = 0;
+                    int recordsCount = listOfDateOfBirthOffsets.Count;
+
+                    while (reader.PeekChar() > -1 && recordIndex < recordsCount)
+                    {
+                        long recordOffset = listOfDateOfBirthOffsets[recordIndex];
+                        reader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
+                        reader.BaseStream.Seek(ReservedSizeInBytes, SeekOrigin.Current);
+                        int id = reader.ReadInt32();
+                        string firstName = reader.ReadString();
+                        reader.BaseStream.Seek(StringSizeInBytes - firstName.Length - 1, SeekOrigin.Current);
+                        string lastName = reader.ReadString();
+                        reader.BaseStream.Seek(StringSizeInBytes - lastName.Length - 1, SeekOrigin.Current);
+                        reader.BaseStream.Seek(YearSizeInBytes + MonthSizeInBytes + DaySizeInBytes, SeekOrigin.Current);
+                        short grade = reader.ReadInt16();
+                        decimal height = reader.ReadDecimal();
+                        char favouriteSymbol = reader.ReadChar();
+
+                        var record = new FileCabinetRecord()
                         {
-                            reader.BaseStream.Seek(RecordSizeInBytes - ReservedSizeInBytes, SeekOrigin.Current);
-                        }
+                            Id = id,
+                            Name = new Name
+                            {
+                                FirstName = firstName,
+                                LastName = lastName,
+                            },
+                            DateOfBirth = birthday,
+                            Grade = grade,
+                            Height = height,
+                            FavouriteSymbol = favouriteSymbol,
+                        };
+
+                        yield return record;
+                        recordIndex++;
                     }
                 }
-
-                return listOfRecords.AsReadOnly();
-            }
-            else
-            {
-                return new ReadOnlyCollection<FileCabinetRecord>(new List<FileCabinetRecord>());
             }
         }
 
@@ -204,62 +331,56 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="firstName">The first name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
+        public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
-            List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
             using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
             {
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
-                while (reader.PeekChar() > -1)
-                {
-                    short deleted = reader.ReadInt16();
-                    if (deleted == 0)
-                    {
-                        reader.BaseStream.Seek(-ReservedSizeInBytes, SeekOrigin.Current);
-                        reader.BaseStream.Seek(ReservedSizeInBytes + IdSizeInBytes, SeekOrigin.Current);
-                        string recordFirstName = reader.ReadString();
-                        if (firstName == recordFirstName)
-                        {
-                            reader.BaseStream.Seek(-(recordFirstName.Length + IdSizeInBytes + 1), SeekOrigin.Current);
-                            int id = reader.ReadInt32();
-                            reader.BaseStream.Seek(StringSizeInBytes, SeekOrigin.Current);
-                            string lastName = reader.ReadString();
-                            reader.BaseStream.Seek(StringSizeInBytes - lastName.Length - 1, SeekOrigin.Current);
-                            int year = reader.ReadInt32();
-                            int month = reader.ReadInt32();
-                            int day = reader.ReadInt32();
-                            short grade = reader.ReadInt16();
-                            decimal height = reader.ReadDecimal();
-                            char favouriteSymbol = reader.ReadChar();
 
-                            var record = new FileCabinetRecord()
-                            {
-                                Id = id,
-                                Name = new Name
-                                {
-                                    FirstName = firstName,
-                                    LastName = lastName,
-                                },
-                                DateOfBirth = new DateTime(year, month, day),
-                                Grade = grade,
-                                Height = height,
-                                FavouriteSymbol = favouriteSymbol,
-                            };
-                            listOfRecords.Add(record);
-                        }
-                        else
-                        {
-                            reader.BaseStream.Seek(RecordSizeInBytes - recordFirstName.Length - ReservedSizeInBytes - IdSizeInBytes - 1, SeekOrigin.Current);
-                        }
-                    }
-                    else
+                List<long> listOfFirstNameOffsets;
+                if (!this.firstNameDictionary.TryGetValue(firstName?.ToLower(null), out listOfFirstNameOffsets))
+                {
+                    listOfFirstNameOffsets = new List<long>();
+                }
+
+                listOfFirstNameOffsets.Sort();
+                int recordIndex = 0;
+                int recordsCount = listOfFirstNameOffsets.Count;
+
+                while (reader.PeekChar() > -1 && recordIndex < recordsCount)
+                {
+                    long recordOffset = listOfFirstNameOffsets[recordIndex];
+                    reader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
+                    reader.BaseStream.Seek(ReservedSizeInBytes, SeekOrigin.Current);
+                    int id = reader.ReadInt32();
+                    reader.BaseStream.Seek(StringSizeInBytes, SeekOrigin.Current);
+                    string lastName = reader.ReadString();
+                    reader.BaseStream.Seek(StringSizeInBytes - lastName.Length - 1, SeekOrigin.Current);
+                    int year = reader.ReadInt32();
+                    int month = reader.ReadInt32();
+                    int day = reader.ReadInt32();
+                    short grade = reader.ReadInt16();
+                    decimal height = reader.ReadDecimal();
+                    char favouriteSymbol = reader.ReadChar();
+
+                    var record = new FileCabinetRecord()
                     {
-                        reader.BaseStream.Seek(RecordSizeInBytes - ReservedSizeInBytes, SeekOrigin.Current);
-                    }
+                        Id = id,
+                        Name = new Name
+                        {
+                            FirstName = firstName,
+                            LastName = lastName,
+                        },
+                        DateOfBirth = new DateTime(year, month, day),
+                        Grade = grade,
+                        Height = height,
+                        FavouriteSymbol = favouriteSymbol,
+                    };
+
+                    yield return record;
+                    recordIndex++;
                 }
             }
-
-            return listOfRecords.AsReadOnly();
         }
 
         /// <summary>
@@ -267,62 +388,56 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="lastName">The last name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName)
+        public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
         {
-            List<FileCabinetRecord> listOfRecords = new List<FileCabinetRecord>();
             using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
             {
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
-                while (reader.PeekChar() > -1)
-                {
-                    short deleted = reader.ReadInt16();
-                    if (deleted == 0)
-                    {
-                        reader.BaseStream.Seek(-ReservedSizeInBytes, SeekOrigin.Current);
-                        reader.BaseStream.Seek(ReservedSizeInBytes + IdSizeInBytes + StringSizeInBytes, SeekOrigin.Current);
-                        string recordLastName = reader.ReadString();
-                        if (lastName == recordLastName)
-                        {
-                            reader.BaseStream.Seek(-(StringSizeInBytes + recordLastName.Length + IdSizeInBytes + 1), SeekOrigin.Current);
-                            int id = reader.ReadInt32();
-                            string firstName = reader.ReadString();
-                            reader.BaseStream.Seek(StringSizeInBytes - firstName.Length - 1, SeekOrigin.Current);
-                            reader.BaseStream.Seek(StringSizeInBytes, SeekOrigin.Current);
-                            int year = reader.ReadInt32();
-                            int month = reader.ReadInt32();
-                            int day = reader.ReadInt32();
-                            short grade = reader.ReadInt16();
-                            decimal height = reader.ReadDecimal();
-                            char favouriteSymbol = reader.ReadChar();
 
-                            var record = new FileCabinetRecord()
-                            {
-                                Id = id,
-                                Name = new Name
-                                {
-                                    FirstName = firstName,
-                                    LastName = lastName,
-                                },
-                                DateOfBirth = new DateTime(year, month, day),
-                                Grade = grade,
-                                Height = height,
-                                FavouriteSymbol = favouriteSymbol,
-                            };
-                            listOfRecords.Add(record);
-                        }
-                        else
-                        {
-                            reader.BaseStream.Seek(RecordSizeInBytes - recordLastName.Length - ReservedSizeInBytes - IdSizeInBytes - StringSizeInBytes - 1, SeekOrigin.Current);
-                        }
-                    }
-                    else
+                List<long> listOfLastNameOffsets;
+                if (!this.lastNameDictionary.TryGetValue(lastName?.ToLower(null), out listOfLastNameOffsets))
+                {
+                    listOfLastNameOffsets = new List<long>();
+                }
+
+                listOfLastNameOffsets.Sort();
+                int recordIndex = 0;
+                int recordsCount = listOfLastNameOffsets.Count;
+
+                while (reader.PeekChar() > -1 && recordIndex < recordsCount)
+                {
+                    long recordOffset = listOfLastNameOffsets[recordIndex];
+                    reader.BaseStream.Seek(recordOffset, SeekOrigin.Begin);
+                    reader.BaseStream.Seek(ReservedSizeInBytes, SeekOrigin.Current);
+                    int id = reader.ReadInt32();
+                    string firstName = reader.ReadString();
+                    reader.BaseStream.Seek(StringSizeInBytes - firstName.Length - 1, SeekOrigin.Current);
+                    reader.BaseStream.Seek(StringSizeInBytes, SeekOrigin.Current);
+                    int year = reader.ReadInt32();
+                    int month = reader.ReadInt32();
+                    int day = reader.ReadInt32();
+                    short grade = reader.ReadInt16();
+                    decimal height = reader.ReadDecimal();
+                    char favouriteSymbol = reader.ReadChar();
+
+                    var record = new FileCabinetRecord()
                     {
-                        reader.BaseStream.Seek(RecordSizeInBytes - ReservedSizeInBytes, SeekOrigin.Current);
-                    }
+                        Id = id,
+                        Name = new Name
+                        {
+                            FirstName = firstName,
+                            LastName = lastName,
+                        },
+                        DateOfBirth = new DateTime(year, month, day),
+                        Grade = grade,
+                        Height = height,
+                        FavouriteSymbol = favouriteSymbol,
+                    };
+
+                    yield return record;
+                    recordIndex++;
                 }
             }
-
-            return listOfRecords.AsReadOnly();
         }
 
         /// <summary>
@@ -403,6 +518,10 @@ namespace FileCabinetApp
         /// </summary>
         public void Purge()
         {
+            this.firstNameDictionary.Clear();
+            this.lastNameDictionary.Clear();
+            this.dateOfBirthDictionary.Clear();
+
             string tempFile = Path.GetTempFileName();
             using (var reader = new BinaryReader(this.fileStream, Encoding.ASCII, true))
             {
@@ -411,6 +530,7 @@ namespace FileCabinetApp
                 {
                     while (reader.PeekChar() > -1)
                     {
+                        var recordOffset = writer.BaseStream.Position;
                         short deleted = reader.ReadInt16();
                         if (deleted == 0)
                         {
@@ -425,6 +545,8 @@ namespace FileCabinetApp
                             short grade = reader.ReadInt16();
                             decimal height = reader.ReadDecimal();
                             char favouriteSymbol = reader.ReadChar();
+
+                            this.PopulateDictionariesWithOffset(firstName, lastName, new DateTime(year, month, day), recordOffset);
 
                             writer.BaseStream.Seek(0, SeekOrigin.End);
                             int amountOfRecords = (int)writer.BaseStream.Length / RecordSizeInBytes;
@@ -488,7 +610,22 @@ namespace FileCabinetApp
                         }
                     }
 
-                    reader.BaseStream.Seek(-ReservedSizeInBytes - IdSizeInBytes, SeekOrigin.Current);
+                    long recordOffset = reader.BaseStream.Seek(-ReservedSizeInBytes - IdSizeInBytes, SeekOrigin.Current);
+                    reader.BaseStream.Seek(ReservedSizeInBytes + IdSizeInBytes, SeekOrigin.Current);
+                    string firstName = reader.ReadString();
+                    reader.BaseStream.Seek(StringSizeInBytes - firstName.Length - 1, SeekOrigin.Current);
+                    string lastName = reader.ReadString();
+                    reader.BaseStream.Seek(StringSizeInBytes - lastName.Length - 1, SeekOrigin.Current);
+                    int year = reader.ReadInt32();
+                    int month = reader.ReadInt32();
+                    int day = reader.ReadInt32();
+                    DateTime dateOfBirth = new DateTime(year, month, day);
+
+                    this.firstNameDictionary[firstName.ToLower(null)].Remove(recordOffset);
+                    this.lastNameDictionary[lastName.ToLower(null)].Remove(recordOffset);
+                    this.dateOfBirthDictionary[dateOfBirth].Remove(recordOffset);
+
+                    reader.BaseStream.Seek(-(ReservedSizeInBytes + IdSizeInBytes + (StringSizeInBytes * 2) + YearSizeInBytes + MonthSizeInBytes + DaySizeInBytes), SeekOrigin.Current);
                     short deleted = 4;
                     writer.Write(deleted);
                 }
@@ -521,6 +658,10 @@ namespace FileCabinetApp
                             var position = writer.BaseStream.Position;
                             int amountOfRecords = (int)writer.BaseStream.Length / RecordSizeInBytes;
                             short reseved = 0;
+
+                            var recordOffset = writer.BaseStream.Position;
+                            this.PopulateDictionariesWithOffset(record.Name.FirstName, record.Name.LastName, record.DateOfBirth, recordOffset);
+
                             writer.Write(reseved);
                             writer.Write(record.Id);
                             writer.Write(record.Name.FirstName);
@@ -621,6 +762,51 @@ namespace FileCabinetApp
             }
 
             return lastID;
+        }
+
+        private void PopulateDictionariesWithOffset(string firstName, string lastName, DateTime dateOfBirth, long recordOffset)
+        {
+            List<long> listOfFirstNameOffsets;
+            if (this.firstNameDictionary.TryGetValue(firstName.ToLower(null), out listOfFirstNameOffsets))
+            {
+                listOfFirstNameOffsets.Add(recordOffset);
+            }
+            else
+            {
+                listOfFirstNameOffsets = new List<long>
+                {
+                    recordOffset,
+                };
+                this.firstNameDictionary.Add(firstName.ToLower(null), listOfFirstNameOffsets);
+            }
+
+            List<long> listOfLastNameOffsets;
+            if (this.lastNameDictionary.TryGetValue(lastName.ToLower(null), out listOfLastNameOffsets))
+            {
+                listOfLastNameOffsets.Add(recordOffset);
+            }
+            else
+            {
+                listOfLastNameOffsets = new List<long>
+                {
+                    recordOffset,
+                };
+                this.lastNameDictionary.Add(lastName.ToLower(null), listOfLastNameOffsets);
+            }
+
+            List<long> listOfDateOfBirthOffsets;
+            if (this.dateOfBirthDictionary.TryGetValue(dateOfBirth, out listOfDateOfBirthOffsets))
+            {
+                listOfDateOfBirthOffsets.Add(recordOffset);
+            }
+            else
+            {
+                listOfDateOfBirthOffsets = new List<long>
+                {
+                    recordOffset,
+                };
+                this.dateOfBirthDictionary.Add(dateOfBirth, listOfDateOfBirthOffsets);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -90,7 +91,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="firstName">The first name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByFirstName(string firstName)
+        public IEnumerable<FileCabinetRecord> FindByFirstName(string firstName)
         {
             List<FileCabinetRecord> listOfFirstNames;
             if (!this.firstNameDictionary.TryGetValue(firstName?.ToLower(null), out listOfFirstNames))
@@ -98,7 +99,10 @@ namespace FileCabinetApp
                 listOfFirstNames = new List<FileCabinetRecord>();
             }
 
-            return listOfFirstNames.AsReadOnly();
+            foreach (var record in listOfFirstNames)
+            {
+                yield return record;
+            }
         }
 
         /// <summary>
@@ -106,7 +110,7 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="lastName">The last name to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByLastName(string lastName)
+        public IEnumerable<FileCabinetRecord> FindByLastName(string lastName)
         {
             List<FileCabinetRecord> listOfLastNames;
             if (!this.lastNameDictionary.TryGetValue(lastName?.ToLower(null), out listOfLastNames))
@@ -114,7 +118,10 @@ namespace FileCabinetApp
                 listOfLastNames = new List<FileCabinetRecord>();
             }
 
-            return listOfLastNames.AsReadOnly();
+            foreach (var record in listOfLastNames)
+            {
+                yield return record;
+            }
         }
 
         /// <summary>
@@ -122,23 +129,26 @@ namespace FileCabinetApp
         /// </summary>
         /// <param name="dateOfBirth">The date of birth to find the records by it.</param>
         /// <returns>The ReadOnlyCollection of found records.</returns>
-        public ReadOnlyCollection<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
+        public IEnumerable<FileCabinetRecord> FindByDateOfBirth(string dateOfBirth)
         {
             DateTime birthday;
+            List<FileCabinetRecord> listOfDateOfBirth;
             bool dateSuccess = DateTime.TryParseExact(dateOfBirth, "yyyy-MMM-dd", new CultureInfo("en-US"), DateTimeStyles.None, out birthday);
             if (dateSuccess)
             {
-                List<FileCabinetRecord> listOfDateOfBirth;
                 if (!this.dateOfBirthDictionary.TryGetValue(birthday, out listOfDateOfBirth))
                 {
                     listOfDateOfBirth = new List<FileCabinetRecord>();
                 }
-
-                return listOfDateOfBirth.AsReadOnly();
             }
             else
             {
-                return new ReadOnlyCollection<FileCabinetRecord>(new List<FileCabinetRecord>());
+                listOfDateOfBirth = new List<FileCabinetRecord>();
+            }
+
+            foreach (var record in listOfDateOfBirth)
+            {
+                yield return record;
             }
         }
 
