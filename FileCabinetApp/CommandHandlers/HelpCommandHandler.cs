@@ -16,6 +16,7 @@ namespace FileCabinetApp.CommandHandlers
         private static string[][] helpMessages = new string[][]
         {
             new string[] { "create", "creates the record", "The 'create' command creates the record." },
+            new string[] { "insert", "inserts the record", "The 'insert' command inserts the record." },
             new string[] { "find", "finds the record by specified property", "The 'find' command finds the record by specified property." },
             new string[] { "edit", "allows to update the choosen record", "The 'edit' command allows to update the choosen record." },
             new string[] { "remove", "allows to remove the choosen record", "The 'remove' command allows to remove the choosen record." },

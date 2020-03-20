@@ -96,7 +96,16 @@ namespace FileCabinetApp
                 this.PopulateDictionariesWithOffset(recordInfo.Name.FirstName, recordInfo.Name.LastName, recordInfo.DateOfBirth, recordOffset);
 
                 int amountOfRecords = (int)writer.BaseStream.Length / RecordSizeInBytes;
-                recordId = this.FindLastID() + 1;
+
+                if (recordInfo.Id > 0)
+                {
+                    recordId = recordInfo.Id;
+                }
+                else
+                {
+                    recordId = this.FindLastID() + 1;
+                }
+
                 short reseved = 0;
                 writer.Write(reseved);
                 writer.Write(recordId);
