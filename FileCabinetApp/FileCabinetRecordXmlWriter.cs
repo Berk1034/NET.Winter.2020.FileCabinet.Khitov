@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Xml;
 
@@ -34,13 +35,13 @@ namespace FileCabinetApp
             this.writer.WriteAttributeString("last", record.Name.LastName);
             this.writer.WriteEndElement();
             this.writer.WriteStartElement("dateOfBirth");
-            this.writer.WriteString(record.DateOfBirth.ToString("MM'/'dd'/'yyyy", null));
+            this.writer.WriteString(record.DateOfBirth.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"));
             this.writer.WriteEndElement();
             this.writer.WriteStartElement("grade");
             this.writer.WriteString(record.Grade.ToString());
             this.writer.WriteEndElement();
             this.writer.WriteStartElement("height");
-            this.writer.WriteString(record.Height.ToString());
+            this.writer.WriteString(record.Height.ToString(CultureInfo.InvariantCulture));
             this.writer.WriteEndElement();
             this.writer.WriteStartElement("favouriteSymbol");
             this.writer.WriteString(record.FavouriteSymbol.ToString());

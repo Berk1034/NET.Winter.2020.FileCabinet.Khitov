@@ -172,7 +172,7 @@ namespace FileCabinetApp
         {
             foreach (var record in records)
             {
-                Console.WriteLine($"#{record.Id}, {record.Name.FirstName}, {record.Name.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
+                Console.WriteLine($"#{record.Id}, {record.Name.FirstName}, {record.Name.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {record.Grade}, {record.Height.ToString(CultureInfo.InvariantCulture)}, {record.FavouriteSymbol}");
             }
         }
     }

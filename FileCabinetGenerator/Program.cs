@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
@@ -179,7 +180,7 @@ namespace FileCabinetGenerator
                 textWriter.WriteLine("Id,First Name,Last Name,Date of birth,Grade,Height,Favourite symbol");
                 foreach (var record in records)
                 {
-                    textWriter.WriteLine("{0},{1},{2},{3},{4},{5},{6}", record.Id, record.Name.FirstName, record.Name.LastName, record.DateOfBirth.ToString("MM'/'dd'/'yyyy", null), record.Grade, record.Height, record.FavouriteSymbol);
+                    textWriter.WriteLine("{0},{1},{2},{3},{4},{5},{6}", record.Id, record.Name.FirstName, record.Name.LastName, record.DateOfBirth.ToString("MM'/'dd'/'yyyy", null), record.Grade, record.Height.ToString(CultureInfo.InvariantCulture), record.FavouriteSymbol);
                 }
             }
         }

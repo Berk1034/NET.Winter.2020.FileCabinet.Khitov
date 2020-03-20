@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -33,10 +34,6 @@ namespace FileCabinetApp
             {
                 var data = this.reader.ReadLine();
                 var values = data.Split(',');
-                if (values[7].Length == 0)
-                {
-                    values[7] = ",";
-                }
 
                 var record = new FileCabinetRecord()
                 {
@@ -48,8 +45,8 @@ namespace FileCabinetApp
                     },
                     DateOfBirth = DateTime.ParseExact(values[3], "MM/dd/yyyy", null),
                     Grade = Convert.ToInt16(values[4]),
-                    Height = Convert.ToDecimal(values[5] + ',' + values[6]),
-                    FavouriteSymbol = Convert.ToChar(values[7]),
+                    Height = Convert.ToDecimal(values[5], CultureInfo.InvariantCulture),
+                    FavouriteSymbol = Convert.ToChar(values[6]),
                 };
 
                 importRecords.Add(record);
