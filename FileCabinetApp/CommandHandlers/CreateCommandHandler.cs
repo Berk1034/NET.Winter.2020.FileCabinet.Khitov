@@ -13,22 +13,16 @@ namespace FileCabinetApp.CommandHandlers
     public class CreateCommandHandler : ServiceCommandHandlerBase
     {
         private ValidationRules validationRules;
-        private ServiceMeter serviceMeter;
-        private ServiceLogger serviceLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
         /// <param name="validationRules">The validation rules.</param>
-        /// <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-        /// <param name="serviceLogger">The service logger to log every method call of service methods.</param>
-        public CreateCommandHandler(IFileCabinetService service, ValidationRules validationRules, ServiceMeter serviceMeter, ServiceLogger serviceLogger)
+        public CreateCommandHandler(IFileCabinetService service, ValidationRules validationRules)
             : base(service)
         {
             this.validationRules = validationRules;
-            this.serviceMeter = serviceMeter;
-            this.serviceLogger = serviceLogger;
         }
 
         /// <summary>
@@ -58,18 +52,7 @@ namespace FileCabinetApp.CommandHandlers
                 var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
                 int recordId;
-                if (this.serviceLogger != null)
-                {
-                    recordId = this.serviceLogger.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
-                }
-                else if (this.serviceMeter != null)
-                {
-                    recordId = this.serviceMeter.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
-                }
-                else
-                {
-                    recordId = this.service.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
-                }
+                recordId = this.service.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
 
                 Console.WriteLine($"Record #{recordId} is created.");
             }

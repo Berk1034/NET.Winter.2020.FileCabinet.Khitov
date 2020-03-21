@@ -55,14 +55,12 @@
             The CreateCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules,FileCabinetApp.ServiceMeter,FileCabinetApp.ServiceLogger)">
+        <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.CreateCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
             <param name="validationRules">The validation rules.</param>
-            <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-            <param name="serviceLogger">The service logger to log every method call of service methods.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -92,13 +90,12 @@
             The ExitCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.ExitCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Boolean},FileCabinetApp.ServiceLogger)">
+        <member name="M:FileCabinetApp.CommandHandlers.ExitCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Boolean})">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ExitCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
             <param name="action">The Action delegate to contol exit.</param>
-            <param name="serviceLogger">The service logger.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.ExitCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -111,13 +108,11 @@
             The ExportCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.ExportCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.ServiceMeter,FileCabinetApp.ServiceLogger)">
+        <member name="M:FileCabinetApp.CommandHandlers.ExportCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ExportCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
-            <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-            <param name="serviceLogger">The service logger to log every method call of service methods.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.ExportCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -130,14 +125,12 @@
             The FindCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.FindCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}},FileCabinetApp.ServiceMeter,FileCabinetApp.ServiceLogger)">
+        <member name="M:FileCabinetApp.CommandHandlers.FindCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.FindCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
             <param name="printer">The IRecordPrinter printer.</param>
-            <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-            <param name="serviceLogger">The service logger to log every method call of service methods.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.FindCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -178,13 +171,11 @@
             The ImportCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.ImportCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.ServiceMeter,FileCabinetApp.ServiceLogger)">
+        <member name="M:FileCabinetApp.CommandHandlers.ImportCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ImportCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
-            <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-            <param name="serviceLogger">The service logger to log every method call of service methods.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.ImportCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -215,14 +206,12 @@
             The ListCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.ListCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}},FileCabinetApp.ServiceMeter,FileCabinetApp.ServiceLogger)">
+        <member name="M:FileCabinetApp.CommandHandlers.ListCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,System.Action{System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord}})">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ListCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
             <param name="printer">The IRecordPrinter printer.</param>
-            <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-            <param name="serviceLogger">The service logger to log every method call of service methods.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.ListCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -246,13 +235,11 @@
             The PurgeCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.PurgeCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.ServiceMeter,FileCabinetApp.ServiceLogger)">
+        <member name="M:FileCabinetApp.CommandHandlers.PurgeCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.PurgeCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
-            <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-            <param name="serviceLogger">The service logger to log every method call of service methods.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.PurgeCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -281,13 +268,11 @@
             The StatCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.StatCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.ServiceMeter,FileCabinetApp.ServiceLogger)">
+        <member name="M:FileCabinetApp.CommandHandlers.StatCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.StatCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
-            <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-            <param name="serviceLogger">The service logger to log every method call of service methods.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.StatCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>

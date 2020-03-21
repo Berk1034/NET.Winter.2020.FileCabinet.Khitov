@@ -12,22 +12,16 @@ namespace FileCabinetApp.CommandHandlers
     public class ListCommandHandler : ServiceCommandHandlerBase
     {
         private Action<IEnumerable<FileCabinetRecord>> printer;
-        private ServiceMeter serviceMeter;
-        private ServiceLogger serviceLogger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
         /// <param name="printer">The IRecordPrinter printer.</param>
-        /// <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-        /// <param name="serviceLogger">The service logger to log every method call of service methods.</param>
-        public ListCommandHandler(IFileCabinetService service, Action<IEnumerable<FileCabinetRecord>> printer, ServiceMeter serviceMeter, ServiceLogger serviceLogger)
+        public ListCommandHandler(IFileCabinetService service, Action<IEnumerable<FileCabinetRecord>> printer)
             : base(service)
         {
             this.printer = printer;
-            this.serviceMeter = serviceMeter;
-            this.serviceLogger = serviceLogger;
         }
 
         /// <summary>
@@ -39,19 +33,7 @@ namespace FileCabinetApp.CommandHandlers
             if (appCommandRequest.Command == "list")
             {
                 ReadOnlyCollection<FileCabinetRecord> listOfRecords;
-
-                if (this.serviceLogger != null)
-                {
-                    listOfRecords = this.serviceLogger.GetRecords();
-                }
-                else if (this.serviceMeter != null)
-                {
-                    listOfRecords = this.serviceMeter.GetRecords();
-                }
-                else
-                {
-                    listOfRecords = this.service.GetRecords();
-                }
+                listOfRecords = this.service.GetRecords();
 
                 this.printer(listOfRecords);
             }
