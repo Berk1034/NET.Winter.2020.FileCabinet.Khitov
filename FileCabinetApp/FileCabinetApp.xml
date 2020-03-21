@@ -334,6 +334,24 @@
             </summary>
             <param name="appCommandRequest">The app command request.</param>
         </member>
+        <member name="T:FileCabinetApp.CommandHandlers.UpdateCommandHandler">
+            <summary>
+            The UpdateCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.UpdateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.UpdateCommandHandler"/> class.
+            </summary>
+            <param name="service">The IFileCabinetService service.</param>
+            <param name="validationRules">The validation rules.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.UpdateCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
         <member name="T:FileCabinetApp.FileCabinetFilesystemService">
             <summary>
             The FileCabinetFilesystemService class.

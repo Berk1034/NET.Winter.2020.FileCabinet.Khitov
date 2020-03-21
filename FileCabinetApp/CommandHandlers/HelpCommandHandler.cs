@@ -19,6 +19,7 @@ namespace FileCabinetApp.CommandHandlers
             new string[] { "insert", "inserts the record", "The 'insert' command inserts the record." },
             new string[] { "find", "finds the record by specified property", "The 'find' command finds the record by specified property." },
             new string[] { "edit", "allows to update the choosen record", "The 'edit' command allows to update the choosen record." },
+            new string[] { "update", "allows to update the records that match the criteria.", "The 'update' command allows to update the records that match the criteria." },
             new string[] { "remove", "allows to remove the choosen record", "The 'remove' command allows to remove the choosen record." },
             new string[] { "delete", "allows to delete the records that match the criteria.", "The 'delete' command allows to delete the records that match the criteria." },
             new string[] { "list", "provides the list of records", "The 'list' command provides the list of records." },
