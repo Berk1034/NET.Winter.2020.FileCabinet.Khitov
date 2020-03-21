@@ -87,26 +87,6 @@
             </summary>
             <param name="appCommandRequest">The app command request.</param>
         </member>
-        <member name="T:FileCabinetApp.CommandHandlers.EditCommandHandler">
-            <summary>
-            The EditCommandHandler class.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.EditCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules,FileCabinetApp.ServiceMeter,FileCabinetApp.ServiceLogger)">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.EditCommandHandler"/> class.
-            </summary>
-            <param name="service">The IFileCabinetService service.</param>
-            <param name="validationRules">The validation rules.</param>
-            <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-            <param name="serviceLogger">The service logger to log every method call of service methods.</param>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.EditCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
-            <summary>
-            Executes the request.
-            </summary>
-            <param name="appCommandRequest">The app command request.</param>
-        </member>
         <member name="T:FileCabinetApp.CommandHandlers.ExitCommandHandler">
             <summary>
             The ExitCommandHandler class.
@@ -275,25 +255,6 @@
             <param name="serviceLogger">The service logger to log every method call of service methods.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.PurgeCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
-            <summary>
-            Executes the request.
-            </summary>
-            <param name="appCommandRequest">The app command request.</param>
-        </member>
-        <member name="T:FileCabinetApp.CommandHandlers.RemoveCommandHandler">
-            <summary>
-            The RemoveCommandHandler class.
-            </summary>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.RemoveCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.ServiceMeter,FileCabinetApp.ServiceLogger)">
-            <summary>
-            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.RemoveCommandHandler"/> class.
-            </summary>
-            <param name="service">The IFileCabinetService service.</param>
-            <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-            <param name="serviceLogger">The service logger to log every method call of service methods.</param>
-        </member>
-        <member name="M:FileCabinetApp.CommandHandlers.RemoveCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
             Executes the request.
             </summary>

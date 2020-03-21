@@ -137,27 +137,23 @@ namespace FileCabinetApp
         {
             var helpHandler = new HelpCommandHandler();
             var createHandler = new CreateCommandHandler(Program.fileCabinetService, validationRules, Program.serviceMeter, Program.serviceLogger);
-            var editHandler = new EditCommandHandler(Program.fileCabinetService, validationRules, Program.serviceMeter, Program.serviceLogger);
+            var insertHandler = new InsertCommandHandler(Program.fileCabinetService, validationRules);
+            var updateHandler = new UpdateCommandHandler(Program.fileCabinetService, validationRules);
             var exitHandler = new ExitCommandHandler(Program.fileCabinetService, Program.ChangeIsRunning, Program.serviceLogger);
             var exportHandler = new ExportCommandHandler(Program.fileCabinetService, Program.serviceMeter, Program.serviceLogger);
             var findHandler = new FindCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint, Program.serviceMeter, Program.serviceLogger);
             var importHandler = new ImportCommandHandler(Program.fileCabinetService, Program.serviceMeter, Program.serviceLogger);
             var listHandler = new ListCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint, Program.serviceMeter, Program.serviceLogger);
             var purgeHandler = new PurgeCommandHandler(Program.fileCabinetService, Program.serviceMeter, Program.serviceLogger);
-            var removeHandler = new RemoveCommandHandler(Program.fileCabinetService, Program.serviceMeter, Program.serviceLogger);
+            var deleteHandler = new DeleteCommandHandler(Program.fileCabinetService);
             var statHandler = new StatCommandHandler(Program.fileCabinetService, Program.serviceMeter, Program.serviceLogger);
             var missedHandler = new MissedCommandHandler();
-            var insertHandler = new InsertCommandHandler(Program.fileCabinetService, validationRules);
-            var deleteHandler = new DeleteCommandHandler(Program.fileCabinetService);
-            var updateHandler = new UpdateCommandHandler(Program.fileCabinetService, validationRules);
 
             helpHandler.SetNext(createHandler);
-            createHandler.SetNext(editHandler);
-            editHandler.SetNext(updateHandler);
+            createHandler.SetNext(updateHandler);
             updateHandler.SetNext(insertHandler);
             insertHandler.SetNext(deleteHandler);
-            deleteHandler.SetNext(removeHandler);
-            removeHandler.SetNext(findHandler);
+            deleteHandler.SetNext(findHandler);
             findHandler.SetNext(statHandler);
             statHandler.SetNext(purgeHandler);
             purgeHandler.SetNext(listHandler);
