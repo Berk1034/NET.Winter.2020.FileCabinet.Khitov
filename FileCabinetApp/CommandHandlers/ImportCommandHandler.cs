@@ -10,20 +10,13 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public class ImportCommandHandler : ServiceCommandHandlerBase
     {
-        private ServiceMeter serviceMeter;
-        private ServiceLogger serviceLogger;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ImportCommandHandler"/> class.
         /// </summary>
         /// <param name="service">The IFileCabinetService service.</param>
-        /// <param name="serviceMeter">The service meter to measure execution time of service methods.</param>
-        /// <param name="serviceLogger">The service logger to log every method call of service methods.</param>
-        public ImportCommandHandler(IFileCabinetService service, ServiceMeter serviceMeter, ServiceLogger serviceLogger)
+        public ImportCommandHandler(IFileCabinetService service)
             : base(service)
         {
-            this.serviceMeter = serviceMeter;
-            this.serviceLogger = serviceLogger;
         }
 
         /// <summary>
@@ -47,18 +40,7 @@ namespace FileCabinetApp.CommandHandlers
                                 snapshot.LoadFromCsv(reader);
 
                                 int importedRecordsCount;
-                                if (this.serviceLogger != null)
-                                {
-                                    importedRecordsCount = this.serviceLogger.Restore(snapshot);
-                                }
-                                else if (this.serviceMeter != null)
-                                {
-                                    importedRecordsCount = this.serviceMeter.Restore(snapshot);
-                                }
-                                else
-                                {
-                                    importedRecordsCount = this.service.Restore(snapshot);
-                                }
+                                importedRecordsCount = this.service.Restore(snapshot);
 
                                 Console.WriteLine("{0} records were imported from {1}.", importedRecordsCount, args[1]);
                                 reader.Close();
@@ -81,18 +63,7 @@ namespace FileCabinetApp.CommandHandlers
                                 snapshot.LoadFromXml(reader);
 
                                 int importedRecordsCount;
-                                if (this.serviceLogger != null)
-                                {
-                                    importedRecordsCount = this.serviceLogger.Restore(snapshot);
-                                }
-                                else if (this.serviceMeter != null)
-                                {
-                                    importedRecordsCount = this.serviceMeter.Restore(snapshot);
-                                }
-                                else
-                                {
-                                    importedRecordsCount = this.service.Restore(snapshot);
-                                }
+                                importedRecordsCount = this.service.Restore(snapshot);
 
                                 Console.WriteLine("{0} records were imported from {1}.", importedRecordsCount, args[1]);
                                 reader.Close();

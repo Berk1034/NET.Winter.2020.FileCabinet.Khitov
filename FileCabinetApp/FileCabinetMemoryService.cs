@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using FileCabinetApp.Validators;
 
@@ -48,13 +49,20 @@ namespace FileCabinetApp
             this.validator.ValidateParameters(recordInfo);
 
             int recordId;
-            if (this.list.Count == 0)
+            if (recordInfo.Id > 0)
             {
-                recordId = 1;
+                recordId = recordInfo.Id;
             }
             else
             {
-                recordId = this.list[this.list.Count - 1].Id + 1;
+                if (this.list.Count == 0)
+                {
+                    recordId = 1;
+                }
+                else
+                {
+                    recordId = this.list.Max(record => record.Id) + 1;
+                }
             }
 
             var record = new FileCabinetRecord

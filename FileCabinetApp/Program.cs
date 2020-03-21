@@ -17,8 +17,6 @@ namespace FileCabinetApp
         private const string HintMessage = "Enter your command, or enter 'help' to get help.";
         private static IFileCabinetService fileCabinetService;
         private static bool isRunning = true;
-        private static ServiceMeter serviceMeter;
-        private static ServiceLogger serviceLogger;
         private static ValidationRules validationRules;
 
         /// <summary>
@@ -87,12 +85,12 @@ namespace FileCabinetApp
             {
                 if (args[i] == "use-stopwatch")
                 {
-                    serviceMeter = new ServiceMeter(fileCabinetService);
+                    fileCabinetService = new ServiceMeter(fileCabinetService);
                 }
 
                 if (args[i] == "use-logger")
                 {
-                    serviceLogger = new ServiceLogger(new FileStream("Log.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite), new ServiceMeter(fileCabinetService));
+                    fileCabinetService = new ServiceLogger(new FileStream("Log.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite), new ServiceMeter(fileCabinetService));
                 }
             }
 
@@ -136,22 +134,24 @@ namespace FileCabinetApp
         private static ICommandHandler CreateCommandHandlers()
         {
             var helpHandler = new HelpCommandHandler();
-            var createHandler = new CreateCommandHandler(Program.fileCabinetService, validationRules, Program.serviceMeter, Program.serviceLogger);
-            var editHandler = new EditCommandHandler(Program.fileCabinetService, validationRules, Program.serviceMeter, Program.serviceLogger);
-            var exitHandler = new ExitCommandHandler(Program.fileCabinetService, Program.ChangeIsRunning, Program.serviceLogger);
-            var exportHandler = new ExportCommandHandler(Program.fileCabinetService, Program.serviceMeter, Program.serviceLogger);
-            var findHandler = new FindCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint, Program.serviceMeter, Program.serviceLogger);
-            var importHandler = new ImportCommandHandler(Program.fileCabinetService, Program.serviceMeter, Program.serviceLogger);
-            var listHandler = new ListCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint, Program.serviceMeter, Program.serviceLogger);
-            var purgeHandler = new PurgeCommandHandler(Program.fileCabinetService, Program.serviceMeter, Program.serviceLogger);
-            var removeHandler = new RemoveCommandHandler(Program.fileCabinetService, Program.serviceMeter, Program.serviceLogger);
-            var statHandler = new StatCommandHandler(Program.fileCabinetService, Program.serviceMeter, Program.serviceLogger);
+            var createHandler = new CreateCommandHandler(Program.fileCabinetService, validationRules);
+            var insertHandler = new InsertCommandHandler(Program.fileCabinetService, validationRules);
+            var updateHandler = new UpdateCommandHandler(Program.fileCabinetService, validationRules);
+            var exitHandler = new ExitCommandHandler(Program.fileCabinetService, Program.ChangeIsRunning);
+            var exportHandler = new ExportCommandHandler(Program.fileCabinetService);
+            var findHandler = new FindCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint);
+            var importHandler = new ImportCommandHandler(Program.fileCabinetService);
+            var listHandler = new ListCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint);
+            var purgeHandler = new PurgeCommandHandler(Program.fileCabinetService);
+            var deleteHandler = new DeleteCommandHandler(Program.fileCabinetService);
+            var statHandler = new StatCommandHandler(Program.fileCabinetService);
             var missedHandler = new MissedCommandHandler();
 
             helpHandler.SetNext(createHandler);
-            createHandler.SetNext(editHandler);
-            editHandler.SetNext(removeHandler);
-            removeHandler.SetNext(findHandler);
+            createHandler.SetNext(updateHandler);
+            updateHandler.SetNext(insertHandler);
+            insertHandler.SetNext(deleteHandler);
+            deleteHandler.SetNext(findHandler);
             findHandler.SetNext(statHandler);
             statHandler.SetNext(purgeHandler);
             purgeHandler.SetNext(listHandler);
@@ -172,7 +172,7 @@ namespace FileCabinetApp
         {
             foreach (var record in records)
             {
-                Console.WriteLine($"#{record.Id}, {record.Name.FirstName}, {record.Name.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {record.Grade}, {record.Height}, {record.FavouriteSymbol}");
+                Console.WriteLine($"#{record.Id}, {record.Name.FirstName}, {record.Name.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {record.Grade}, {record.Height.ToString(CultureInfo.InvariantCulture)}, {record.FavouriteSymbol}");
             }
         }
     }

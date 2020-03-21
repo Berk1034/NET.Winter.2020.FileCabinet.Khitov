@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -28,7 +29,7 @@ namespace FileCabinetApp
         /// <param name="record">The record to be written.</param>
         public void Write(FileCabinetRecord record)
         {
-            this.writer.WriteLine("{0},{1},{2},{3},{4},{5},{6}", record.Id, record.Name.FirstName, record.Name.LastName, record.DateOfBirth.ToString("MM'/'dd'/'yyyy", null), record.Grade, record.Height, record.FavouriteSymbol);
+            this.writer.WriteLine("{0},{1},{2},{3},{4},{5},{6}", record.Id, record.Name.FirstName, record.Name.LastName, record.DateOfBirth.ToString("MM'/'dd'/'yyyy", null), record.Grade, record.Height.ToString(CultureInfo.InvariantCulture), record.FavouriteSymbol);
         }
     }
 }
