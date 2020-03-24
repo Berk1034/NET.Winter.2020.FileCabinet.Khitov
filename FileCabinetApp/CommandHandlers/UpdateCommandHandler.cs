@@ -254,7 +254,7 @@ namespace FileCabinetApp.CommandHandlers
                         }
                         else
                         {
-                            predicate2 = record => record.Name.FirstName == conditions[i + 1];
+                            predicate2 = record => record.Name.FirstName == firstname;
                         }
 
                         continue;
