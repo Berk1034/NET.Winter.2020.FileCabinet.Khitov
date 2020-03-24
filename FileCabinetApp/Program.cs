@@ -18,6 +18,7 @@ namespace FileCabinetApp
         private static IFileCabinetService fileCabinetService;
         private static bool isRunning = true;
         private static ValidationRules validationRules;
+        private static IPrinter printer;
 
         /// <summary>
         /// The start point of the program.
@@ -104,6 +105,8 @@ namespace FileCabinetApp
             Console.WriteLine(Program.HintMessage);
             Console.WriteLine();
 
+            printer = new TablePrinter();
+
             var commandHandler = CreateCommandHandlers();
             do
             {
@@ -134,9 +137,9 @@ namespace FileCabinetApp
         private static ICommandHandler CreateCommandHandlers()
         {
             var helpHandler = new HelpCommandHandler();
-            var createHandler = new CreateCommandHandler(Program.fileCabinetService, validationRules);
-            var insertHandler = new InsertCommandHandler(Program.fileCabinetService, validationRules);
-            var updateHandler = new UpdateCommandHandler(Program.fileCabinetService, validationRules);
+            var createHandler = new CreateCommandHandler(Program.fileCabinetService, Program.validationRules);
+            var insertHandler = new InsertCommandHandler(Program.fileCabinetService, Program.validationRules);
+            var updateHandler = new UpdateCommandHandler(Program.fileCabinetService, Program.validationRules);
             var exitHandler = new ExitCommandHandler(Program.fileCabinetService, Program.ChangeIsRunning);
             var exportHandler = new ExportCommandHandler(Program.fileCabinetService);
             var findHandler = new FindCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint);
@@ -146,12 +149,14 @@ namespace FileCabinetApp
             var deleteHandler = new DeleteCommandHandler(Program.fileCabinetService);
             var statHandler = new StatCommandHandler(Program.fileCabinetService);
             var missedHandler = new MissedCommandHandler();
+            var selectHandler = new SelectCommandHanlder(Program.fileCabinetService, Program.printer);
 
             helpHandler.SetNext(createHandler);
             createHandler.SetNext(updateHandler);
             updateHandler.SetNext(insertHandler);
             insertHandler.SetNext(deleteHandler);
-            deleteHandler.SetNext(findHandler);
+            deleteHandler.SetNext(selectHandler);
+            selectHandler.SetNext(findHandler);
             findHandler.SetNext(statHandler);
             statHandler.SetNext(purgeHandler);
             purgeHandler.SetNext(listHandler);

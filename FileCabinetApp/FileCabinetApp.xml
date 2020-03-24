@@ -247,6 +247,24 @@
             </summary>
             <param name="appCommandRequest">The app command request.</param>
         </member>
+        <member name="T:FileCabinetApp.CommandHandlers.SelectCommandHanlder">
+            <summary>
+            The SelectCommandHandler class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.SelectCommandHanlder.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.IPrinter)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.SelectCommandHanlder"/> class.
+            </summary>
+            <param name="service">The IFileCabinetService service.</param>
+            <param name="printer">The IRecordPrinter printer.</param>
+        </member>
+        <member name="M:FileCabinetApp.CommandHandlers.SelectCommandHanlder.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
+            <summary>
+            Executes the request.
+            </summary>
+            <param name="appCommandRequest">The app command request.</param>
+        </member>
         <member name="T:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase">
             <summary>
             The ServiceCommandHandlerBase class.
@@ -752,6 +770,18 @@
             <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
             <returns>The amount of imported records.</returns>
         </member>
+        <member name="T:FileCabinetApp.IPrinter">
+            <summary>
+            The IPrinter interface.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.IPrinter.Print(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord},System.String[])">
+            <summary>
+            Prints the records with specified fields.
+            </summary>
+            <param name="records">The records to be printed.</param>
+            <param name="recordFields">The fields of records to print.</param>
+        </member>
         <member name="T:FileCabinetApp.Name">
             <summary>
             The Name class.
@@ -973,6 +1003,18 @@
             </summary>
             <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
             <returns>The amount of imported records.</returns>
+        </member>
+        <member name="T:FileCabinetApp.TablePrinter">
+            <summary>
+            The TablePrinter class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.TablePrinter.Print(System.Collections.Generic.IEnumerable{FileCabinetApp.FileCabinetRecord},System.String[])">
+            <summary>
+            Prints the records with specified fields in table view.
+            </summary>
+            <param name="records">The records to be printed.</param>
+            <param name="recordFields">The fields of records to print.</param>
         </member>
         <member name="T:FileCabinetApp.Validators.CompositeValidator">
             <summary>

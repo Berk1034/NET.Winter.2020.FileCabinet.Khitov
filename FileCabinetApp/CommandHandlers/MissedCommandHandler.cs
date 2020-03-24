@@ -17,6 +17,7 @@ namespace FileCabinetApp.CommandHandlers
             "find",
             "update",
             "delete",
+            "select",
             "list",
             "stat",
             "purge",
