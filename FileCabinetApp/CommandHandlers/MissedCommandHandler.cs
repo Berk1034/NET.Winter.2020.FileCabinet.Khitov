@@ -14,11 +14,9 @@ namespace FileCabinetApp.CommandHandlers
         {
             "create",
             "insert",
-            "find",
             "update",
             "delete",
             "select",
-            "list",
             "stat",
             "purge",
             "import",

@@ -142,25 +142,21 @@ namespace FileCabinetApp
             var updateHandler = new UpdateCommandHandler(Program.fileCabinetService, Program.validationRules);
             var exitHandler = new ExitCommandHandler(Program.fileCabinetService, Program.ChangeIsRunning);
             var exportHandler = new ExportCommandHandler(Program.fileCabinetService);
-            var findHandler = new FindCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint);
             var importHandler = new ImportCommandHandler(Program.fileCabinetService);
-            var listHandler = new ListCommandHandler(Program.fileCabinetService, Program.DefaultRecordPrint);
             var purgeHandler = new PurgeCommandHandler(Program.fileCabinetService);
             var deleteHandler = new DeleteCommandHandler(Program.fileCabinetService);
             var statHandler = new StatCommandHandler(Program.fileCabinetService);
-            var missedHandler = new MissedCommandHandler();
             var selectHandler = new SelectCommandHanlder(Program.fileCabinetService, Program.printer);
+            var missedHandler = new MissedCommandHandler();
 
             helpHandler.SetNext(createHandler);
             createHandler.SetNext(updateHandler);
             updateHandler.SetNext(insertHandler);
             insertHandler.SetNext(deleteHandler);
             deleteHandler.SetNext(selectHandler);
-            selectHandler.SetNext(findHandler);
-            findHandler.SetNext(statHandler);
+            selectHandler.SetNext(statHandler);
             statHandler.SetNext(purgeHandler);
-            purgeHandler.SetNext(listHandler);
-            listHandler.SetNext(importHandler);
+            purgeHandler.SetNext(importHandler);
             importHandler.SetNext(exportHandler);
             exportHandler.SetNext(exitHandler);
             exitHandler.SetNext(missedHandler);
@@ -171,14 +167,6 @@ namespace FileCabinetApp
         private static void ChangeIsRunning(bool value)
         {
             isRunning = value;
-        }
-
-        private static void DefaultRecordPrint(IEnumerable<FileCabinetRecord> records)
-        {
-            foreach (var record in records)
-            {
-                Console.WriteLine($"#{record.Id}, {record.Name.FirstName}, {record.Name.LastName}, {record.DateOfBirth.ToString("yyyy-MMM-dd", new CultureInfo("en-US"))}, {record.Grade}, {record.Height.ToString(CultureInfo.InvariantCulture)}, {record.FavouriteSymbol}");
-            }
         }
     }
 }
