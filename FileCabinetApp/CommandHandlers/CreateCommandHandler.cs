@@ -54,6 +54,8 @@ namespace FileCabinetApp.CommandHandlers
                 int recordId;
                 recordId = this.service.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
 
+                Memoizer.Clear();
+
                 Console.WriteLine($"Record #{recordId} is created.");
             }
             else if (this.NextHandler != null)

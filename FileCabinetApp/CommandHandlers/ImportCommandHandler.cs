@@ -42,6 +42,8 @@ namespace FileCabinetApp.CommandHandlers
                                 int importedRecordsCount;
                                 importedRecordsCount = this.service.Restore(snapshot);
 
+                                Memoizer.Clear();
+
                                 Console.WriteLine("{0} records were imported from {1}.", importedRecordsCount, args[1]);
                                 reader.Close();
                             }
@@ -64,6 +66,8 @@ namespace FileCabinetApp.CommandHandlers
 
                                 int importedRecordsCount;
                                 importedRecordsCount = this.service.Restore(snapshot);
+
+                                Memoizer.Clear();
 
                                 Console.WriteLine("{0} records were imported from {1}.", importedRecordsCount, args[1]);
                                 reader.Close();
