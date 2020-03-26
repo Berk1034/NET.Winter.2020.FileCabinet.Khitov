@@ -146,6 +146,8 @@ namespace FileCabinetApp.CommandHandlers
                                         break;
                                 }
                             }
+
+                            Memoizer.Clear();
                         }
                         else
                         {
@@ -198,6 +200,8 @@ namespace FileCabinetApp.CommandHandlers
                             {
                                 Console.WriteLine($"Records {updatedRecords.ToString()} are updated.");
                             }
+
+                            Memoizer.Clear();
                         }
                         else
                         {

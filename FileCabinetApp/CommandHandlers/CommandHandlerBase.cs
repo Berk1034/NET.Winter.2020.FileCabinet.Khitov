@@ -9,6 +9,11 @@ namespace FileCabinetApp.CommandHandlers
     /// </summary>
     public abstract class CommandHandlerBase : ICommandHandler
     {
+        /// <summary>
+        /// The Memoizer to store select results.
+        /// </summary>
+        protected static readonly Memoizer Memoizer = new Memoizer();
+
         private ICommandHandler nextHandler;
 
         /// <summary>

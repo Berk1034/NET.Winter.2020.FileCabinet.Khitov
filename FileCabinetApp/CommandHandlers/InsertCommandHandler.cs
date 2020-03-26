@@ -68,6 +68,8 @@ namespace FileCabinetApp.CommandHandlers
                             char favouriteSymbol = ReadInput(recordFields, recordValues, FavouriteSymbolSearcher, CharConverter, FavouriteSymbolValidator);
                             var recordId = this.service.CreateRecord(new FileCabinetRecord { Id = id, Name = new Name { FirstName = firstName, LastName = lastName }, DateOfBirth = dateOfBirth, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
 
+                            Memoizer.Clear();
+
                             Console.WriteLine($"Record #{recordId} is created.");
                         }
                         else

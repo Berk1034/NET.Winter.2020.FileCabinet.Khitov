@@ -127,6 +127,12 @@ namespace FileCabinetApp.CommandHandlers
                             }
                         }
 
+                        if (Memoizer.TryGetCachedRecords(conditions, out var cachedRecords))
+                        {
+                            this.printer.Print(cachedRecords, recordFields);
+                            return;
+                        }
+
                         List<FileCabinetRecord> recordsMatch = new List<FileCabinetRecord>(this.service.GetRecords());
 
                         string condition = string.Empty;
@@ -189,6 +195,7 @@ namespace FileCabinetApp.CommandHandlers
 
                         if (recordsMatch.Count != 0)
                         {
+                            Memoizer.Memoize(conditions, recordsMatch);
                             this.printer.Print(recordsMatch, recordFields);
                         }
                         else

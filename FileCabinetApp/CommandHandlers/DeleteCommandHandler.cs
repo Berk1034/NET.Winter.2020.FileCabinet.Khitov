@@ -75,6 +75,8 @@ namespace FileCabinetApp.CommandHandlers
 
                                     break;
                             }
+
+                            Memoizer.Clear();
                         }
                         catch (ArgumentException e)
                         {
