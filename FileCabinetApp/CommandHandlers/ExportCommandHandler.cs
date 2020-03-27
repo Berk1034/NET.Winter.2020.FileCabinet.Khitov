@@ -60,6 +60,10 @@ namespace FileCabinetApp.CommandHandlers
                                         Console.WriteLine("All records are exported to file {0}.", args[1]);
                                         writer.Close();
                                     }
+                                    catch (ArgumentException)
+                                    {
+                                        Console.WriteLine("Export failed: empty filepath is not allowed.");
+                                    }
                                     catch (NotImplementedException)
                                     {
                                         Console.WriteLine("Can't export data from FilesystemService.");
@@ -106,6 +110,10 @@ namespace FileCabinetApp.CommandHandlers
                                         snapshot.SaveToXml(writer);
                                         Console.WriteLine("All records are exported to file {0}.", args[1]);
                                         writer.Close();
+                                    }
+                                    catch (ArgumentException)
+                                    {
+                                        Console.WriteLine("Export failed: empty filepath is not allowed.");
                                     }
                                     catch (NotImplementedException)
                                     {

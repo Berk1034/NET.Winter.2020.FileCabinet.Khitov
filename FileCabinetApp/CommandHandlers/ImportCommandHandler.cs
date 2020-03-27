@@ -55,6 +55,10 @@ namespace FileCabinetApp.CommandHandlers
                             {
                                 Console.WriteLine("Import error: file {0} is not exist.", args[1]);
                             }
+                            catch (ArgumentException)
+                            {
+                                Console.WriteLine("Import error: empty filepath is not allowed.");
+                            }
 
                             break;
                         case "xml":
@@ -79,6 +83,10 @@ namespace FileCabinetApp.CommandHandlers
                             catch (FileNotFoundException)
                             {
                                 Console.WriteLine("Import error: file {0} is not exist.", args[1]);
+                            }
+                            catch (ArgumentException)
+                            {
+                                Console.WriteLine("Import error: empty filepath is not allowed.");
                             }
 
                             break;
