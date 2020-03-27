@@ -29,7 +29,7 @@ namespace FileCabinetApp.CommandHandlers
                 int totalRecordsCount;
                 int deletedRecordsCount;
 
-                (totalRecordsCount, deletedRecordsCount) = this.service.GetStat();
+                (totalRecordsCount, deletedRecordsCount) = this.Service.GetStat();
 
                 Console.WriteLine($"Totally {totalRecordsCount} record(s). Need to delete {deletedRecordsCount} record(s).");
             }

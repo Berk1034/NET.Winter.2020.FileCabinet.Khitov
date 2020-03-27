@@ -26,10 +26,10 @@ namespace FileCabinetApp.CommandHandlers
         {
             if (appCommandRequest.Command == "purge")
             {
-                var totalAmountOfRecords = this.service.GetStat().total;
-                this.service.Purge();
+                var totalAmountOfRecords = this.Service.GetStat().total;
+                this.Service.Purge();
 
-                var purgedRecords = totalAmountOfRecords - this.service.GetStat().total;
+                var purgedRecords = totalAmountOfRecords - this.Service.GetStat().total;
                 Console.WriteLine($"Data file processing is completed: {purgedRecords} of {totalAmountOfRecords} were purged.");
             }
             else if (this.NextHandler != null)

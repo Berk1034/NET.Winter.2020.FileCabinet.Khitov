@@ -22,7 +22,7 @@ namespace FileCabinetApp.CommandHandlers
         public InsertCommandHandler(IFileCabinetService service, ValidationRules validationRules)
             : base(service)
         {
-            this.service = service;
+            this.Service = service;
             this.validationRules = validationRules;
         }
 
@@ -66,7 +66,7 @@ namespace FileCabinetApp.CommandHandlers
                             short grade = ReadInput(recordFields, recordValues, GradeSearcher, ShortConverter, GradeValidator);
                             decimal height = ReadInput(recordFields, recordValues, HeightSearcher, DecimalConverter, HeightValidator);
                             char favouriteSymbol = ReadInput(recordFields, recordValues, FavouriteSymbolSearcher, CharConverter, FavouriteSymbolValidator);
-                            var recordId = this.service.CreateRecord(new FileCabinetRecord { Id = id, Name = new Name { FirstName = firstName, LastName = lastName }, DateOfBirth = dateOfBirth, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                            var recordId = this.Service.CreateRecord(new FileCabinetRecord { Id = id, Name = new Name { FirstName = firstName, LastName = lastName }, DateOfBirth = dateOfBirth, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
 
                             Memoizer.Clear();
 
@@ -258,7 +258,7 @@ namespace FileCabinetApp.CommandHandlers
 
         private Tuple<bool, string> IdValidator(int id)
         {
-            List<FileCabinetRecord> records = new List<FileCabinetRecord>(this.service.GetRecords());
+            List<FileCabinetRecord> records = new List<FileCabinetRecord>(this.Service.GetRecords());
             var record = records.Find(record => record.Id == id);
             if (record != null || id < 1)
             {
@@ -327,6 +327,5 @@ namespace FileCabinetApp.CommandHandlers
 
             return new Tuple<bool, string>(true, favouriteSymbol.ToString());
         }
-
     }
 }

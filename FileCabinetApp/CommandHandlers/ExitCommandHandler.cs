@@ -30,9 +30,9 @@ namespace FileCabinetApp.CommandHandlers
         {
             if (appCommandRequest.Command == "exit")
             {
-                if (this.service is IDisposable)
+                if (this.Service is IDisposable)
                 {
-                    (this.service as IDisposable).Dispose();
+                    (this.Service as IDisposable).Dispose();
                 }
 
                 Console.WriteLine("Exiting an application...");

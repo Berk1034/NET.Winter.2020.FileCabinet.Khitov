@@ -52,7 +52,7 @@ namespace FileCabinetApp.CommandHandlers
                 var favouriteSymbol = ReadInput(CharConverter, FavouriteSymbolValidator);
 
                 int recordId;
-                recordId = this.service.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
+                recordId = this.Service.CreateRecord(new FileCabinetRecord { Name = new Name { FirstName = name, LastName = surname }, DateOfBirth = birthday, Grade = grade, Height = height, FavouriteSymbol = favouriteSymbol });
 
                 Memoizer.Clear();
 

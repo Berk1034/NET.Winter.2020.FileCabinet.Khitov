@@ -54,7 +54,7 @@ namespace FileCabinetApp.CommandHandlers
                                         writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
 
                                         FileCabinetServiceSnapshot snapshot;
-                                        snapshot = this.service.MakeSnapshot();
+                                        snapshot = this.Service.MakeSnapshot();
 
                                         snapshot.SaveToCsv(writer);
                                         Console.WriteLine("All records are exported to file {0}.", args[1]);
@@ -105,7 +105,7 @@ namespace FileCabinetApp.CommandHandlers
                                         writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
 
                                         FileCabinetServiceSnapshot snapshot;
-                                        snapshot = this.service.MakeSnapshot();
+                                        snapshot = this.Service.MakeSnapshot();
 
                                         snapshot.SaveToXml(writer);
                                         Console.WriteLine("All records are exported to file {0}.", args[1]);

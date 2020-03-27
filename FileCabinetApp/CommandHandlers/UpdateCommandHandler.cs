@@ -104,7 +104,7 @@ namespace FileCabinetApp.CommandHandlers
                             throw new ArgumentException("Can't update id.");
                         }
 
-                        List<FileCabinetRecord> recordsMatch = new List<FileCabinetRecord>(this.service.GetRecords());
+                        List<FileCabinetRecord> recordsMatch = new List<FileCabinetRecord>(this.Service.GetRecords());
 
                         string condition = string.Empty;
                         if (conditions.Contains("and"))
@@ -133,15 +133,15 @@ namespace FileCabinetApp.CommandHandlers
 
                                         break;
                                     case "firstname":
-                                        recordsMatch = new List<FileCabinetRecord>(this.service.FindByFirstName(conditions[i + 1]));
+                                        recordsMatch = new List<FileCabinetRecord>(this.Service.FindByFirstName(conditions[i + 1]));
 
                                         break;
                                     case "lastname":
-                                        recordsMatch = new List<FileCabinetRecord>(this.service.FindByLastName(conditions[i + 1]));
+                                        recordsMatch = new List<FileCabinetRecord>(this.Service.FindByLastName(conditions[i + 1]));
 
                                         break;
                                     case "dateofbirth":
-                                        recordsMatch = new List<FileCabinetRecord>(this.service.FindByLastName(conditions[i + 1]));
+                                        recordsMatch = new List<FileCabinetRecord>(this.Service.FindByLastName(conditions[i + 1]));
 
                                         break;
                                 }
@@ -174,7 +174,7 @@ namespace FileCabinetApp.CommandHandlers
                             var updatedRecord = this.UpdatedRecord(recordFields.ToArray(), recordValues.ToArray(), recordsMatch[i]);
                             updatedRecord.Id = recordsMatch[i].Id;
 
-                            this.service.EditRecord(updatedRecord);
+                            this.Service.EditRecord(updatedRecord);
                             updatedIds.Add(updatedRecord.Id);
                         }
 
@@ -517,6 +517,5 @@ namespace FileCabinetApp.CommandHandlers
 
             return new Tuple<bool, string>(true, favouriteSymbol.ToString());
         }
-
     }
 }

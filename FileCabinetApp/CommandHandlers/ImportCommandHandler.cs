@@ -40,7 +40,7 @@ namespace FileCabinetApp.CommandHandlers
                                 snapshot.LoadFromCsv(reader);
 
                                 int importedRecordsCount;
-                                importedRecordsCount = this.service.Restore(snapshot);
+                                importedRecordsCount = this.Service.Restore(snapshot);
 
                                 Memoizer.Clear();
 
@@ -69,7 +69,7 @@ namespace FileCabinetApp.CommandHandlers
                                 snapshot.LoadFromXml(reader);
 
                                 int importedRecordsCount;
-                                importedRecordsCount = this.service.Restore(snapshot);
+                                importedRecordsCount = this.Service.Restore(snapshot);
 
                                 Memoizer.Clear();
 
