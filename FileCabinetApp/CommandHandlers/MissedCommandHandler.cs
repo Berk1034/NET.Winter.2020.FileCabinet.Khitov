@@ -31,6 +31,11 @@ namespace FileCabinetApp.CommandHandlers
         /// <param name="appCommandRequest">The app command request.</param>
         public override void Handle(AppCommandRequest appCommandRequest)
         {
+            if (appCommandRequest is null)
+            {
+                throw new ArgumentNullException(nameof(appCommandRequest), "AppCommandRequest is null.");
+            }
+
             Console.WriteLine($"There is no '{appCommandRequest.Command}' command. See 'help'. ");
             Console.WriteLine();
 
