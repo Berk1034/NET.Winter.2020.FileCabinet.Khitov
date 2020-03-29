@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FileCabinetApp.Validators
 {
@@ -29,19 +27,24 @@ namespace FileCabinetApp.Validators
         /// <param name="recordInfo">The record informaton.</param>
         public void ValidateParameters(FileCabinetRecord recordInfo)
         {
+            if (recordInfo is null)
+            {
+                throw new ArgumentNullException(nameof(recordInfo), "RecordInfo is null.");
+            }
+
             if (recordInfo.Name.FirstName is null)
             {
-                throw new ArgumentNullException(nameof(recordInfo.Name.FirstName), "Firstname can't be null.");
+                throw new ArgumentNullException(nameof(recordInfo), "Firstname can't be null.");
             }
 
             if (recordInfo.Name.FirstName.Trim().Length == 0)
             {
-                throw new ArgumentException("Firstname cannot contain only spaces.", nameof(recordInfo.Name.FirstName));
+                throw new ArgumentException("Firstname cannot contain only spaces.", nameof(recordInfo));
             }
 
             if (recordInfo.Name.FirstName.Length < this.minLength || recordInfo.Name.FirstName.Length > this.maxLength)
             {
-                throw new ArgumentException($"Firstname length should be in range [{this.minLength};{this.maxLength}].", nameof(recordInfo.Name.FirstName));
+                throw new ArgumentException($"Firstname length should be in range [{this.minLength};{this.maxLength}].", nameof(recordInfo));
             }
         }
     }

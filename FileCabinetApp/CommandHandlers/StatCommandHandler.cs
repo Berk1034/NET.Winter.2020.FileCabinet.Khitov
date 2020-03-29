@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FileCabinetApp.CommandHandlers
 {
@@ -24,12 +22,17 @@ namespace FileCabinetApp.CommandHandlers
         /// <param name="appCommandRequest">The app command request.</param>
         public override void Handle(AppCommandRequest appCommandRequest)
         {
+            if (appCommandRequest is null)
+            {
+                throw new ArgumentNullException(nameof(appCommandRequest), "AppCommandRequest is null.");
+            }
+
             if (appCommandRequest.Command == "stat")
             {
                 int totalRecordsCount;
                 int deletedRecordsCount;
 
-                (totalRecordsCount, deletedRecordsCount) = this.service.GetStat();
+                (totalRecordsCount, deletedRecordsCount) = this.Service.GetStat();
 
                 Console.WriteLine($"Totally {totalRecordsCount} record(s). Need to delete {deletedRecordsCount} record(s).");
             }

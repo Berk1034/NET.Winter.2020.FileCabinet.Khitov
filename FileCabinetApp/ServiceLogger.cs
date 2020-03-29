@@ -41,6 +41,11 @@ namespace FileCabinetApp
         /// <returns>The id of the created record.</returns>
         public int CreateRecord(FileCabinetRecord recordInfo)
         {
+            if (recordInfo is null)
+            {
+                throw new ArgumentNullException(nameof(recordInfo), "RecordInfo is null.");
+            }
+
             using (var streamWriter = new StreamWriter(this.fileStream, Encoding.ASCII, -1, true))
             {
                 streamWriter.BaseStream.Seek(0, SeekOrigin.End);
@@ -62,6 +67,11 @@ namespace FileCabinetApp
         /// <param name="recordInfo">The record information.</param>
         public void EditRecord(FileCabinetRecord recordInfo)
         {
+            if (recordInfo is null)
+            {
+                throw new ArgumentNullException(nameof(recordInfo), "RecordInfo is null.");
+            }
+
             using (var streamWriter = new StreamWriter(this.fileStream, Encoding.ASCII, -1, true))
             {
                 streamWriter.BaseStream.Seek(0, SeekOrigin.End);

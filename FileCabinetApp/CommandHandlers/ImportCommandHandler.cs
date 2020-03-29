@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace FileCabinetApp.CommandHandlers
 {
@@ -25,6 +23,11 @@ namespace FileCabinetApp.CommandHandlers
         /// <param name="appCommandRequest">The app command request.</param>
         public override void Handle(AppCommandRequest appCommandRequest)
         {
+            if (appCommandRequest is null)
+            {
+                throw new ArgumentNullException(nameof(appCommandRequest), "AppCommandRequest is null.");
+            }
+
             if (appCommandRequest.Command == "import")
             {
                 string[] args = appCommandRequest.Parameters.Split(' ');
@@ -40,7 +43,7 @@ namespace FileCabinetApp.CommandHandlers
                                 snapshot.LoadFromCsv(reader);
 
                                 int importedRecordsCount;
-                                importedRecordsCount = this.service.Restore(snapshot);
+                                importedRecordsCount = this.Service.Restore(snapshot);
 
                                 Memoizer.Clear();
 
@@ -54,6 +57,10 @@ namespace FileCabinetApp.CommandHandlers
                             catch (FileNotFoundException)
                             {
                                 Console.WriteLine("Import error: file {0} is not exist.", args[1]);
+                            }
+                            catch (ArgumentException)
+                            {
+                                Console.WriteLine("Import error: empty filepath is not allowed.");
                             }
 
                             break;
@@ -65,7 +72,7 @@ namespace FileCabinetApp.CommandHandlers
                                 snapshot.LoadFromXml(reader);
 
                                 int importedRecordsCount;
-                                importedRecordsCount = this.service.Restore(snapshot);
+                                importedRecordsCount = this.Service.Restore(snapshot);
 
                                 Memoizer.Clear();
 
@@ -79,6 +86,10 @@ namespace FileCabinetApp.CommandHandlers
                             catch (FileNotFoundException)
                             {
                                 Console.WriteLine("Import error: file {0} is not exist.", args[1]);
+                            }
+                            catch (ArgumentException)
+                            {
+                                Console.WriteLine("Import error: empty filepath is not allowed.");
                             }
 
                             break;

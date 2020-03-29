@@ -21,6 +21,16 @@ namespace FileCabinetApp
         /// <param name="recordFields">The fields of records to print.</param>
         public void Print(IEnumerable<FileCabinetRecord> records, string[] recordFields)
         {
+            if (records is null)
+            {
+                throw new ArgumentNullException(nameof(records), "Records is null.");
+            }
+
+            if (recordFields is null)
+            {
+                throw new ArgumentNullException(nameof(recordFields), "RecordFields is null");
+            }
+
             List<int> fieldsLength = GetFieldsMaxLength(records, recordFields);
             string horizontalBoarder = CreateHorizontalBoarder(records, recordFields, fieldsLength);
             Console.WriteLine(horizontalBoarder);

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FileCabinetApp.CommandHandlers
+﻿namespace FileCabinetApp.CommandHandlers
 {
     /// <summary>
     /// The AppCommandRequest class.

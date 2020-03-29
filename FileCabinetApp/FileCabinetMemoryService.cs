@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using FileCabinetApp.Validators;
 
 namespace FileCabinetApp
@@ -46,6 +44,11 @@ namespace FileCabinetApp
         /// <returns>The id of the created record.</returns>
         public int CreateRecord(FileCabinetRecord recordInfo)
         {
+            if (recordInfo is null)
+            {
+                throw new ArgumentNullException(nameof(recordInfo), "FileCabinetRecord is null.");
+            }
+
             this.validator.ValidateParameters(recordInfo);
 
             int recordId;
@@ -168,10 +171,15 @@ namespace FileCabinetApp
         /// <exception cref="ArgumentNullException()">Thrown when firstname or lastname is null.</exception>
         public void EditRecord(FileCabinetRecord recordInfo)
         {
+            if (recordInfo is null)
+            {
+                throw new ArgumentNullException(nameof(recordInfo), "FileCabinetRecord is null.");
+            }
+
             var indexToEdit = this.list.FindIndex((record) => record.Id == recordInfo.Id);
             if (indexToEdit == -1)
             {
-                throw new ArgumentException("No record with such id found.", nameof(recordInfo.Id));
+                throw new ArgumentException("No record with such id found.", nameof(recordInfo));
             }
 
             this.validator.ValidateParameters(recordInfo);
@@ -333,6 +341,11 @@ namespace FileCabinetApp
         /// <returns>The amount of imported records.</returns>
         public int Restore(FileCabinetServiceSnapshot fileCabinetServiceSnapshot)
         {
+            if (fileCabinetServiceSnapshot is null)
+            {
+                throw new ArgumentNullException(nameof(fileCabinetServiceSnapshot), "FileCabinetServiceSnapshot is null.");
+            }
+
             int importedRecordsCount = 0;
             var importedRecords = new List<FileCabinetRecord>(fileCabinetServiceSnapshot.Records);
             foreach (var record in importedRecords)

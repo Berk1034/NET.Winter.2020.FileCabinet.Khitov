@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FileCabinetApp.CommandHandlers
 {
@@ -28,11 +26,16 @@ namespace FileCabinetApp.CommandHandlers
         /// <param name="appCommandRequest">The app command request.</param>
         public override void Handle(AppCommandRequest appCommandRequest)
         {
+            if (appCommandRequest is null)
+            {
+                throw new ArgumentNullException(nameof(appCommandRequest), "AppCommandRequest is null.");
+            }
+
             if (appCommandRequest.Command == "exit")
             {
-                if (this.service is IDisposable)
+                if (this.Service is IDisposable)
                 {
-                    (this.service as IDisposable).Dispose();
+                    (this.Service as IDisposable).Dispose();
                 }
 
                 Console.WriteLine("Exiting an application...");

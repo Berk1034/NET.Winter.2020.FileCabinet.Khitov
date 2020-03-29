@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace FileCabinetApp.CommandHandlers
 {
@@ -30,6 +29,11 @@ namespace FileCabinetApp.CommandHandlers
         /// <param name="appCommandRequest">The app command request.</param>
         public override void Handle(AppCommandRequest appCommandRequest)
         {
+            if (appCommandRequest is null)
+            {
+                throw new ArgumentNullException(nameof(appCommandRequest), "AppCommandRequest is null.");
+            }
+
             if (appCommandRequest.Command == "select")
             {
                 try
@@ -90,7 +94,7 @@ namespace FileCabinetApp.CommandHandlers
                             recordFields = new string[7] { "Id", "FirstName", "LastName", "DateOfBirth", "Grade", "Height", "FavouriteSymbol" };
                         }
 
-                        List<FileCabinetRecord> recordsMatch = new List<FileCabinetRecord>(this.service.GetRecords());
+                        List<FileCabinetRecord> recordsMatch = new List<FileCabinetRecord>(this.Service.GetRecords());
                         if (recordsMatch.Count != 0)
                         {
                             this.printer.Print(recordsMatch, recordFields);
@@ -133,7 +137,7 @@ namespace FileCabinetApp.CommandHandlers
                             return;
                         }
 
-                        List<FileCabinetRecord> recordsMatch = new List<FileCabinetRecord>(this.service.GetRecords());
+                        List<FileCabinetRecord> recordsMatch = new List<FileCabinetRecord>(this.Service.GetRecords());
 
                         string condition = string.Empty;
                         if (conditions.Contains("and"))
@@ -162,15 +166,15 @@ namespace FileCabinetApp.CommandHandlers
 
                                         break;
                                     case "firstname":
-                                        recordsMatch = new List<FileCabinetRecord>(this.service.FindByFirstName(conditions[i + 1]));
+                                        recordsMatch = new List<FileCabinetRecord>(this.Service.FindByFirstName(conditions[i + 1]));
 
                                         break;
                                     case "lastname":
-                                        recordsMatch = new List<FileCabinetRecord>(this.service.FindByLastName(conditions[i + 1]));
+                                        recordsMatch = new List<FileCabinetRecord>(this.Service.FindByLastName(conditions[i + 1]));
 
                                         break;
                                     case "dateofbirth":
-                                        recordsMatch = new List<FileCabinetRecord>(this.service.FindByLastName(conditions[i + 1]));
+                                        recordsMatch = new List<FileCabinetRecord>(this.Service.FindByLastName(conditions[i + 1]));
 
                                         break;
                                 }

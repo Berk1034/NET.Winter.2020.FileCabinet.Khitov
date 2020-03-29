@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace FileCabinetApp.CommandHandlers
 {
@@ -25,6 +23,11 @@ namespace FileCabinetApp.CommandHandlers
         /// <param name="appCommandRequest">The app command request.</param>
         public override void Handle(AppCommandRequest appCommandRequest)
         {
+            if (appCommandRequest is null)
+            {
+                throw new ArgumentNullException(nameof(appCommandRequest), "AppCommandRequest is null.");
+            }
+
             if (appCommandRequest.Command == "export")
             {
                 string[] args = appCommandRequest.Parameters.Split(' ');
@@ -54,11 +57,15 @@ namespace FileCabinetApp.CommandHandlers
                                         writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
 
                                         FileCabinetServiceSnapshot snapshot;
-                                        snapshot = this.service.MakeSnapshot();
+                                        snapshot = this.Service.MakeSnapshot();
 
                                         snapshot.SaveToCsv(writer);
                                         Console.WriteLine("All records are exported to file {0}.", args[1]);
                                         writer.Close();
+                                    }
+                                    catch (ArgumentException)
+                                    {
+                                        Console.WriteLine("Export failed: empty filepath is not allowed.");
                                     }
                                     catch (NotImplementedException)
                                     {
@@ -101,11 +108,15 @@ namespace FileCabinetApp.CommandHandlers
                                         writer = new StreamWriter(new FileStream(args[1], FileMode.Create));
 
                                         FileCabinetServiceSnapshot snapshot;
-                                        snapshot = this.service.MakeSnapshot();
+                                        snapshot = this.Service.MakeSnapshot();
 
                                         snapshot.SaveToXml(writer);
                                         Console.WriteLine("All records are exported to file {0}.", args[1]);
                                         writer.Close();
+                                    }
+                                    catch (ArgumentException)
+                                    {
+                                        Console.WriteLine("Export failed: empty filepath is not allowed.");
                                     }
                                     catch (NotImplementedException)
                                     {

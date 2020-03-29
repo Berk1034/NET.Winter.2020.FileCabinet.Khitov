@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
 
 namespace FileCabinetApp
 {
@@ -37,16 +36,16 @@ namespace FileCabinetApp
 
                 var record = new FileCabinetRecord()
                 {
-                    Id = Convert.ToInt32(values[0]),
+                    Id = Convert.ToInt32(values[0], CultureInfo.InvariantCulture),
                     Name = new Name
                     {
                         FirstName = values[1],
                         LastName = values[2],
                     },
-                    DateOfBirth = DateTime.ParseExact(values[3], "MM/dd/yyyy", null),
-                    Grade = Convert.ToInt16(values[4]),
+                    DateOfBirth = DateTime.ParseExact(values[3], "MM/dd/yyyy", CultureInfo.InvariantCulture),
+                    Grade = Convert.ToInt16(values[4], CultureInfo.InvariantCulture),
                     Height = Convert.ToDecimal(values[5], CultureInfo.InvariantCulture),
-                    FavouriteSymbol = Convert.ToChar(values[6]),
+                    FavouriteSymbol = Convert.ToChar(values[6], CultureInfo.InvariantCulture),
                 };
 
                 importRecords.Add(record);

@@ -24,6 +24,11 @@ namespace FileCabinetApp.CommandHandlers
         /// <param name="appCommandRequest">The app command request.</param>
         public override void Handle(AppCommandRequest appCommandRequest)
         {
+            if (appCommandRequest is null)
+            {
+                throw new ArgumentNullException(nameof(appCommandRequest), "AppCommandRequest is null.");
+            }
+
             if (appCommandRequest.Command == "delete")
             {
                 char[] separators = { '=', ' ' };
@@ -54,23 +59,23 @@ namespace FileCabinetApp.CommandHandlers
                                     }
                                     else
                                     {
-                                        this.service.Remove(removeId);
+                                        this.Service.Remove(removeId);
                                         Console.WriteLine($"Record #{removeId} is deleted.");
                                     }
 
                                     break;
                                 case "firstname":
-                                    records = new List<FileCabinetRecord>(this.service.FindByFirstName(recordValue));
+                                    records = new List<FileCabinetRecord>(this.Service.FindByFirstName(recordValue));
                                     this.DeleteRecords(records, recordField);
 
                                     break;
                                 case "lastname":
-                                    records = new List<FileCabinetRecord>(this.service.FindByLastName(recordValue));
+                                    records = new List<FileCabinetRecord>(this.Service.FindByLastName(recordValue));
                                     this.DeleteRecords(records, recordField);
 
                                     break;
                                 case "dateofbirth":
-                                    records = new List<FileCabinetRecord>(this.service.FindByDateOfBirth(recordValue));
+                                    records = new List<FileCabinetRecord>(this.Service.FindByDateOfBirth(recordValue));
                                     this.DeleteRecords(records, recordField);
 
                                     break;
@@ -108,7 +113,7 @@ namespace FileCabinetApp.CommandHandlers
             foreach (var record in records)
             {
                 removedIds.Add(record.Id);
-                this.service.Remove(record.Id);
+                this.Service.Remove(record.Id);
             }
 
             if (removedIds.Count != 0)
@@ -127,11 +132,11 @@ namespace FileCabinetApp.CommandHandlers
 
                 if (removedIds.Count == 1)
                 {
-                    Console.WriteLine($"Record {removedRecords.ToString()} is deleted.");
+                    Console.WriteLine($"Record {removedRecords} is deleted.");
                 }
                 else
                 {
-                    Console.WriteLine($"Records {removedRecords.ToString()} are deleted.");
+                    Console.WriteLine($"Records {removedRecords} are deleted.");
                 }
             }
             else

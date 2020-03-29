@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using FileCabinetApp.CommandHandlers;
 using FileCabinetApp.Validators;
@@ -21,11 +19,38 @@ namespace FileCabinetApp
         private static IPrinter printer;
 
         /// <summary>
+        /// Gets the validationRules.
+        /// </summary>
+        /// <value>
+        /// The validationRules.
+        /// </value>
+        public static ValidationRules ValidationRules
+        {
+            get => validationRules;
+        }
+
+        /// <summary>
+        /// Gets the fileCabinetService.
+        /// </summary>
+        /// <value>
+        /// The fileCabinetService.
+        /// </value>
+        public static IFileCabinetService FileCabinetService
+        {
+            get => fileCabinetService;
+        }
+
+        /// <summary>
         /// The start point of the program.
         /// </summary>
         /// <param name="args">The arguments passed to the program.</param>
         public static void Main(string[] args)
         {
+            if (args is null)
+            {
+                throw new ArgumentNullException(nameof(args), "Arguments is null.");
+            }
+
             string validation = "default";
             int argsAmount = args.Length;
             IRecordValidator validator = new ValidatorBuilder().CreateDefault();
@@ -137,9 +162,9 @@ namespace FileCabinetApp
         private static ICommandHandler CreateCommandHandlers()
         {
             var helpHandler = new HelpCommandHandler();
-            var createHandler = new CreateCommandHandler(Program.fileCabinetService, Program.validationRules);
-            var insertHandler = new InsertCommandHandler(Program.fileCabinetService, Program.validationRules);
-            var updateHandler = new UpdateCommandHandler(Program.fileCabinetService, Program.validationRules);
+            var createHandler = new CreateCommandHandler(Program.fileCabinetService);
+            var insertHandler = new InsertCommandHandler(Program.fileCabinetService);
+            var updateHandler = new UpdateCommandHandler(Program.fileCabinetService);
             var exitHandler = new ExitCommandHandler(Program.fileCabinetService, Program.ChangeIsRunning);
             var exportHandler = new ExportCommandHandler(Program.fileCabinetService);
             var importHandler = new ImportCommandHandler(Program.fileCabinetService);

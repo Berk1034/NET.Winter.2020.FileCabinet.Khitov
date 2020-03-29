@@ -60,12 +60,11 @@
             The CreateCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules)">
+        <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.CreateCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
-            <param name="validationRules">The validation rules.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.CreateCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -175,12 +174,11 @@
             The InsertCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.InsertCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules)">
+        <member name="M:FileCabinetApp.CommandHandlers.InsertCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.InsertCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
-            <param name="validationRules">The validation rules.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.InsertCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -239,16 +237,19 @@
             The ServiceCommandHandlerBase class.
             </summary>
         </member>
-        <member name="F:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase.service">
-            <summary>
-            The service to use.
-            </summary>
-        </member>
         <member name="M:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase.#ctor(FileCabinetApp.IFileCabinetService)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
+        </member>
+        <member name="P:FileCabinetApp.CommandHandlers.ServiceCommandHandlerBase.Service">
+            <summary>
+            Gets or sets the service.
+            </summary>
+            <value>
+            The service.
+            </value>
         </member>
         <member name="T:FileCabinetApp.CommandHandlers.StatCommandHandler">
             <summary>
@@ -272,12 +273,11 @@
             The UpdateCommandHandler class.
             </summary>
         </member>
-        <member name="M:FileCabinetApp.CommandHandlers.UpdateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService,FileCabinetApp.Validators.ValidationRules)">
+        <member name="M:FileCabinetApp.CommandHandlers.UpdateCommandHandler.#ctor(FileCabinetApp.IFileCabinetService)">
             <summary>
             Initializes a new instance of the <see cref="T:FileCabinetApp.CommandHandlers.UpdateCommandHandler"/> class.
             </summary>
             <param name="service">The IFileCabinetService service.</param>
-            <param name="validationRules">The validation rules.</param>
         </member>
         <member name="M:FileCabinetApp.CommandHandlers.UpdateCommandHandler.Handle(FileCabinetApp.CommandHandlers.AppCommandRequest)">
             <summary>
@@ -739,6 +739,34 @@
             <param name="fileCabinetServiceSnapshot">The snapshot of the current state of records.</param>
             <returns>The amount of imported records.</returns>
         </member>
+        <member name="T:FileCabinetApp.InputReader">
+            <summary>
+            The InputReader class.
+            </summary>
+        </member>
+        <member name="M:FileCabinetApp.InputReader.CreateRecord">
+            <summary>
+            Creates the record by all the fields.
+            </summary>
+            <returns>The created record.</returns>
+        </member>
+        <member name="M:FileCabinetApp.InputReader.CreateRecord(System.String[],System.String[])">
+            <summary>
+            Creates the record by recordFields with given recordValues.
+            </summary>
+            <param name="recordFields">The fields.</param>
+            <param name="recordValues">The values.</param>
+            <returns>The created record.</returns>
+        </member>
+        <member name="M:FileCabinetApp.InputReader.UpdateRecord(System.String[],System.String[],FileCabinetApp.FileCabinetRecord)">
+            <summary>
+            Updates the records recordFields with the given recordValues.
+            </summary>
+            <param name="recordFields">The fields to update.</param>
+            <param name="recordValues">The values to update.</param>
+            <param name="recordToUpdate">The record to update.</param>
+            <returns>The updated record.</returns>
+        </member>
         <member name="T:FileCabinetApp.IPrinter">
             <summary>
             The IPrinter interface.
@@ -801,6 +829,22 @@
             <summary>
             The Program class.
             </summary>
+        </member>
+        <member name="P:FileCabinetApp.Program.ValidationRules">
+            <summary>
+            Gets the validationRules.
+            </summary>
+            <value>
+            The validationRules.
+            </value>
+        </member>
+        <member name="P:FileCabinetApp.Program.FileCabinetService">
+            <summary>
+            Gets the fileCabinetService.
+            </summary>
+            <value>
+            The fileCabinetService.
+            </value>
         </member>
         <member name="M:FileCabinetApp.Program.Main(System.String[])">
             <summary>
