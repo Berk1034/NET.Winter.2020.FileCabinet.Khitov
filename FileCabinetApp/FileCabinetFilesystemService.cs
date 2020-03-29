@@ -85,6 +85,11 @@ namespace FileCabinetApp
         /// <returns>The id of the created record.</returns>
         public int CreateRecord(FileCabinetRecord recordInfo)
         {
+            if (recordInfo is null)
+            {
+                throw new ArgumentNullException(nameof(recordInfo), "FileCabinetRecord is null.");
+            }
+
             this.validator.ValidateParameters(recordInfo);
 
             int recordId;
@@ -130,6 +135,11 @@ namespace FileCabinetApp
         /// <param name="recordInfo">The record information.</param>
         public void EditRecord(FileCabinetRecord recordInfo)
         {
+            if (recordInfo is null)
+            {
+                throw new ArgumentNullException(nameof(recordInfo), "FileCabinetRecord is null.");
+            }
+
             this.validator.ValidateParameters(recordInfo);
 
             int id = -1;
@@ -648,6 +658,11 @@ namespace FileCabinetApp
         /// <returns>The amount of imported records.</returns>
         public int Restore(FileCabinetServiceSnapshot fileCabinetServiceSnapshot)
         {
+            if (fileCabinetServiceSnapshot is null)
+            {
+                throw new ArgumentNullException(nameof(fileCabinetServiceSnapshot), "FileCabinetServiceSnapshot is null.");
+            }
+
             int importedRecordsCount = 0;
             var importedRecords = new List<FileCabinetRecord>(fileCabinetServiceSnapshot.Records);
             foreach (var record in importedRecords)

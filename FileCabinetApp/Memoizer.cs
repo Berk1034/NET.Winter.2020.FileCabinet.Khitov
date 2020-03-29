@@ -19,7 +19,12 @@ namespace FileCabinetApp
         /// <param name="records">The records to add.</param>
         public void Memoize(string[] rawKey, IEnumerable<FileCabinetRecord> records)
         {
-            string generatedKey = this.GenerateKey(rawKey);
+            if (rawKey is null)
+            {
+                throw new ArgumentNullException(nameof(rawKey), "RawKey is null.");
+            }
+
+            string generatedKey = GenerateKey(rawKey);
             this.cacheOfRecords.Add(generatedKey, records);
         }
 
@@ -31,9 +36,14 @@ namespace FileCabinetApp
         /// <returns>True if cacheOfRecords contains key generated from raw key, otherwise false.</returns>
         public bool TryGetCachedRecords(string[] rawKey, out IEnumerable<FileCabinetRecord> cachedRecords)
         {
+            if (rawKey is null)
+            {
+                throw new ArgumentNullException(nameof(rawKey), "RawKey is null.");
+            }
+
             cachedRecords = null;
 
-            if (!this.cacheOfRecords.TryGetValue(this.GenerateKey(rawKey), out cachedRecords))
+            if (!this.cacheOfRecords.TryGetValue(GenerateKey(rawKey), out cachedRecords))
             {
                 return false;
             }
@@ -49,7 +59,7 @@ namespace FileCabinetApp
             this.cacheOfRecords.Clear();
         }
 
-        private string GenerateKey(string[] rawKey)
+        private static string GenerateKey(string[] rawKey)
         {
             StringBuilder generatedKey = new StringBuilder();
             generatedKey.Append("%");

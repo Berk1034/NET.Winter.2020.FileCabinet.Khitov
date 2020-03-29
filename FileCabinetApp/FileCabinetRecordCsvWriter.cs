@@ -20,7 +20,10 @@ namespace FileCabinetApp
         public FileCabinetRecordCsvWriter(TextWriter writer)
         {
             this.writer = writer;
-            writer.WriteLine("Id,First Name,Last Name,Date of birth,Grade,Height,Favourite symbol");
+            if (writer != null)
+            {
+                writer.WriteLine("Id,First Name,Last Name,Date of birth,Grade,Height,Favourite symbol");
+            }
         }
 
         /// <summary>
@@ -29,7 +32,12 @@ namespace FileCabinetApp
         /// <param name="record">The record to be written.</param>
         public void Write(FileCabinetRecord record)
         {
-            this.writer.WriteLine("{0},{1},{2},{3},{4},{5},{6}", record.Id, record.Name.FirstName, record.Name.LastName, record.DateOfBirth.ToString("MM'/'dd'/'yyyy", null), record.Grade, record.Height.ToString(CultureInfo.InvariantCulture), record.FavouriteSymbol);
+            if (record is null)
+            {
+                throw new ArgumentNullException(nameof(record), "Record is null.");
+            }
+
+            this.writer.WriteLine("{0},{1},{2},{3},{4},{5},{6}", record.Id, record.Name.FirstName, record.Name.LastName, record.DateOfBirth.ToString("MM'/'dd'/'yyyy", CultureInfo.InvariantCulture), record.Grade, record.Height.ToString(CultureInfo.InvariantCulture), record.FavouriteSymbol);
         }
     }
 }

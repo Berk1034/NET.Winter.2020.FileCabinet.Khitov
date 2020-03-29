@@ -28,23 +28,28 @@ namespace FileCabinetApp
         /// <param name="record">The record to be written.</param>
         public void Write(FileCabinetRecord record)
         {
+            if (record is null)
+            {
+                throw new ArgumentNullException(nameof(record), "Record is null.");
+            }
+
             this.writer.WriteStartElement("record");
-            this.writer.WriteAttributeString("id", record.Id.ToString());
+            this.writer.WriteAttributeString("id", record.Id.ToString(CultureInfo.InvariantCulture));
             this.writer.WriteStartElement("name");
             this.writer.WriteAttributeString("first", record.Name.FirstName);
             this.writer.WriteAttributeString("last", record.Name.LastName);
             this.writer.WriteEndElement();
             this.writer.WriteStartElement("dateOfBirth");
-            this.writer.WriteString(record.DateOfBirth.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"));
+            this.writer.WriteString(record.DateOfBirth.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss", CultureInfo.InvariantCulture));
             this.writer.WriteEndElement();
             this.writer.WriteStartElement("grade");
-            this.writer.WriteString(record.Grade.ToString());
+            this.writer.WriteString(record.Grade.ToString(CultureInfo.InvariantCulture));
             this.writer.WriteEndElement();
             this.writer.WriteStartElement("height");
             this.writer.WriteString(record.Height.ToString(CultureInfo.InvariantCulture));
             this.writer.WriteEndElement();
             this.writer.WriteStartElement("favouriteSymbol");
-            this.writer.WriteString(record.FavouriteSymbol.ToString());
+            this.writer.WriteString(record.FavouriteSymbol.ToString(CultureInfo.InvariantCulture));
             this.writer.WriteEndElement();
             this.writer.WriteEndElement();
         }

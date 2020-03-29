@@ -26,6 +26,11 @@ namespace FileCabinetApp
         /// <param name="args">The arguments passed to the program.</param>
         public static void Main(string[] args)
         {
+            if (args is null)
+            {
+                throw new ArgumentNullException(nameof(args), "Arguments is null.");
+            }
+
             string validation = "default";
             int argsAmount = args.Length;
             IRecordValidator validator = new ValidatorBuilder().CreateDefault();

@@ -72,8 +72,14 @@ namespace FileCabinetApp
         [XmlElement("favouriteSymbol")]
         public string FavouriteSymbolString
         {
-            get => this.FavouriteSymbol.ToString();
-            set => this.FavouriteSymbol = value[0];
+            get => this.FavouriteSymbol.ToString(null);
+            set
+            {
+                if (value != null)
+                {
+                    this.FavouriteSymbol = value[0];
+                }
+            }
         }
     }
 }
