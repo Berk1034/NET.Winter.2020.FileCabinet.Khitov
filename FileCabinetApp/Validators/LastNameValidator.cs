@@ -29,19 +29,24 @@ namespace FileCabinetApp.Validators
         /// <param name="recordInfo">The record informaton.</param>
         public void ValidateParameters(FileCabinetRecord recordInfo)
         {
-            if (recordInfo.Name.FirstName is null)
+            if (recordInfo is null)
             {
-                throw new ArgumentNullException(nameof(recordInfo.Name.FirstName), "Lastname can't be null.");
+                throw new ArgumentNullException(nameof(recordInfo), "RecordInfo is null.");
             }
 
-            if (recordInfo.Name.FirstName.Trim().Length == 0)
+            if (recordInfo.Name.LastName is null)
             {
-                throw new ArgumentException("Lastname cannot contain only spaces.", nameof(recordInfo.Name.FirstName));
+                throw new ArgumentNullException(nameof(recordInfo), "Lastname can't be null.");
             }
 
-            if (recordInfo.Name.FirstName.Length < this.minLength || recordInfo.Name.FirstName.Length > this.maxLength)
+            if (recordInfo.Name.LastName.Trim().Length == 0)
             {
-                throw new ArgumentException($"Lastname length should be in range [{this.minLength};{this.maxLength}].", nameof(recordInfo.Name.FirstName));
+                throw new ArgumentException("Lastname cannot contain only spaces.", nameof(recordInfo));
+            }
+
+            if (recordInfo.Name.LastName.Length < this.minLength || recordInfo.Name.LastName.Length > this.maxLength)
+            {
+                throw new ArgumentException($"Lastname length should be in range [{this.minLength};{this.maxLength}].", nameof(recordInfo));
             }
         }
     }

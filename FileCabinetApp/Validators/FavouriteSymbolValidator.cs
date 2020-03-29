@@ -26,9 +26,14 @@ namespace FileCabinetApp.Validators
         /// <param name="recordInfo">The record informaton.</param>
         public void ValidateParameters(FileCabinetRecord recordInfo)
         {
+            if (recordInfo is null)
+            {
+                throw new ArgumentNullException(nameof(recordInfo), "RecordInfo is null.");
+            }
+
             if (recordInfo.FavouriteSymbol == this.bannedSymbol)
             {
-                throw new ArgumentException($"{this.bannedSymbol} is not valid symbol.", nameof(recordInfo.FavouriteSymbol));
+                throw new ArgumentException($"{this.bannedSymbol} is not valid symbol.", nameof(recordInfo));
             }
         }
     }

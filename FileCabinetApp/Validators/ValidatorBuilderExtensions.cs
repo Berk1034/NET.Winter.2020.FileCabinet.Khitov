@@ -18,6 +18,11 @@ namespace FileCabinetApp.Validators
         /// <returns>The IRecordValidator reference.</returns>
         public static IRecordValidator CreateDefault(this ValidatorBuilder validatorBuilder)
         {
+            if (validatorBuilder is null)
+            {
+                throw new ArgumentNullException(nameof(validatorBuilder), "ValidatorBuilder is null");
+            }
+
             string basePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
             var builder = new ConfigurationBuilder().SetBasePath(basePath).AddJsonFile("validation-rules.json");
             var config = builder.Build();
@@ -40,6 +45,11 @@ namespace FileCabinetApp.Validators
         /// <returns>The IRecordValidator reference.</returns>
         public static IRecordValidator CreateCustom(this ValidatorBuilder validatorBuilder)
         {
+            if (validatorBuilder is null)
+            {
+                throw new ArgumentNullException(nameof(validatorBuilder), "ValidatorBuilder is null");
+            }
+
             string basePath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\"));
             var builder = new ConfigurationBuilder().SetBasePath(basePath).AddJsonFile("validation-rules.json");
             var config = builder.Build();

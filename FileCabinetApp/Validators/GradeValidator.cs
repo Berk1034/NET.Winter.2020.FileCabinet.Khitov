@@ -29,9 +29,14 @@ namespace FileCabinetApp.Validators
         /// <param name="recordInfo">The record informaton.</param>
         public void ValidateParameters(FileCabinetRecord recordInfo)
         {
+            if (recordInfo is null)
+            {
+                throw new ArgumentNullException(nameof(recordInfo), "RecordInfo is null.");
+            }
+
             if (recordInfo.Grade < this.minGrade || recordInfo.Grade > this.maxGrade)
             {
-                throw new ArgumentException($"Grade should be in range [{this.minGrade};{this.maxGrade}].", nameof(recordInfo.Grade));
+                throw new ArgumentException($"Grade should be in range [{this.minGrade};{this.maxGrade}].", nameof(recordInfo));
             }
         }
     }

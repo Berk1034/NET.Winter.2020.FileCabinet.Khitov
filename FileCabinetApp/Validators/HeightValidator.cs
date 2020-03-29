@@ -29,9 +29,14 @@ namespace FileCabinetApp.Validators
         /// <param name="recordInfo">The record informaton.</param>
         public void ValidateParameters(FileCabinetRecord recordInfo)
         {
+            if (recordInfo is null)
+            {
+                throw new ArgumentNullException(nameof(recordInfo), "RecordInfo is null.");
+            }
+
             if (recordInfo.Height < this.minHeight || recordInfo.Height > this.maxHeight)
             {
-                throw new ArgumentException($"Height can't be lower {this.minHeight} and higher than {this.maxHeight}.", nameof(recordInfo.Height));
+                throw new ArgumentException($"Height can't be lower {this.minHeight} and higher than {this.maxHeight}.", nameof(recordInfo));
             }
         }
     }
