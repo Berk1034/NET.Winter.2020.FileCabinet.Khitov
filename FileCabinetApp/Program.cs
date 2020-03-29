@@ -21,6 +21,28 @@ namespace FileCabinetApp
         private static IPrinter printer;
 
         /// <summary>
+        /// Gets the validationRules.
+        /// </summary>
+        /// <value>
+        /// The validationRules.
+        /// </value>
+        public static ValidationRules ValidationRules
+        {
+            get => validationRules;
+        }
+
+        /// <summary>
+        /// Gets the fileCabinetService.
+        /// </summary>
+        /// <value>
+        /// The fileCabinetService.
+        /// </value>
+        public static IFileCabinetService FileCabinetService
+        {
+            get => fileCabinetService;
+        }
+
+        /// <summary>
         /// The start point of the program.
         /// </summary>
         /// <param name="args">The arguments passed to the program.</param>
@@ -142,9 +164,9 @@ namespace FileCabinetApp
         private static ICommandHandler CreateCommandHandlers()
         {
             var helpHandler = new HelpCommandHandler();
-            var createHandler = new CreateCommandHandler(Program.fileCabinetService, Program.validationRules);
-            var insertHandler = new InsertCommandHandler(Program.fileCabinetService, Program.validationRules);
-            var updateHandler = new UpdateCommandHandler(Program.fileCabinetService, Program.validationRules);
+            var createHandler = new CreateCommandHandler(Program.fileCabinetService);
+            var insertHandler = new InsertCommandHandler(Program.fileCabinetService);
+            var updateHandler = new UpdateCommandHandler(Program.fileCabinetService);
             var exitHandler = new ExitCommandHandler(Program.fileCabinetService, Program.ChangeIsRunning);
             var exportHandler = new ExportCommandHandler(Program.fileCabinetService);
             var importHandler = new ImportCommandHandler(Program.fileCabinetService);
